@@ -1,0 +1,4 @@
+/home/karmaner/webserver/build/CMakeFiles/webserver.dir
+/home/karmaner/webserver/build/CMakeFiles/test.dir
+/home/karmaner/webserver/build/CMakeFiles/edit_cache.dir
+/home/karmaner/webserver/build/CMakeFiles/rebuild_cache.dir

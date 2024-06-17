@@ -1,0 +1,1 @@
+/usr/bin/c++ -fPIC  -rdynamic -O0 -ggdb -std=c++11 -Wall -Wno-deprecated -Werror -Wno-unused-function -g -shared -Wl,-soname,libwebserver.so -o /home/karmaner/webserver/lib/libwebserver.so CMakeFiles/webserver.dir/src/basic/log.cpp.o 
