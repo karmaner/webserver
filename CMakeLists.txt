@@ -6,6 +6,7 @@ set(CMAKE_CXX_FLAGS "$ENV{CXXFLAGS} -rdynamic -O0 -ggdb -std=c++11 -Wall -Wno-de
 
 set(LIB_SRC
     src/basic/log.cpp
+    src/basic/util.cpp
     )
 
 add_library(webserver SHARED ${LIB_SRC})

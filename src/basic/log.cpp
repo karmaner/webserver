@@ -38,6 +38,21 @@ LogEvent::LogEvent(const std::string &logger_name, LogLevel::Level level, const 
     , m_threadName(thread_name) {
 }
 
+void LogEvent::printf(const char *fmt, ...) {
+    va_list ap;
+    va_start(ap, fmt);
+    vprintf(fmt, ap);
+    va_end(ap);
+}
+
+void LogEvent::vprintf(const char* fmt, va_list ap) {
+    char* buf = nullptr;
+    int len = vasprintf(&buf, fmt, ap);
+    if(len != 1) {
+        m_ss << std::string(buf, len);
+        free(buf);
+    }
+}
 
 
 class MessageFormatItem : public LogFormatter::FormatItem {
@@ -247,12 +262,12 @@ void LogFormatter::init() {
         tmp.clear();
     }
 
-    // for debug
-    std::cout << "pattrens: " << std::endl;
-    for(auto &v : patterns) {
-        std::cout << "type = " << v.first << ", value = " << v.second << std::endl;
-    }
-    std::cout << "dataformat = " << dateformat << std::endl;
+    // // for debug
+    // std::cout << "pattrens: " << std::endl;
+    // for(auto &v : patterns) {
+    //     std::cout << "type = " << v.first << ", value = " << v.second << std::endl;
+    // }
+    // std::cout << "dataformat = " << dateformat << std::endl;
 
     static std::map<std::string, std::function<FormatItem::ptr(const std::string& str)> > s_format_items = {
 #define XX(str, C) \
@@ -417,6 +432,41 @@ void Logger::log(LogEvent::ptr event) {
         }
     }
 }
+
+LoggerManager::LoggerManager() {
+    m_root.reset(new Logger("root"));
+    m_root->addAppender(LogAppender::ptr(new StdoutLogAppender));
+    m_loggers[m_root->getName()] = m_root;
+    init();
+}
+
+Logger::ptr LoggerManager::getLogger(const std::string &name) {
+    auto it = m_loggers.find(name);
+    if(it != m_loggers.end()) {
+        return it->second;
+    }
+
+    // 没有就会new一个Logger
+    Logger::ptr logger(new Logger(name));
+    m_loggers[name] = logger;
+    return logger;
+}
+
+// TODO: 从配置文件加载
+void LoggerManager::init() {
+
+}
+
+LogEventWrap::LogEventWrap(Logger::ptr logger, LogEvent::ptr event) 
+    : m_logger(logger)
+    , m_event(event) {
+
+}
+
+LogEventWrap::~LogEventWrap() {
+    m_logger->log(m_event);
+}
+
 void Logger::debug(LogEvent::ptr event) {
     log(event);
 }

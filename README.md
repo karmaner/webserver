@@ -19,11 +19,18 @@ cmake
 ## 日志系统
 >1. 仿照log4J进行开发
 >
->    Logger (定义日志等级类别)(debug日志，普通日志)
+>   Logger (定义日志等级类别)(debug日志，普通日志)
 >
->            Formatter(定义日志格式)
+>           Formatter(定义日志格式)
 >
->    Appender (日志输出地)
+>   Appender (日志输出地)  派生 FileLogAppender  StdoutLogAppender
+>   
+>   
+>   
+>   LogFormatter（日志格式器） 包含多个FormatItem
+>   
+>
+
 
 ## 协程库封装
 
