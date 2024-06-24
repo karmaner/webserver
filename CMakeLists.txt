@@ -11,7 +11,7 @@ set(LIB_SRC
 
 add_library(webserver SHARED ${LIB_SRC})
 
-add_executable(test tests/test.cpp)
+add_executable(test tests/test_log.cpp)
 add_dependencies(test webserver)
 target_link_libraries(test webserver)
 

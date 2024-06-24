@@ -22,7 +22,7 @@ int main(int argc, char* argv[]) {
     WEBSERVER_LOG_DEBUG(logger) << "This is Debug info";
 
     //TODO: 有问题
-    WEBSERVER_LOG_FMT_FATAL(logger, "fatal %s:%d:%s;%s", "你好！", __FILE__, __LINE__);
+    //WEBSERVER_LOG_FMT_FATAL(logger, "fatal %s:%d:%s;%s", "你好！", __FILE__, __LINE__);
 
     // logger->log(event);
     // logger->info(event);

@@ -467,23 +467,5 @@ LogEventWrap::~LogEventWrap() {
     m_logger->log(m_event);
 }
 
-void Logger::debug(LogEvent::ptr event) {
-    log(event);
-}
-
-void Logger::info(LogEvent::ptr event) {
-    log(event);
-
-}
-void Logger::warn(LogEvent::ptr event) {
-    log(event);
-}
-void Logger::error(LogEvent::ptr event) {
-    log(event);
-}
-void Logger::fatal(LogEvent::ptr event) {
-    log(event);
-}
-
 
 };

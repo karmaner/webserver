@@ -97,7 +97,6 @@ private:
     std::string m_threadName;
 
     std::stringstream m_ss;
-    std::shared_ptr<Logger> m_logger;
 
 };
 
@@ -154,7 +153,6 @@ public:
     // virtual std::string toYamlString() = 0;
 
 protected:
-    LogLevel::Level m_level;
     LogFormatter::ptr m_formatter;
     LogFormatter::ptr m_defaultFormatter;
 };
@@ -164,15 +162,9 @@ class Logger{
 public:
     typedef std::shared_ptr<Logger> ptr;
 
-    Logger(const std::string& name = "root");
+    Logger(const std::string& name = "default");
     void log(LogEvent::ptr event);
 
-    /* 日志级别 */
-    void debug(LogEvent::ptr event);
-    void info(LogEvent::ptr event);
-    void warn(LogEvent::ptr event);
-    void error(LogEvent::ptr event);
-    void fatal(LogEvent::ptr event);
 
     /* 设置日志输出地 */
     void addAppender(LogAppender::ptr appender);
@@ -251,6 +243,6 @@ private:
     bool m_reopenError = false;
 };
 
-}
+}   // end namespace webserver
 #endif
 
