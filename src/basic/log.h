@@ -96,6 +96,7 @@ private:
     uint64_t m_time;              // 时间戳
     std::string m_threadName;
 
+    std::shared_ptr<Logger> m_logger;
     std::stringstream m_ss;
 
 };
@@ -148,11 +149,15 @@ public:
     void setFormatter(LogFormatter::ptr val);
     LogFormatter::ptr getFormatter() const;
 
+    LogLevel::Level getLevel() const { return m_level; }
+    void setLevel(LogLevel::Level val) { m_level = val; }
+
     // virtual void log(LogEvent::ptr evnt) = 0;
 
     // virtual std::string toYamlString() = 0;
 
 protected:
+    LogLevel::Level m_level = LogLevel::DEBUG;
     LogFormatter::ptr m_formatter;
     LogFormatter::ptr m_defaultFormatter;
 };

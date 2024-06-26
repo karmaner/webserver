@@ -1,42 +1,29 @@
 #include <iostream>
-#include "../src/basic/log.h"
-#include "../src/basic/util.h"
+#include "src/basic/log.h"
+#include "src/basic/util.h"
 
-
-int main(int argc, char* argv[]) {
+int main(int argc, char** argv) {
     webserver::Logger::ptr logger(new webserver::Logger);
-    logger->addAppender(webserver::LogAppender::ptr (new webserver::FileLogAppender("/home/karmaner/webserver/bin/log.txt")));
-    logger->addAppender(webserver::LogAppender::ptr (new webserver::StdoutLogAppender()));
-    
-    // logger->addAppender(webserver::LogAppender::ptr (new webserver::StdoutLogAppender));
+    logger->addAppender(webserver::LogAppender::ptr(new webserver::StdoutLogAppender));
 
-    // webserver::LogEvent::ptr event(new webserver::LogEvent("Debug日志", webserver::LogLevel::DEBUG, __FILE__, __LINE__, 0, 
-    //                                                            webserver::GetThreadId(), webserver::GetFiberId(),time(0), webserver::GetThreadName()));
+    webserver::FileLogAppender::ptr file_appender(new webserver::FileLogAppender("./log.txt"));
+    webserver::LogFormatter::ptr fmt(new webserver::LogFormatter("%d%T%p%T%m%n"));
+    file_appender->setFormatter(fmt);
+    file_appender->setLevel(webserver::LogLevel::ERROR);
 
-    // event->getSS() << "Hello World!";
+    logger->addAppender(file_appender);
 
-    logger->setLevel(webserver::LogLevel::FATAL);
+    //webserver::LogEvent::ptr event(new webserver::LogEvent(__FILE__, __LINE__, 0, webserver::GetThreadId(), webserver::GetFiberId(), time(0)));
+    //event->getSS() << "hello webserver log";
+    //logger->log(webserver::LogLevel::DEBUG, event);
+    std::cout << "hello webserver log" << std::endl;
 
-    WEBSERVER_LOG_FATAL(logger) << "FATAL show up";
+    WEBSERVER_LOG_INFO(logger) << "test macro";
+    WEBSERVER_LOG_ERROR(logger) << "test macro error";
 
-    WEBSERVER_LOG_DEBUG(logger) << "This is Debug info";
+    WEBSERVER_LOG_FMT_ERROR(logger, "test macro fmt error %s", "aa");
 
-    //TODO: 有问题
-    //WEBSERVER_LOG_FMT_FATAL(logger, "fatal %s:%d:%s;%s", "你好！", __FILE__, __LINE__);
-
-    // logger->log(event);
-    // logger->info(event);
-
-    // webserver::Logger::ptr l2 =  WEBSERVER_LOG_ROOT();
-
-    webserver::Logger::ptr l2 = WEBSERVER_LOG_NAME("DBA日志");
-    l2->addAppender(webserver::LogAppender::ptr (new webserver::StdoutLogAppender()));
-
-    WEBSERVER_LOG_DEBUG(l2) << "LoggerMgr test";    
-
-    webserver::LoggerManager l;
-    l.getLogger("test日志")->addAppender(webserver::LogAppender::ptr (new webserver::StdoutLogAppender()));
-    WEBSERVER_LOG_DEBUG(l.getLogger("test日志")) << "DEBUG show up";
-
+    auto l = webserver::LoggerMgr::GetInstance()->getLogger("xx");
+    WEBSERVER_LOG_INFO(l) << "xxx";
     return 0;
 }

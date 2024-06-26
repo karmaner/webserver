@@ -11,17 +11,11 @@
 
 namespace webserver {
     pid_t GetThreadId();
-
     uint64_t GetFiberId();
-
     uint64_t GetElapseMS();
-
     std::string GetThreadName();
-
     void SetThreadName(const std::string& name);
-
     uint64_t GetCurrentMS();
-
     uint64_t GetCurrentUS();
 }
 

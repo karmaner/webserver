@@ -3,3 +3,97 @@
 2024-06-17 15:55:31 [0ms]	1	线程01	2	[1]	[Debug日志]	/home/karmaner/webserver/tests/test.cpp:11	
 2024-06-17 15:56:32 [0ms]	1	线程01	2	[1]	[Debug日志]	/home/karmaner/webserver/tests/test.cpp:12	
 2024-06-17 15:56:32 [0ms]	1	线程01	2	[1]	[Debug日志]	/home/karmaner/webserver/tests/test.cpp:12	
+2024-06-17 23:53:57 [0ms]	1	线程01	2	[1]	[Debug日志]	/home/karmaner/webserver/tests/test.cpp:12	
+2024-06-17 23:53:57 [0ms]	1	线程01	2	[1]	[Debug日志]	/home/karmaner/webserver/tests/test.cpp:12	
+2024-06-18 09:26:20 [0ms]	1	线程01	2	[1]	[Debug日志]	/home/karmaner/webserver/tests/test.cpp:12	
+2024-06-18 09:26:20 [0ms]	1	线程01	2	[1]	[Debug日志]	/home/karmaner/webserver/tests/test.cpp:12	
+2024-06-18 13:51:34 [0ms]	1	线程01	2	[1]	[Debug日志]	/home/karmaner/webserver/tests/test.cpp:12	
+2024-06-18 13:51:34 [0ms]	1	线程01	2	[1]	[Debug日志]	/home/karmaner/webserver/tests/test.cpp:12	
+2024-06-18 13:52:16 [0ms]	1	线程01	2	[1]	[Debug日志]	/home/karmaner/webserver/tests/test.cpp:12	
+2024-06-18 13:52:16 [0ms]	1	线程01	2	[1]	[Debug日志]	/home/karmaner/webserver/tests/test.cpp:12	
+2024-06-18 13:53:24 [0ms]	1	线程01	2	[1]	[Debug日志]	/home/karmaner/webserver/tests/test.cpp:12	
+2024-06-18 13:53:24 [0ms]	1	线程01	2	[1]	[Debug日志]	/home/karmaner/webserver/tests/test.cpp:12	
+2024-06-19 09:10:07 [0ms]	969	test	0	[5]	[Debug日志]	/home/karmaner/webserver/tests/test.cpp:20	FATAL show up
+2024-06-19 09:12:29 [130390313ms]	1543	test	0	[5]	[Debug日志]	/home/karmaner/webserver/tests/test.cpp:20	FATAL show up
+2024-06-19 09:14:56 [1232670330ms]	2079	test	0	[5]	[Debug日志]	/home/karmaner/webserver/tests/test.cpp:20	FATAL show up
+2024-06-19 09:44:35 [3269836370ms]	7510	test	0	[5]	[Debug日志]	/home/karmaner/webserver/tests/test.cpp:20	FATAL show up
+2024-06-19 10:23:13 [1388821574ms]	15408	test	0	[5]	[root]	/home/karmaner/webserver/tests/test.cpp:20	FATAL show up
+2024-06-19 10:24:07 [292080423ms]	15662	test	0	[5]	[root]	/home/karmaner/webserver/tests/test.cpp:20	FATAL show up
+2024-06-19 10:35:00 [4177816436ms]	18009	test	0	[5]	[root]	/home/karmaner/webserver/tests/test.cpp:20	FATAL show up
+2024-06-19 10:35:00 [4178426975ms]	18009	test	0	[5]	[root]	/home/karmaner/webserver/tests/test.cpp:25	fatal p�=��U:190903280
+2024-06-19 10:35:56 [528479555ms]	18466	test	0	[5]	[root]	/home/karmaner/webserver/tests/test.cpp:20	FATAL show up
+2024-06-19 10:36:21 [3666698414ms]	18466	test	0	[5]	[root]	/home/karmaner/webserver/tests/test.cpp:25	fatal p]WUUU:-11792
+2024-06-19 10:36:37 [2388420393ms]	18849	test	0	[5]	[root]	/home/karmaner/webserver/tests/test.cpp:20	FATAL show up
+2024-06-19 10:36:59 [126147757ms]	18849	test	0	[5]	[root]	/home/karmaner/webserver/tests/test.cpp:25	fatal p]WUUU:-11792
+2024-06-19 10:37:26 [3835385863ms]	19271	test	0	[5]	[root]	/home/karmaner/webserver/tests/test.cpp:20	FATAL show up
+2024-06-19 10:37:41 [2164747686ms]	19271	test	0	[5]	[root]	/home/karmaner/webserver/tests/test.cpp:25	fatal p]WUUU:-11792
+2024-06-19 22:49:27 [1840624465ms]	756	test	0	[5]	[root]	/home/karmaner/webserver/tests/test.cpp:20	FATAL show up
+2024-06-19 22:49:27 [1841111018ms]	756	test	0	[5]	[root]	/home/karmaner/webserver/tests/test.cpp:25	fatal p]Q��U:-1078021952
+2024-06-19 22:53:54 [1738814607ms]	1744	test	0	[5]	[root]	/home/karmaner/webserver/tests/test.cpp:20	FATAL show up
+2024-06-19 22:53:54 [1739101966ms]	1744	test	0	[5]	[root]	/home/karmaner/webserver/tests/test.cpp:25	fatal p�/uV
+2024-06-20 09:45:15 [2228225692ms]	8114	test	0	[5]	[root]	/home/karmaner/webserver/tests/test.cpp:20	FATAL show up
+2024-06-20 09:45:15 [2229001611ms]	8114	test	0	[5]	[root]	/home/karmaner/webserver/tests/test.cpp:25	fatal pm��U
+2024-06-20 09:53:16 [2718818914ms]	9750	test	0	[5]	[root]	/home/karmaner/webserver/tests/test.cpp:20	FATAL show up
+2024-06-20 09:53:16 [2719306548ms]	9750	test	0	[5]	[root]	/home/karmaner/webserver/tests/test.cpp:25	fatal p]��kU
+2024-06-20 09:53:44 [391501286ms]	10164	test	0	[5]	[root]	/home/karmaner/webserver/tests/test.cpp:20	FATAL show up
+2024-06-20 09:53:44 [391719515ms]	10164	test	0	[5]	[root]	/home/karmaner/webserver/tests/test.cpp:25	fatal p�WUUU
+2024-06-20 09:55:21 [2838577307ms]	10789	test	0	[5]	[root]	/home/karmaner/webserver/tests/test.cpp:20	FATAL show up
+2024-06-20 09:55:21 [2844155260ms]	10789	test	0	[5]	[root]	/home/karmaner/webserver/tests/test.cpp:25	fatal p�WUUU
+2024-06-20 10:06:04 [2005305876ms]	13444	test	0	[5]	[root]	/home/karmaner/webserver/tests/test.cpp:20	FATAL show up
+2024-06-20 10:06:04 [2005722347ms]	13444	test	0	[5]	[root]	/home/karmaner/webserver/tests/test.cpp:25	fatal p�|�U
+2024-06-20 10:20:56 [315578317ms]	17226	test	0	[5]	[root]	/home/karmaner/webserver/tests/test.cpp:20	FATAL show up
+2024-06-20 10:21:11 [2352028500ms]	17226	test	0	[5]	[root]	/home/karmaner/webserver/tests/test.cpp:25	fatal p�WUUU
+2024-06-20 10:22:26 [3966101084ms]	17768	test	0	[5]	[root]	/home/karmaner/webserver/tests/test.cpp:20	FATAL show up
+2024-06-20 10:22:26 [3966319414ms]	17768	test	0	[5]	[root]	/home/karmaner/webserver/tests/test.cpp:25	fatal pm��&V
+2024-06-20 10:35:13 [2727142191ms]	20127	test	0	[5]	[root]	/home/karmaner/webserver/tests/test.cpp:20	FATAL show up
+2024-06-20 10:35:13 [2728127768ms]	20127	test	0	[5]	[root]	/home/karmaner/webserver/tests/test.cpp:25	fatal p�-��U
+2024-06-20 10:36:17 [2530824079ms]	20432	test	0	[5]	[root]	/home/karmaner/webserver/tests/test.cpp:20	FATAL show up
+2024-06-20 10:36:17 [2531040595ms]	20432	test	0	[5]	[root]	/home/karmaner/webserver/tests/test.cpp:25	fatal p��_�U
+2024-06-20 10:43:11 [86977032ms]	21970	test	0	[5]	[root]	/home/karmaner/webserver/tests/test.cpp:20	FATAL show up
+2024-06-20 10:43:11 [87530269ms]	21970	test	0	[5]	[root]	/home/karmaner/webserver/tests/test.cpp:25	fatal 你好！
+2024-06-20 10:43:37 [4193741993ms]	22278	test	0	[5]	[root]	/home/karmaner/webserver/tests/test.cpp:20	FATAL show up
+2024-06-20 10:43:37 [4193905079ms]	22278	test	0	[5]	[root]	/home/karmaner/webserver/tests/test.cpp:25	fatal 你好！:1055903072
+2024-06-20 10:43:56 [1552747987ms]	22447	test	0	[5]	[root]	/home/karmaner/webserver/tests/test.cpp:20	FATAL show up
+2024-06-20 10:43:56 [1552901003ms]	22447	test	0	[5]	[root]	/home/karmaner/webserver/tests/test.cpp:25	fatal 你好！:1117441376
+2024-06-20 10:44:13 [1215779117ms]	22621	test	0	[5]	[root]	/home/karmaner/webserver/tests/test.cpp:20	FATAL show up
+2024-06-20 10:44:13 [1215999710ms]	22621	test	0	[5]	[root]	/home/karmaner/webserver/tests/test.cpp:25	fatal 你好！:-842511008:
+2024-06-20 10:44:25 [184496823ms]	22769	test	0	[5]	[root]	/home/karmaner/webserver/tests/test.cpp:20	FATAL show up
+2024-06-20 10:44:25 [184709361ms]	22769	test	0	[5]	[root]	/home/karmaner/webserver/tests/test.cpp:25	fatal 你好！:242523488
+2024-06-20 10:44:33 [241950672ms]	22902	test	0	[5]	[root]	/home/karmaner/webserver/tests/test.cpp:20	FATAL show up
+2024-06-20 10:44:33 [242156648ms]	22902	test	0	[5]	[root]	/home/karmaner/webserver/tests/test.cpp:25	fatal 你好！:1167215968:%T
+2024-06-20 10:45:10 [3097159893ms]	23171	test	0	[5]	[root]	/home/karmaner/webserver/tests/test.cpp:20	FATAL show up
+2024-06-20 10:45:10 [3097444657ms]	23171	test	0	[5]	[root]	/home/karmaner/webserver/tests/test.cpp:25	fatal 你好！:-956919744
+2024-06-20 10:45:31 [2268656035ms]	23340	test	0	[5]	[root]	/home/karmaner/webserver/tests/test.cpp:20	FATAL show up
+2024-06-20 10:59:16 [2369983030ms]	26764	test	0	[5]	[root]	/home/karmaner/webserver/tests/test.cpp:20	FATAL show up
+2024-06-20 10:59:22 [338495243ms]	26907	test	0	[5]	[root]	/home/karmaner/webserver/tests/test.cpp:20	FATAL show up
+2024-06-20 10:59:32 [1589729652ms]	27093	test	0	[5]	[root]	/home/karmaner/webserver/tests/test.cpp:20	FATAL show up
+2024-06-20 10:59:56 [3988368833ms]	27314	test	0	[5]	[root]	/home/karmaner/webserver/tests/test.cpp:20	FATAL show up
+2024-06-20 11:00:16 [2041954024ms]	27561	test	0	[5]	[root]	/home/karmaner/webserver/tests/test.cpp:20	FATAL show up
+2024-06-20 11:01:32 [859558964ms]	28032	test	0	[5]	[default]	/home/karmaner/webserver/tests/test.cpp:20	FATAL show up
+2024-06-20 11:07:48 [3037324876ms]	29374	test	0	[5]	[default]	/home/karmaner/webserver/tests/test.cpp:20	FATAL show up
+2024-06-20 11:14:00 [1738986966ms]	30579	test	0	[5]	[default]	/home/karmaner/webserver/tests/test.cpp:20	FATAL show up
+2024-06-20 12:09:40 [899945430ms]	2480	test	0	[5]	[default]	/home/karmaner/webserver/tests/test_log.cpp:20	FATAL show up
+2024-06-20 12:17:00 [2298896102ms]	3980	test	0	[5]	[default]	/home/karmaner/webserver/tests/test_log.cpp:20	FATAL show up
+2024-06-20 12:17:05 [3019318456ms]	4090	test	0	[5]	[default]	/home/karmaner/webserver/tests/test_log.cpp:20	FATAL show up
+2024-06-20 12:32:07 [3231926487ms]	7133	test	0	[5]	[default]	/home/karmaner/webserver/tests/test_log.cpp:20	FATAL show up
+2024-06-20 16:34:22 [1228581826ms]	12341	test	0	[5]	[default]	/home/karmaner/webserver/tests/test_log.cpp:20	FATAL show up
+2024-06-23 12:50:58 [656057970ms]	1337	test	0	[5]	[default]	/home/karmaner/webserver/tests/test_log.cpp:20	FATAL show up
+2024-06-23 12:51:56 [2826097064ms]	1869	test	0	[5]	[default]	/home/karmaner/webserver/tests/test_log.cpp:20	FATAL show up
+2024-06-25 11:25:05	2	test macro
+2024-06-25 11:25:05	4	test macro error
+2024-06-25 11:25:05	4	test macro fmt error aa
+2024-06-25 13:11:27	2	test macro
+2024-06-25 13:11:27	4	test macro error
+2024-06-25 13:11:27	4	test macro fmt error aa
+2024-06-25 13:56:35	2	test macro
+2024-06-25 13:56:35	4	test macro error
+2024-06-25 13:56:35	4	test macro fmt error aa
+2024-06-25 13:57:06	2	test macro
+2024-06-25 13:57:06	4	test macro error
+2024-06-25 13:57:06	4	test macro fmt error aa
+2024-06-25 13:57:37	2	test macro
+2024-06-25 13:57:37	4	test macro error
+2024-06-25 13:57:37	4	test macro fmt error aa
+2024-06-25 13:57:46	2	test macro
+2024-06-25 13:57:46	4	test macro error
+2024-06-25 13:57:46	4	test macro fmt error aa

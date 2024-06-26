@@ -133,17 +133,41 @@ webserver/fast:
 .PHONY : webserver/fast
 
 #=============================================================================
-# Target rules for targets named test
+# Target rules for targets named test_config
 
 # Build rule for target.
-test: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test
-.PHONY : test
+test_config: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_config
+.PHONY : test_config
 
 # fast build rule for target.
-test/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/build
-.PHONY : test/fast
+test_config/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_config.dir/build.make CMakeFiles/test_config.dir/build
+.PHONY : test_config/fast
+
+src/basic/config.o: src/basic/config.cpp.o
+.PHONY : src/basic/config.o
+
+# target to build an object file
+src/basic/config.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/basic/config.cpp.o
+.PHONY : src/basic/config.cpp.o
+
+src/basic/config.i: src/basic/config.cpp.i
+.PHONY : src/basic/config.i
+
+# target to preprocess a source file
+src/basic/config.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/basic/config.cpp.i
+.PHONY : src/basic/config.cpp.i
+
+src/basic/config.s: src/basic/config.cpp.s
+.PHONY : src/basic/config.s
+
+# target to generate assembly for a file
+src/basic/config.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/basic/config.cpp.s
+.PHONY : src/basic/config.cpp.s
 
 src/basic/log.o: src/basic/log.cpp.o
 .PHONY : src/basic/log.o
@@ -169,29 +193,53 @@ src/basic/log.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/basic/log.cpp.s
 .PHONY : src/basic/log.cpp.s
 
-tests/test.o: tests/test.cpp.o
-.PHONY : tests/test.o
+src/basic/util.o: src/basic/util.cpp.o
+.PHONY : src/basic/util.o
 
 # target to build an object file
-tests/test.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/tests/test.cpp.o
-.PHONY : tests/test.cpp.o
+src/basic/util.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/basic/util.cpp.o
+.PHONY : src/basic/util.cpp.o
 
-tests/test.i: tests/test.cpp.i
-.PHONY : tests/test.i
+src/basic/util.i: src/basic/util.cpp.i
+.PHONY : src/basic/util.i
 
 # target to preprocess a source file
-tests/test.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/tests/test.cpp.i
-.PHONY : tests/test.cpp.i
+src/basic/util.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/basic/util.cpp.i
+.PHONY : src/basic/util.cpp.i
 
-tests/test.s: tests/test.cpp.s
-.PHONY : tests/test.s
+src/basic/util.s: src/basic/util.cpp.s
+.PHONY : src/basic/util.s
 
 # target to generate assembly for a file
-tests/test.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/tests/test.cpp.s
-.PHONY : tests/test.cpp.s
+src/basic/util.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/basic/util.cpp.s
+.PHONY : src/basic/util.cpp.s
+
+tests/test_config.o: tests/test_config.cpp.o
+.PHONY : tests/test_config.o
+
+# target to build an object file
+tests/test_config.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_config.dir/build.make CMakeFiles/test_config.dir/tests/test_config.cpp.o
+.PHONY : tests/test_config.cpp.o
+
+tests/test_config.i: tests/test_config.cpp.i
+.PHONY : tests/test_config.i
+
+# target to preprocess a source file
+tests/test_config.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_config.dir/build.make CMakeFiles/test_config.dir/tests/test_config.cpp.i
+.PHONY : tests/test_config.cpp.i
+
+tests/test_config.s: tests/test_config.cpp.s
+.PHONY : tests/test_config.s
+
+# target to generate assembly for a file
+tests/test_config.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_config.dir/build.make CMakeFiles/test_config.dir/tests/test_config.cpp.s
+.PHONY : tests/test_config.cpp.s
 
 # Help Target
 help:
@@ -201,14 +249,20 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... test"
+	@echo "... test_config"
 	@echo "... webserver"
+	@echo "... src/basic/config.o"
+	@echo "... src/basic/config.i"
+	@echo "... src/basic/config.s"
 	@echo "... src/basic/log.o"
 	@echo "... src/basic/log.i"
 	@echo "... src/basic/log.s"
-	@echo "... tests/test.o"
-	@echo "... tests/test.i"
-	@echo "... tests/test.s"
+	@echo "... src/basic/util.o"
+	@echo "... src/basic/util.i"
+	@echo "... src/basic/util.s"
+	@echo "... tests/test_config.o"
+	@echo "... tests/test_config.i"
+	@echo "... tests/test_config.s"
 .PHONY : help
 
 
