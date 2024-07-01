@@ -147,7 +147,7 @@ CMAKE_PROJECT_DESCRIPTION:STATIC=
 CMAKE_PROJECT_HOMEPAGE_URL:STATIC=
 
 //Value Computed by CMake
-CMAKE_PROJECT_NAME:STATIC=webserver
+CMAKE_PROJECT_NAME:STATIC=sylar
 
 //Path to a program.
 CMAKE_RANLIB:FILEPATH=/usr/bin/ranlib
@@ -210,6 +210,27 @@ CMAKE_STRIP:FILEPATH=/usr/bin/strip
 // during the make.  This is useful for debugging only. With Visual
 // Studio IDE projects all commands are done without /nologo.
 CMAKE_VERBOSE_MAKEFILE:BOOL=FALSE
+
+//Value Computed by CMake
+Project_BINARY_DIR:STATIC=/home/karmaner/webserver/build
+
+//Value Computed by CMake
+Project_IS_TOP_LEVEL:STATIC=ON
+
+//Value Computed by CMake
+Project_SOURCE_DIR:STATIC=/home/karmaner/webserver
+
+//Path to a library.
+YAMLCPP:FILEPATH=/usr/lib/x86_64-linux-gnu/libyaml-cpp.so
+
+//Value Computed by CMake
+sylar_BINARY_DIR:STATIC=/home/karmaner/webserver/build
+
+//Value Computed by CMake
+sylar_IS_TOP_LEVEL:STATIC=ON
+
+//Value Computed by CMake
+sylar_SOURCE_DIR:STATIC=/home/karmaner/webserver
 
 //Value Computed by CMake
 webserver_BINARY_DIR:STATIC=/home/karmaner/webserver/build

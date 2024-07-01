@@ -44,6 +44,7 @@
 namespace webserver { 
 
 class Logger;
+class LoggerManager;
 
 // 日志级别
 class LogLevel {
@@ -59,6 +60,9 @@ public:
     };
 
     static const char* ToString(LogLevel::Level level);
+    
+    // YAML sting转化为sting
+    static LogLevel::Level FromString(const std::string& str);
 };
 
 // 日志事件
@@ -76,14 +80,15 @@ public:
     uint32_t getFiberId() const { return m_fiberId; }             // 协程id
     std::string getThreadName() { return m_threadName; }          // 线程名
     uint64_t getTime() const { return m_time; }                   // 时间戳
-    const std::string& getLoggerName() { return m_loggerName; }   // 获取日志名                    
+    const std::string& getLoggerName() { return m_loggerName; }   // 获取日志名
+    
     const std::string getContent() const { return m_ss.str(); }                                     
 
     std::stringstream& getSS() { return m_ss; }
 
     void printf(const char *fmt, ...);
 
-    void vprintf(const char* fmt, va_list ap);
+    void vprintf(const char* fmt, va_list al);
 
 private:
     std::string m_loggerName;
@@ -123,6 +128,9 @@ public:
     };
 
     void init();
+
+    bool isError() const { return m_error; }
+    const std::string getPattern() const { return m_pattern; }
 private:
     /// 日志格式模板  输入
     std::string m_pattern;
@@ -145,6 +153,7 @@ public:
     virtual ~LogAppender() {}
 
     virtual void log(LogEvent::ptr event) = 0;
+    virtual std::string toYamlString() = 0;
 
     void setFormatter(LogFormatter::ptr val);
     LogFormatter::ptr getFormatter() const;
@@ -164,6 +173,7 @@ protected:
 
 // 日志器
 class Logger{
+friend class LoggerManager;
 public:
     typedef std::shared_ptr<Logger> ptr;
 
@@ -182,12 +192,19 @@ public:
 
     const std::string& getName() const { return m_name; }
 
+    void setFormatter(LogFormatter::ptr val);
+    void setFormatter(const std::string& val);
+    LogFormatter::ptr getFormatter();
+
+    std::string toYamlString();
+
 private:
     std::string m_name;                         // 日志名称
     LogLevel::Level m_level;                    // 日志级别
     uint64_t m_createTime;                      // 创建时间
     std::list<LogAppender::ptr> m_appenders;    // appender集合
     LogFormatter::ptr m_formatter;              // 日志格式器
+    Logger::ptr m_root;
 };
 
 class LoggerManager {
@@ -196,6 +213,7 @@ public:
 
     void init();
 
+    std::string ToYamlString();
     Logger::ptr getLogger(const std::string& name);
 
     Logger::ptr getRoot() { return m_root; }
@@ -229,6 +247,7 @@ public:
     StdoutLogAppender();
 
     void log(LogEvent::ptr event) override;
+    std::string toYamlString() override;
 };
 
 // 输出到文件的Appender
@@ -237,6 +256,7 @@ public:
     typedef std::shared_ptr<FileLogAppender> ptr;
     FileLogAppender(const std::string& filename);
     void log(LogEvent::ptr event) override;
+    std::string toYamlString() override;
     
     // 检查文件是否打开，已经打开返回true
     bool reopen();
