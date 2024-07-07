@@ -9,6 +9,7 @@ void func1() {
                                 << " this.name: " << webserver::Thread::GetThis()->getName()
                                 << " id:" << webserver::GetThreadId()
                                 << " this.id:" << webserver::Thread::GetThis()->getId();
+    sleep(20);
 }
 
 void func2() {
