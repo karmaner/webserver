@@ -6,7 +6,7 @@ int main(int argc, char** argv) {
     webserver::Logger::ptr logger(new webserver::Logger);
     logger->addAppender(webserver::LogAppender::ptr(new webserver::StdoutLogAppender));
 
-    webserver::FileLogAppender::ptr file_appender(new webserver::FileLogAppender("./log.txt"));
+    webserver::FileLogAppender::ptr file_appender(new webserver::FileLogAppender("./bin/log.txt"));
     webserver::LogFormatter::ptr fmt(new webserver::LogFormatter("%d%T%p%T%m%n"));
     file_appender->setFormatter(fmt);
     file_appender->setLevel(webserver::LogLevel::ERROR);
