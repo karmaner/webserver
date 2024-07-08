@@ -1,8 +1,9 @@
-#include <iostream>
 #include "src/basic/log.h"
 #include "src/basic/util.h"
+#include <iostream>
 
-int main(int argc, char** argv) {
+int main(int argc, char **argv)
+{
     webserver::Logger::ptr logger(new webserver::Logger);
     logger->addAppender(webserver::LogAppender::ptr(new webserver::StdoutLogAppender));
 
@@ -13,9 +14,9 @@ int main(int argc, char** argv) {
 
     logger->addAppender(file_appender);
 
-    //webserver::LogEvent::ptr event(new webserver::LogEvent(__FILE__, __LINE__, 0, webserver::GetThreadId(), webserver::GetFiberId(), time(0)));
-    //event->getSS() << "hello webserver log";
-    //logger->log(webserver::LogLevel::DEBUG, event);
+    // webserver::LogEvent::ptr event(new webserver::LogEvent(__FILE__, __LINE__, 0, webserver::GetThreadId(),
+    // webserver::GetFiberId(), time(0))); event->getSS() << "hello webserver log";
+    // logger->log(webserver::LogLevel::DEBUG, event);
     std::cout << "hello webserver log" << std::endl;
 
     WEBSERVER_LOG_INFO(logger) << "test macro";

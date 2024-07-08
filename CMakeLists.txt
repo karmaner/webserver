@@ -9,7 +9,7 @@ include_directories(webserver/include)
 link_directories(webserver/lib)
 
 find_library(YAMLCPP yaml-cpp)
-message("***", ${YAMLCPP})
+message("*** YAMLCPP: ${YAMLCPP}")
 
 set(LIB_SRC
     src/basic/log.cpp
@@ -18,24 +18,25 @@ set(LIB_SRC
     src/basic/thread.cpp
     )
 
-set(LIB_LIB
+set(LIBS
     webserver
     pthread
     ${YAMLCPP})
+message("*** LIBS: ${LIBS}")
 
 add_library(webserver SHARED ${LIB_SRC})
 
 add_executable(test_log tests/test_log.cpp)
 add_dependencies(test_log webserver)
-target_link_libraries(test_log webserver ${LIB_LIB})
+target_link_libraries(test_log webserver ${LIBS})
 
 add_executable(test_config tests/test_config.cpp)
 add_dependencies(test_config webserver)
-target_link_libraries(test_config webserver ${LIB_LIB})
+target_link_libraries(test_config webserver ${LIBS})
 
 add_executable(test_thread tests/test_thread.cpp)
 add_dependencies(test_thread webserver)
-target_link_libraries(test_thread webserver ${LIB_LIB})
+target_link_libraries(test_thread webserver ${LIBS})
 
 
 SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
