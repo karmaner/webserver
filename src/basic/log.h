@@ -12,6 +12,7 @@
 #include <stdint.h>
 #include <string>
 #include <vector>
+#include "thread.h"
 
 #define WEBSERVER_LOG_ROOT() webserver::LoggerMgr::GetInstance()->getRoot()
 
@@ -22,7 +23,7 @@
     webserver::LogEventWrap(                                                                                           \
         logger, webserver::LogEvent::ptr(new webserver::LogEvent(                                                      \
                     logger->getName(), level, __FILE__, __LINE__, webserver::GetElapseMS(), webserver::GetThreadId(),  \
-                    webserver::GetFiberId(), time(0), webserver::GetThreadName())))                              \
+                    webserver::GetFiberId(), time(0), webserver::GetThreadName())))                                    \
         .getLogEvent()                                                                                                 \
         ->getSS()
 
@@ -37,7 +38,7 @@
     webserver::LogEventWrap(                                                                                           \
         logger, webserver::LogEvent::ptr(new webserver::LogEvent(                                                      \
                     logger->getName(), level, __FILE__, __LINE__, webserver::GetElapseMS(), webserver::GetThreadId(),  \
-                    webserver::GetFiberId(), time(0), webserver::GetThreadName())))                              \
+                    webserver::GetFiberId(), time(0), webserver::GetThreadName())))                                    \
         .getLogEvent()                                                                                                 \
         ->printf(fmt, __VA_ARGS__)
 
@@ -212,7 +213,7 @@ class LogAppender
     virtual std::string toYamlString() = 0;
 
     void setFormatter(LogFormatter::ptr val);
-    LogFormatter::ptr getFormatter() const;
+    LogFormatter::ptr getFormatter();
 
     LogLevel::Level getLevel() const
     {
@@ -231,6 +232,8 @@ class LogAppender
     LogLevel::Level m_level = LogLevel::DEBUG;
     LogFormatter::ptr m_formatter;
     LogFormatter::ptr m_defaultFormatter;
+    bool m_hasFormatter = false;
+    Mutex m_mutex;
 };
 
 // 日志器
@@ -277,11 +280,12 @@ class Logger
     std::list<LogAppender::ptr> m_appenders; // appender集合
     LogFormatter::ptr m_formatter;           // 日志格式器
     Logger::ptr m_root;
+    Mutex m_mutex;
 };
 
 class LoggerManager
 {
-  public:
+public:
     LoggerManager();
 
     void init();
@@ -294,9 +298,10 @@ class LoggerManager
         return m_root;
     }
 
-  private:
+private:
     std::map<std::string, Logger::ptr> m_loggers;
     Logger::ptr m_root;
+    Mutex m_mutex;
 };
 
 typedef webserver::Singleton<LoggerManager> LoggerMgr;

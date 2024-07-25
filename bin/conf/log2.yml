@@ -1,0 +1,10 @@
+logs:
+    - name: root
+      level: info
+      formatter: '%d%T%m%n'
+      appenders:
+          - type: FileLogAppender
+            file: mutex.txt
+system:
+    port: 9900
+    value: 15

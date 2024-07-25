@@ -16,6 +16,7 @@ set(LIB_SRC
     src/basic/util.cpp
     src/basic/config.cpp
     src/basic/thread.cpp
+    src/basic/fiber.cpp
     )
 
 set(LIBS
@@ -37,6 +38,10 @@ target_link_libraries(test_config webserver ${LIBS})
 add_executable(test_thread tests/test_thread.cpp)
 add_dependencies(test_thread webserver)
 target_link_libraries(test_thread webserver ${LIBS})
+
+add_executable(test_util tests/test_thread.cpp)
+add_dependencies(test_util webserver)
+target_link_libraries(test_util webserver ${LIBS})
 
 
 SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)

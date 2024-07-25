@@ -13,38 +13,28 @@
 
 #include "log.h"
 
-namespace webserver
-{
+namespace webserver {
 
 // 配置变量基类
-class ConfigVarBase
-{
-  public:
+class ConfigVarBase {
+public:
     typedef std::shared_ptr<ConfigVarBase> ptr;
 
-    ConfigVarBase(const std::string &name, const std::string &description) : m_name(name), m_description(description)
-    {
+    ConfigVarBase(const std::string &name, const std::string &description) : m_name(name), m_description(description) {
         std::transform(m_name.begin(), m_name.end(), m_name.begin(), ::tolower);
     }
 
-    virtual ~ConfigVarBase()
-    {
+    virtual ~ConfigVarBase() {
     }
 
-    const std::string &getName() const
-    {
-        return m_name;
-    }
-    const std::string &getDesctiption() const
-    {
-        return m_description;
-    }
+    const std::string &getName() const { return m_name; }
+    const std::string &getDesctiption() const { return m_description; }
 
     virtual std::string toString() = 0;                  // 转化为yaml类型
     virtual bool fromString(const std::string &val) = 0; // 读取yaml文件 转化为配置变量
     virtual std::string getTypeName() const = 0;
 
-  private:
+private:
     std::string m_name;
     std::string m_description;
 };
@@ -52,19 +42,16 @@ class ConfigVarBase
 // F from_type, T to_type
 template <class F, class T>
 // 基本类型转换模板类, 特化类型转换另外实现 int <--> string double <--> string float <--> string
-class LexicalCast
-{
-  public:
-    T operator()(const F &v)
-    {
+class LexicalCast {
+public:
+    T operator()(const F &v) {
         return boost::lexical_cast<T>(v);
     }
 };
 
 // string -> vector
-template <class T> class LexicalCast<std::string, std::vector<T>>
-{
-  public:
+template <class T> class LexicalCast<std::string, std::vector<T>> {
+public:
     std::vector<T> operator()(const std::string &v)
     {
         YAML::Node node = YAML::Load(v);
@@ -83,7 +70,7 @@ template <class T> class LexicalCast<std::string, std::vector<T>>
 // vector -> stirng
 template <class T> class LexicalCast<std::vector<T>, std::string>
 {
-  public:
+public:
     std::vector<T> operator()(const std::vector<T> &v)
     {
         YAML::Node node(YAML::NodeType::Sequence);
@@ -100,7 +87,7 @@ template <class T> class LexicalCast<std::vector<T>, std::string>
 // string --> list
 template <class T> class LexicalCast<std::string, std::list<T>>
 {
-  public:
+public:
     std::list<T> operator()(const std::string &v)
     {
         YAML::Node node = YAML::Load(v);
@@ -119,7 +106,7 @@ template <class T> class LexicalCast<std::string, std::list<T>>
 // list --> string
 template <class T> class LexicalCast<std::list<T>, std::string>
 {
-  public:
+public:
     std::string operator()(const std::list<T> &v)
     {
         YAML::Node node(YAML::NodeType::Sequence);
@@ -136,7 +123,7 @@ template <class T> class LexicalCast<std::list<T>, std::string>
 // string --> set
 template <class T> class LexicalCast<std::string, std::set<T>>
 {
-  public:
+public:
     std::set<T> operator()(const std::string &v)
     {
         YAML::Node node = YAML::Load(v);
@@ -155,7 +142,7 @@ template <class T> class LexicalCast<std::string, std::set<T>>
 // set --> string
 template <class T> class LexicalCast<std::set<T>, std::string>
 {
-  public:
+public:
     std::string operator()(const std::set<T> &v)
     {
         YAML::Node node(YAML::NodeType::Sequence);
@@ -172,7 +159,7 @@ template <class T> class LexicalCast<std::set<T>, std::string>
 // string --> unordered_set
 template <class T> class LexicalCast<std::string, std::unordered_set<T>>
 {
-  public:
+public:
     std::unordered_set<T> operator()(const std::string &v)
     {
         YAML::Node node = YAML::Load(v);
@@ -191,7 +178,7 @@ template <class T> class LexicalCast<std::string, std::unordered_set<T>>
 // unordered_set --> string
 template <class T> class LexicalCast<std::unordered_set<T>, std::string>
 {
-  public:
+public:
     std::string operator()(const std::unordered_set<T> &v)
     {
         YAML::Node node(YAML::NodeType::Sequence);
@@ -208,7 +195,7 @@ template <class T> class LexicalCast<std::unordered_set<T>, std::string>
 // string --> map
 template <class T> class LexicalCast<std::string, std::map<std::string, T>>
 {
-  public:
+public:
     std::map<std::string, T> operator()(const std::string &v)
     {
         YAML::Node node = YAML::Load(v);
@@ -227,7 +214,7 @@ template <class T> class LexicalCast<std::string, std::map<std::string, T>>
 // map --> string
 template <class T> class LexicalCast<std::map<std::string, T>, std::string>
 {
-  public:
+public:
     std::string operator()(const std::map<std::string, T> &v)
     {
         YAML::Node node(YAML::NodeType::Map);
@@ -244,7 +231,7 @@ template <class T> class LexicalCast<std::map<std::string, T>, std::string>
 // string --> unordered_map
 template <class T> class LexicalCast<std::string, std::unordered_map<std::string, T>>
 {
-  public:
+public:
     std::unordered_map<std::string, T> operator()(const std::string &v)
     {
         YAML::Node node = YAML::Load(v);
@@ -263,7 +250,7 @@ template <class T> class LexicalCast<std::string, std::unordered_map<std::string
 // unordered_map --> string
 template <class T> class LexicalCast<std::unordered_map<std::string, T>, std::string>
 {
-  public:
+public:
     std::string operator()(const std::unordered_map<std::string, T> &v)
     {
         YAML::Node node(YAML::NodeType::Map);
@@ -280,7 +267,7 @@ template <class T> class LexicalCast<std::unordered_map<std::string, T>, std::st
 template <class T, class FromStr = LexicalCast<std::string, T>, class ToStr = LexicalCast<T, std::string>>
 class ConfigVar : public ConfigVarBase
 {
-  public:
+public:
     typedef std::shared_ptr<ConfigVar> ptr;
     typedef std::function<void(const T &old_value, const T &new_value)> on_change_cb;
 
@@ -314,7 +301,7 @@ class ConfigVar : public ConfigVarBase
         catch (std::exception &e)
         {
             WEBSERVER_LOG_ERROR(WEBSERVER_LOG_ROOT()) << "ConfigVar::fromString exception " << e.what()
-                                                      << " convert: string to " << typeid(m_val).name() << " - " << val;
+                                                        << " convert: string to " << typeid(m_val).name() << " - " << val;
         }
         return false;
     }
@@ -366,7 +353,7 @@ class ConfigVar : public ConfigVarBase
         return it == m_cbs.end() ? nullptr : it->second;
     }
 
-  private:
+private:
     T m_val;
     // 回调函数
     std::map<uint64_t, on_change_cb> m_cbs;
@@ -374,12 +361,12 @@ class ConfigVar : public ConfigVarBase
 
 class Config
 {
-  public:
+public:
     typedef std::unordered_map<std::string, ConfigVarBase::ptr> ConfigVarMap;
 
     template <class T>
     static typename ConfigVar<T>::ptr Lookup(const std::string &name, const T &default_value,
-                                             const std::string &description = "")
+                                                const std::string &description = "")
     {
         auto it = GetDatas().find(name);
         if (it != GetDatas().end())
@@ -426,7 +413,7 @@ class Config
 
     static ConfigVarBase::ptr LookupBase(const std::string &name);
 
-  private:
+private:
     static ConfigVarMap &GetDatas()
     {
         static ConfigVarMap s_datas;

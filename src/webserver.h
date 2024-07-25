@@ -6,5 +6,7 @@
 #include "src/basic/singleton.h"
 #include "src/basic/thread.h"
 #include "src/basic/util.h"
+#include "src/basic/macro.h"
+#include "src/basic/fiber.h"
 
 #endif

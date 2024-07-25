@@ -1,7 +1,7 @@
 build/*
 !build/Makefile
 
-.vscode/
+/.vscode/*
 
-/bin/
+/bin/*
 !/bin/conf

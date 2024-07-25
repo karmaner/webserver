@@ -171,6 +171,19 @@ test_thread/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_thread.dir/build.make CMakeFiles/test_thread.dir/build
 .PHONY : test_thread/fast
 
+#=============================================================================
+# Target rules for targets named test_util
+
+# Build rule for target.
+test_util: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_util
+.PHONY : test_util
+
+# fast build rule for target.
+test_util/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_util.dir/build.make CMakeFiles/test_util.dir/build
+.PHONY : test_util/fast
+
 src/basic/config.o: src/basic/config.cpp.o
 .PHONY : src/basic/config.o
 
@@ -194,6 +207,30 @@ src/basic/config.s: src/basic/config.cpp.s
 src/basic/config.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/basic/config.cpp.s
 .PHONY : src/basic/config.cpp.s
+
+src/basic/fiber.o: src/basic/fiber.cpp.o
+.PHONY : src/basic/fiber.o
+
+# target to build an object file
+src/basic/fiber.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/basic/fiber.cpp.o
+.PHONY : src/basic/fiber.cpp.o
+
+src/basic/fiber.i: src/basic/fiber.cpp.i
+.PHONY : src/basic/fiber.i
+
+# target to preprocess a source file
+src/basic/fiber.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/basic/fiber.cpp.i
+.PHONY : src/basic/fiber.cpp.i
+
+src/basic/fiber.s: src/basic/fiber.cpp.s
+.PHONY : src/basic/fiber.s
+
+# target to generate assembly for a file
+src/basic/fiber.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/basic/fiber.cpp.s
+.PHONY : src/basic/fiber.cpp.s
 
 src/basic/log.o: src/basic/log.cpp.o
 .PHONY : src/basic/log.o
@@ -321,6 +358,7 @@ tests/test_thread.o: tests/test_thread.cpp.o
 # target to build an object file
 tests/test_thread.cpp.o:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_thread.dir/build.make CMakeFiles/test_thread.dir/tests/test_thread.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_util.dir/build.make CMakeFiles/test_util.dir/tests/test_thread.cpp.o
 .PHONY : tests/test_thread.cpp.o
 
 tests/test_thread.i: tests/test_thread.cpp.i
@@ -329,6 +367,7 @@ tests/test_thread.i: tests/test_thread.cpp.i
 # target to preprocess a source file
 tests/test_thread.cpp.i:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_thread.dir/build.make CMakeFiles/test_thread.dir/tests/test_thread.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_util.dir/build.make CMakeFiles/test_util.dir/tests/test_thread.cpp.i
 .PHONY : tests/test_thread.cpp.i
 
 tests/test_thread.s: tests/test_thread.cpp.s
@@ -337,6 +376,7 @@ tests/test_thread.s: tests/test_thread.cpp.s
 # target to generate assembly for a file
 tests/test_thread.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_thread.dir/build.make CMakeFiles/test_thread.dir/tests/test_thread.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_util.dir/build.make CMakeFiles/test_util.dir/tests/test_thread.cpp.s
 .PHONY : tests/test_thread.cpp.s
 
 # Help Target
@@ -350,10 +390,14 @@ help:
 	@echo "... test_config"
 	@echo "... test_log"
 	@echo "... test_thread"
+	@echo "... test_util"
 	@echo "... webserver"
 	@echo "... src/basic/config.o"
 	@echo "... src/basic/config.i"
 	@echo "... src/basic/config.s"
+	@echo "... src/basic/fiber.o"
+	@echo "... src/basic/fiber.i"
+	@echo "... src/basic/fiber.s"
 	@echo "... src/basic/log.o"
 	@echo "... src/basic/log.i"
 	@echo "... src/basic/log.s"
