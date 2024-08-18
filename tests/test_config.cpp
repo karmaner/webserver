@@ -52,7 +52,7 @@ void test_config()
     WEBSERVER_LOG_INFO(WEBSERVER_LOG_ROOT()) << "before: " << g_int_value_config->getValue();
     WEBSERVER_LOG_INFO(WEBSERVER_LOG_ROOT()) << "before: " << g_float_value_config->toString();
 
-    YAML::Node root = YAML::LoadFile("/home/karmaner/webserver/bin/conf/log.yml");
+    YAML::Node root = YAML::LoadFile("/home/karmaner/myRepo/webserver/bin/conf/log.yml");
     webserver::Config::LoadFromYaml(root);
 
     WEBSERVER_LOG_INFO(WEBSERVER_LOG_ROOT()) << "after: " << g_int_value_config->getValue();

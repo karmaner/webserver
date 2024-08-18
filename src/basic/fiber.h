@@ -8,8 +8,7 @@
 
 namespace webserver {
 
-class Fiber : public std::enable_shared_from_this<Fiber>
-{
+class Fiber : public std::enable_shared_from_this<Fiber> { 
 public:
     typedef std::shared_ptr<Fiber> ptr;
 
@@ -63,6 +62,7 @@ public:
     static void SetThis(Fiber* f);
     // 返回当前所在的协程
     static Fiber::ptr GetThis();
+    
     // 将当前协程切换到后台,并设置为READY状态
     static void YieldToReady();
     // 将当前协程切换到后台,并设置为HOLD状态

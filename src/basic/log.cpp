@@ -8,10 +8,8 @@
 namespace webserver
 {
 
-const char *LogLevel::ToString(LogLevel::Level level)
-{
-    switch (level)
-    {
+const char *LogLevel::ToString(LogLevel::Level level) {
+    switch (level) {
 #define XX(name)                                                                                                       \
     case LogLevel::name:                                                                                               \
         return #name;                                                                                                  \
@@ -29,11 +27,9 @@ const char *LogLevel::ToString(LogLevel::Level level)
     return "UNKNOW";
 }
 
-LogLevel::Level LogLevel::FromString(const std::string &str)
-{
+LogLevel::Level LogLevel::FromString(const std::string &str) {
 #define XX(level, v)                                                                                                   \
-    if (str == #v)                                                                                                     \
-    {                                                                                                                  \
+    if (str == #v) {                                                                                                   \
         return LogLevel::level;                                                                                        \
     }
     XX(DEBUG, debug);
@@ -51,10 +47,10 @@ LogLevel::Level LogLevel::FromString(const std::string &str)
 #undef XX
 }
 
-LogEvent::LogEvent(const std::string &loggerName, LogLevel::Level level, const char *file, int32_t line, int64_t elapse,
-                   uint32_t thread_id, uint64_t fiber_id, time_t time, const std::string &thread_name)
+LogEvent::LogEvent(const std::string &loggerName, LogLevel::Level level, const char *file, uint32_t line, uint64_t elapse,
+                    uint32_t thread_id, uint64_t fiber_id, time_t time, const std::string &thread_name)
     : m_loggerName(loggerName), m_level(level), m_file(file), m_line(line), m_elapse(elapse), m_threadId(thread_id),
-      m_fiberId(fiber_id), m_time(time), m_threadName(thread_name)
+        m_fiberId(fiber_id), m_time(time), m_threadName(thread_name)
 {
 }
 
@@ -79,7 +75,7 @@ void LogEvent::vprintf(const char *fmt, va_list al)
 
 class MessageFormatItem : public LogFormatter::FormatItem
 {
-  public:
+public:
     MessageFormatItem(const std::string &str)
     {
     }
@@ -91,7 +87,7 @@ class MessageFormatItem : public LogFormatter::FormatItem
 
 class LevelFormatItem : public LogFormatter::FormatItem
 {
-  public:
+public:
     LevelFormatItem(const std::string &str)
     {
     }
@@ -103,7 +99,7 @@ class LevelFormatItem : public LogFormatter::FormatItem
 
 class ElapseFormatItem : public LogFormatter::FormatItem
 {
-  public:
+public:
     ElapseFormatItem(const std::string &str)
     {
     }
@@ -115,7 +111,7 @@ class ElapseFormatItem : public LogFormatter::FormatItem
 
 class NameFormatItem : public LogFormatter::FormatItem
 {
-  public:
+public:
     NameFormatItem(const std::string &str)
     {
     }
@@ -127,7 +123,7 @@ class NameFormatItem : public LogFormatter::FormatItem
 
 class ThreadIdFormatItem : public LogFormatter::FormatItem
 {
-  public:
+public:
     ThreadIdFormatItem(const std::string &str)
     {
     }
@@ -139,7 +135,7 @@ class ThreadIdFormatItem : public LogFormatter::FormatItem
 
 class FiberIdFormatItem : public LogFormatter::FormatItem
 {
-  public:
+public:
     FiberIdFormatItem(const std::string &str)
     {
     }
@@ -151,7 +147,7 @@ class FiberIdFormatItem : public LogFormatter::FormatItem
 
 class ThreadNameFormatItem : public LogFormatter::FormatItem
 {
-  public:
+public:
     ThreadNameFormatItem(const std::string &str)
     {
     }
@@ -163,7 +159,7 @@ class ThreadNameFormatItem : public LogFormatter::FormatItem
 
 class DateTimeFormatItem : public LogFormatter::FormatItem
 {
-  public:
+public:
     DateTimeFormatItem(const std::string &format = "%Y-%m-%d %H:%M:%S") : m_format(format)
     {
         if (m_format.empty())
@@ -182,13 +178,13 @@ class DateTimeFormatItem : public LogFormatter::FormatItem
         os << buf;
     }
 
-  private:
+private:
     std::string m_format;
 };
 
 class FilenameFormatItem : public LogFormatter::FormatItem
 {
-  public:
+public:
     FilenameFormatItem(const std::string &str)
     {
     }
@@ -200,7 +196,7 @@ class FilenameFormatItem : public LogFormatter::FormatItem
 
 class LineFormatItem : public LogFormatter::FormatItem
 {
-  public:
+public:
     LineFormatItem(const std::string &str)
     {
     }
@@ -212,7 +208,7 @@ class LineFormatItem : public LogFormatter::FormatItem
 
 class NewLineFormatItem : public LogFormatter::FormatItem
 {
-  public:
+public:
     NewLineFormatItem(const std::string &str)
     {
     }
@@ -224,7 +220,7 @@ class NewLineFormatItem : public LogFormatter::FormatItem
 
 class StringFormatItem : public LogFormatter::FormatItem
 {
-  public:
+public:
     StringFormatItem(const std::string &str) : FormatItem(str), m_string(str)
     {
     }
@@ -233,13 +229,13 @@ class StringFormatItem : public LogFormatter::FormatItem
         os << m_string;
     }
 
-  private:
+private:
     std::string m_string;
 };
 
 class TabFormatItem : public LogFormatter::FormatItem
 {
-  public:
+public:
     TabFormatItem(const std::string &str)
     {
     }
@@ -251,7 +247,7 @@ class TabFormatItem : public LogFormatter::FormatItem
 
 class PercentSignFormatItem : public LogFormatter::FormatItem
 {
-  public:
+public:
     PercentSignFormatItem(const std::string &str)
     {
     }
@@ -337,7 +333,7 @@ void LogFormatter::init()
                 if (m_pattern[i] != '}')
                 {
                     std::cout << "[ERROR] LogFormatter::init() " << "pattern: [" << m_pattern << "] '{' not closed"
-                              << std::endl;
+                                << std::endl;
                     error = true;
                     break;
                 }
@@ -404,7 +400,7 @@ void LogFormatter::init()
             if (it == s_format_items.end())
             {
                 std::cout << "[ERROR] LogFormatter::init() " << "pattern: [" << m_pattern << "] "
-                          << "unknown format item: " << v.second << std::endl;
+                            << "unknown format item: " << v.second << std::endl;
                 error = true;
                 break;
             }
@@ -739,7 +735,7 @@ struct LogDefine
 // string类型 到 logDefine类型
 template <> class LexicalCast<std::string, std::set<LogDefine>>
 {
-  public:
+public:
     std::set<LogDefine> operator()(const std::string &v)
     {
         YAML::Node node = YAML::Load(v);
@@ -811,7 +807,7 @@ template <> class LexicalCast<std::string, std::set<LogDefine>>
 // LogDefine --> YAML string
 template <> class LexicalCast<std::set<LogDefine>, std::string>
 {
-  public:
+public:
     std::string operator()(const std::set<LogDefine> &v)
     {
         YAML::Node node;
@@ -868,39 +864,32 @@ struct LogIniter
 {
     LogIniter()
     {
-        g_log_defines->addListener([](const std::set<LogDefine> &old_value, const std::set<LogDefine> &new_value) {
+        g_log_defines->addListener([](const std::set<LogDefine> &old_value, 
+                    const std::set<LogDefine> &new_value) {
             WEBSERVER_LOG_INFO(WEBSERVER_LOG_ROOT()) << "on_logger_conf_changed";
-            for (auto &i : new_value)
-            {
+            for (auto &i : new_value) {
                 auto it = old_value.find(i);
                 webserver::Logger::ptr logger;
-                if (it == old_value.end())
-                {
+                if (it == old_value.end()) {
                     logger = WEBSERVER_LOG_NAME(i.name);
-                }
-                else
-                {
-                    if (!(i == *it))
-                    {
+                } else {
+                    if (!(i == *it)) {
                         logger = WEBSERVER_LOG_NAME(i.name);
                     }
                 }
                 logger->setLevel(i.level);
-                if (!i.formatter.empty())
-                {
+                
+                if (!i.formatter.empty()) {
                     logger->setFormatter(i.formatter);
                 }
 
                 logger->clearAppenders();
-                for (auto &a : i.appenders)
-                {
+                for (auto &a : i.appenders) {
                     webserver::LogAppender::ptr ap;
-                    if (a.type == 1)
-                    {
+                    if (a.type == 1) {
                         ap.reset(new FileLogAppender(a.file));
                     }
-                    else if (a.type == 2)
-                    {
+                    else if (a.type == 2) {
                         ap.reset(new StdoutLogAppender());
                     }
                     ap->setLevel(a.level);

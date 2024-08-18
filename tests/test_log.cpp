@@ -6,6 +6,7 @@ int main(int argc, char **argv)
 {
     webserver::Logger::ptr logger(new webserver::Logger);
     logger->addAppender(webserver::LogAppender::ptr(new webserver::StdoutLogAppender));
+    webserver::Logger::ptr t_logger = WEBSERVER_LOG_NAME("system");
 
     webserver::FileLogAppender::ptr file_appender(new webserver::FileLogAppender("./bin/log.txt"));
     webserver::LogFormatter::ptr fmt(new webserver::LogFormatter("%d%T%p%T%m%n"));

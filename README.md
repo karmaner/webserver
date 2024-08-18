@@ -65,6 +65,14 @@ Thread, Mutex,
 同步锁模块
 
 ## 协程库封装
+定义协程接口
+ucontext.h   ucontext_t
+
+```mermaid
+graph TD;
+    A[Thread->main_fiber] <-->sub_fiber1;
+    A<-->sub_fiber2;
+```
 
 ## socket函数库
 

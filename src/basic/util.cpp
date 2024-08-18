@@ -1,4 +1,5 @@
 #include "util.h"
+#include "fiber.h"
 #include "log.h"
 #include <execinfo.h>
 
@@ -11,8 +12,7 @@ namespace webserver {
     }
 
     uint64_t GetFiberId() {
-        //TODO: 协程未实现先返回0
-        return 0;
+        return webserver::Fiber::GetFiberId();
     }
 
     uint64_t GetElapseMS() {

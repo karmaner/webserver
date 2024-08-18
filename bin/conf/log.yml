@@ -1,22 +1,15 @@
 logs:
     - name: root
       level: info
-      formatter: '%d%T%m%n'
       appenders:
-          - type: FileLogAppender
-            file: log.txt
-            file: root.txt
           - type: StdoutLogAppender
-    - name: system
-      level: debug
-      formatter: '%d%T%m%n'
-      appenders:
           - type: FileLogAppender
-            path: log.txt
-            file: system.txt
-            formatter: '%d%T[%p]%T%m%n'
-          - type: StdoutLogAppender
+            file: /home/karmaner/myRepo/webserver/log/root.log
 
-system:
-    port: 9900
-    value: 15
+    - name: system
+      level: info
+      appenders:
+          - type: StdoutLogAppender
+          - type: FileLogAppender
+            file: /home/karmaner/myRepo/webserver/log/system.log
+

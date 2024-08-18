@@ -39,9 +39,14 @@ add_executable(test_thread tests/test_thread.cpp)
 add_dependencies(test_thread webserver)
 target_link_libraries(test_thread webserver ${LIBS})
 
-add_executable(test_util tests/test_thread.cpp)
+add_executable(test_util tests/test_util.cpp)
 add_dependencies(test_util webserver)
 target_link_libraries(test_util webserver ${LIBS})
+
+add_executable(test_fiber tests/test_fiber.cpp)
+add_dependencies(test_fiber webserver)
+target_link_libraries(test_fiber webserver ${LIBS})
+
 
 
 SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)

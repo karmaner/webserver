@@ -1,12 +1,13 @@
 #include "fiber.h"
 #include "config.h"
+#include "log.h"
 #include "macro.h"
 #include <atomic>
 
 
 namespace webserver {
 
-static Logger::ptr g_logger = WEBSERVER_LOG_NAME("system");
+static Logger::ptr g_logger = WEBSERVER_LOG_NAME("root");
 
 static std::atomic<uint64_t> s_fiber_id {0};                              // 用于生成协程ID
 static std::atomic<uint64_t> s_fiber_count {0};                           // 用于统计协程数
@@ -15,8 +16,9 @@ static thread_local Fiber* t_fiber = nullptr;                             // 当
 static thread_local Fiber::ptr t_threadFiber = nullptr;                   // 当前线程的主协程
 
 static ConfigVar<uint32_t>::ptr g_fiber_stack_size =
-    Config::Lookup<uint32_t>("fiber.stack_size", 128 * 1024, "fiber stack size");
+    Config::Lookup<uint32_t>("fiber.stack_size", 1024 * 1024, "fiber stack size");
 
+// 内存分配器
 class MallocStackAllocator {
 public:
     static void* Alloc(size_t size) {
@@ -31,6 +33,7 @@ public:
 using StackAllocator = MallocStackAllocator;
 
 
+// 协程上下文 给到t_fiber
 Fiber::Fiber() {
     m_state = EXEC;
     SetThis(this);
@@ -43,8 +46,11 @@ Fiber::Fiber() {
     WEBSERVER_LOG_DEBUG(g_logger) << "FIber::Fiber main";
 }
 
-Fiber::Fiber(std::function<void()> cb, size_t stacksize, bool use_caller) : m_id(++s_fiber_count), m_cb(cb) {
-    
+// 创建协程
+Fiber::Fiber(std::function<void()> cb, size_t stacksize, bool use_caller) 
+    :m_id(++s_fiber_id)
+    ,m_cb(cb) {
+
     ++s_fiber_count;
     m_stacksize = stacksize ? stacksize : g_fiber_stack_size->getValue();
 
@@ -86,8 +92,12 @@ Fiber::~Fiber() {
 }
 
 void Fiber::reset(std::function<void()> cb) {
-
+    WEBSERVER_ASSERT(m_stack);
+    WEBSERVER_ASSERT((m_state == TERM
+            || m_state == EXCEPT
+            || m_state == INIT));
     m_cb = cb;
+
     if (getcontext(&m_ctx)) {
         WEBSERVER_ASSERT2(false, "getcontext");
     }
@@ -143,6 +153,7 @@ Fiber::ptr Fiber::GetThis() {
     t_threadFiber = main_fiber;
     return t_fiber->shared_from_this();
 }
+
 void Fiber::YieldToReady() {
     Fiber::ptr cur = GetThis();
     WEBSERVER_ASSERT((cur->m_state == EXEC));

@@ -6,7 +6,7 @@
 #include "util.h"
 
 #define WEBSERVER_ASSERT(x)                                                                                            \
-    if (!x) { \
+    if (!x) {                                                                                                          \
         WEBSERVER_LOG_ERROR(WEBSERVER_LOG_ROOT())                                                                      \
             << "ASSERTION: " #x << "\nbacktrace:\n"                                                                    \
             << webserver::BacktraceToString(100, 2, "      ");                                                         \
@@ -17,7 +17,7 @@
     if (!(x)) {                                                                                                        \
         WEBSERVER_LOG_ERROR(WEBSERVER_LOG_ROOT()) << "ASSERTION: " #x << "\n"                                          \
             << w << "\nbacktrace:\n"                                                                                   \
-            << webserver::BacktraceToString(100, 2, "    ");                                                               \
+            << webserver::BacktraceToString(100, 2, "    ");                                                           \
         assert(x);                                                                                                     \
     }
 
