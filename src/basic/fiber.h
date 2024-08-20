@@ -8,36 +8,27 @@
 
 namespace webserver {
 
-class Fiber : public std::enable_shared_from_this<Fiber> { 
+class Scheduler;
+
+class Fiber : public std::enable_shared_from_this<Fiber> {
+friend class Scheduler;
 public:
     typedef std::shared_ptr<Fiber> ptr;
 
     enum State {
-        /// 初始化状态
-        INIT,
-        /// 暂停状态
-        HOLD,
-        /// 执行中状态
-        EXEC,
-        /// 结束状态
-        TERM,
-        /// 可执行状态
-        READY,
-        /// 异常状态
-        EXCEPT
+        
+        INIT,   // 初始化状态
+        HOLD,   // 暂停状态
+        EXEC,   // 执行中状态
+        TERM,   // 结束状态
+        READY,  // 可执行状态
+        EXCEPT  // 异常状态
     };
 
 private:
     Fiber();
 public: 
-    /**
-     * @brief 构造函数
-     * @param[in] cb 协程执行的函数
-     * @param[in] stacksize 协程栈大小
-     * @param[in] use_caller 是否在MainFiber上调度
-     */
     Fiber(std::function<void()> cb, size_t stacksize = 0, bool use_caller = false);
-
     ~Fiber();
 
     // 重置协程函数， 并重置状态

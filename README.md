@@ -74,6 +74,32 @@ graph TD;
     A<-->sub_fiber2;
 ```
 
+## 协程调度模块
+```
+        1 - N            1 - M
+    scheduler --> thread --> fiber
+scheduler的功能
+1. 线程池， 分配一组线程
+2. 协程调度器， 将协程，指定到相应的线程执行
+
+
+N : M
+
+m_threads
+<function<void()>, fiber, threadid> m_fibers
+
+schedule(func/fiber);
+
+概述
+一个 N-M 的协程调度器，N 个线程运行 M 个协程，协程可以在线程之间进行切换，协程也可以绑定到指定线程运行。
+实现协程调度之后，可以解决前一章协程模块中子协程不能运行另一个子协程的缺陷，子协程可以通过向调度器添加调度任务的方式来运行另一个子协程。
+协程调度器调度的是协程，函数（可执行对象）被包装成协程。
+Scheduler
+协程调度器类。
+t_scheduler_fiber 保存当前线程的调度协程，加上 Fiber 模块的 t_fiber 和 t_thread_fiber，每个线程总共可以记录三个协程的上下文信息。
+
+```
+
 ## socket函数库
 
 ## Http协议

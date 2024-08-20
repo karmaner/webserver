@@ -14,7 +14,7 @@ int main(int argc, char **argv)
     file_appender->setLevel(webserver::LogLevel::ERROR);
 
     logger->addAppender(file_appender);
-
+    t_logger->addAppender(webserver::LogAppender::ptr(new webserver::StdoutLogAppender));
     // webserver::LogEvent::ptr event(new webserver::LogEvent(__FILE__, __LINE__, 0, webserver::GetThreadId(),
     // webserver::GetFiberId(), time(0))); event->getSS() << "hello webserver log";
     // logger->log(webserver::LogLevel::DEBUG, event);
@@ -27,5 +27,6 @@ int main(int argc, char **argv)
 
     auto l = webserver::LoggerMgr::GetInstance()->getLogger("xx");
     WEBSERVER_LOG_INFO(l) << "xxx";
+    WEBSERVER_LOG_INFO(t_logger) << "good?";
     return 0;
 }

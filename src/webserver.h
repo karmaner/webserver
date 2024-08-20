@@ -8,6 +8,7 @@
 #include "src/basic/util.h"
 #include "src/basic/macro.h"
 #include "src/basic/fiber.h"
-
+#include "src/basic/mutex.h"
+#include "src/basic/scheduler.h"
 
 #endif

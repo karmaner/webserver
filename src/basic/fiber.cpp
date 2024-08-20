@@ -1,13 +1,15 @@
+#include <atomic>
+
 #include "fiber.h"
 #include "config.h"
 #include "log.h"
 #include "macro.h"
-#include <atomic>
+
 
 
 namespace webserver {
 
-static Logger::ptr g_logger = WEBSERVER_LOG_NAME("root");
+static Logger::ptr g_logger = WEBSERVER_LOG_NAME("system");
 
 static std::atomic<uint64_t> s_fiber_id {0};                              // 用于生成协程ID
 static std::atomic<uint64_t> s_fiber_count {0};                           // 用于统计协程数
@@ -31,7 +33,6 @@ public:
 };
 
 using StackAllocator = MallocStackAllocator;
-
 
 // 协程上下文 给到t_fiber
 Fiber::Fiber() {
@@ -109,6 +110,7 @@ void Fiber::reset(std::function<void()> cb) {
     makecontext(&m_ctx, &Fiber::MainFunc, 0);
     m_state = INIT;
 }
+
 void Fiber::swapIn() {
     SetThis(this);
     m_state = EXEC;

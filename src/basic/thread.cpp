@@ -31,7 +31,9 @@ void Semaphore::notify() {
     }
 }
 
-Thread::Thread(std::function<void()> cb, const std::string &name) : m_name(name), m_cb(cb) {
+Thread::Thread(std::function<void()> cb, const std::string &name) 
+    :m_name(name)
+    ,m_cb(cb) {
     if (name.empty()) {
         m_name = "UNKNOW";
     }

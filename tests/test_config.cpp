@@ -59,9 +59,12 @@ void test_config()
     WEBSERVER_LOG_INFO(WEBSERVER_LOG_ROOT()) << "after: " << g_float_value_config->toString();
 }
 
+static webserver::Logger::ptr s_logger = WEBSERVER_LOG_NAME("system");
+
 int main(int argc, char **argv)
 {
     // test_yaml();
+    WEBSERVER_LOG_INFO(s_logger) << "Hi ok" << "nice man";
     test_config();
     return 0;
 }

@@ -197,6 +197,19 @@ test_fiber/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_fiber.dir/build.make CMakeFiles/test_fiber.dir/build
 .PHONY : test_fiber/fast
 
+#=============================================================================
+# Target rules for targets named test_scheduler
+
+# Build rule for target.
+test_scheduler: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_scheduler
+.PHONY : test_scheduler
+
+# fast build rule for target.
+test_scheduler/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_scheduler.dir/build.make CMakeFiles/test_scheduler.dir/build
+.PHONY : test_scheduler/fast
+
 src/basic/config.o: src/basic/config.cpp.o
 .PHONY : src/basic/config.o
 
@@ -220,6 +233,30 @@ src/basic/config.s: src/basic/config.cpp.s
 src/basic/config.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/basic/config.cpp.s
 .PHONY : src/basic/config.cpp.s
+
+src/basic/env.o: src/basic/env.cpp.o
+.PHONY : src/basic/env.o
+
+# target to build an object file
+src/basic/env.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/basic/env.cpp.o
+.PHONY : src/basic/env.cpp.o
+
+src/basic/env.i: src/basic/env.cpp.i
+.PHONY : src/basic/env.i
+
+# target to preprocess a source file
+src/basic/env.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/basic/env.cpp.i
+.PHONY : src/basic/env.cpp.i
+
+src/basic/env.s: src/basic/env.cpp.s
+.PHONY : src/basic/env.s
+
+# target to generate assembly for a file
+src/basic/env.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/basic/env.cpp.s
+.PHONY : src/basic/env.cpp.s
 
 src/basic/fiber.o: src/basic/fiber.cpp.o
 .PHONY : src/basic/fiber.o
@@ -268,6 +305,30 @@ src/basic/log.s: src/basic/log.cpp.s
 src/basic/log.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/basic/log.cpp.s
 .PHONY : src/basic/log.cpp.s
+
+src/basic/scheduler.o: src/basic/scheduler.cpp.o
+.PHONY : src/basic/scheduler.o
+
+# target to build an object file
+src/basic/scheduler.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/basic/scheduler.cpp.o
+.PHONY : src/basic/scheduler.cpp.o
+
+src/basic/scheduler.i: src/basic/scheduler.cpp.i
+.PHONY : src/basic/scheduler.i
+
+# target to preprocess a source file
+src/basic/scheduler.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/basic/scheduler.cpp.i
+.PHONY : src/basic/scheduler.cpp.i
+
+src/basic/scheduler.s: src/basic/scheduler.cpp.s
+.PHONY : src/basic/scheduler.s
+
+# target to generate assembly for a file
+src/basic/scheduler.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/basic/scheduler.cpp.s
+.PHONY : src/basic/scheduler.cpp.s
 
 src/basic/thread.o: src/basic/thread.cpp.o
 .PHONY : src/basic/thread.o
@@ -389,6 +450,30 @@ tests/test_log.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_log.dir/build.make CMakeFiles/test_log.dir/tests/test_log.cpp.s
 .PHONY : tests/test_log.cpp.s
 
+tests/test_scheduler.o: tests/test_scheduler.cpp.o
+.PHONY : tests/test_scheduler.o
+
+# target to build an object file
+tests/test_scheduler.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_scheduler.dir/build.make CMakeFiles/test_scheduler.dir/tests/test_scheduler.cpp.o
+.PHONY : tests/test_scheduler.cpp.o
+
+tests/test_scheduler.i: tests/test_scheduler.cpp.i
+.PHONY : tests/test_scheduler.i
+
+# target to preprocess a source file
+tests/test_scheduler.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_scheduler.dir/build.make CMakeFiles/test_scheduler.dir/tests/test_scheduler.cpp.i
+.PHONY : tests/test_scheduler.cpp.i
+
+tests/test_scheduler.s: tests/test_scheduler.cpp.s
+.PHONY : tests/test_scheduler.s
+
+# target to generate assembly for a file
+tests/test_scheduler.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_scheduler.dir/build.make CMakeFiles/test_scheduler.dir/tests/test_scheduler.cpp.s
+.PHONY : tests/test_scheduler.cpp.s
+
 tests/test_thread.o: tests/test_thread.cpp.o
 .PHONY : tests/test_thread.o
 
@@ -448,18 +533,25 @@ help:
 	@echo "... test_config"
 	@echo "... test_fiber"
 	@echo "... test_log"
+	@echo "... test_scheduler"
 	@echo "... test_thread"
 	@echo "... test_util"
 	@echo "... webserver"
 	@echo "... src/basic/config.o"
 	@echo "... src/basic/config.i"
 	@echo "... src/basic/config.s"
+	@echo "... src/basic/env.o"
+	@echo "... src/basic/env.i"
+	@echo "... src/basic/env.s"
 	@echo "... src/basic/fiber.o"
 	@echo "... src/basic/fiber.i"
 	@echo "... src/basic/fiber.s"
 	@echo "... src/basic/log.o"
 	@echo "... src/basic/log.i"
 	@echo "... src/basic/log.s"
+	@echo "... src/basic/scheduler.o"
+	@echo "... src/basic/scheduler.i"
+	@echo "... src/basic/scheduler.s"
 	@echo "... src/basic/thread.o"
 	@echo "... src/basic/thread.i"
 	@echo "... src/basic/thread.s"
@@ -475,6 +567,9 @@ help:
 	@echo "... tests/test_log.o"
 	@echo "... tests/test_log.i"
 	@echo "... tests/test_log.s"
+	@echo "... tests/test_scheduler.o"
+	@echo "... tests/test_scheduler.i"
+	@echo "... tests/test_scheduler.s"
 	@echo "... tests/test_thread.o"
 	@echo "... tests/test_thread.i"
 	@echo "... tests/test_thread.s"
