@@ -1,18 +1,18 @@
 #ifndef __SRC_LOG_H__
 #define __SRC_LOG_H__
 
-#include "singleton.h"
-#include "util.h"
-#include <chrono>
-#include <fstream>
-#include <list>
-#include <map>
-#include <memory>
-#include <sstream>
-#include <stdarg.h>
-#include <stdint.h>
 #include <string>
+#include <stdint.h>
+#include <memory>
+#include <list>
+#include <sstream>
+#include <fstream>
 #include <vector>
+#include <stdarg.h>
+#include <map>
+
+#include "util.h"
+#include "singleton.h"
 #include "thread.h"
 
 #define WEBSERVER_LOG_ROOT() webserver::LoggerMgr::GetInstance()->getRoot()
@@ -212,7 +212,7 @@ public:
     LogLevel::Level getLevel() const { return m_level; };
     void setLevel(LogLevel::Level val) { m_level = val; };
 
-    const std::string &getName() const { return m_name; }
+    const std::string& getName() const { return m_name; }
 
     void setFormatter(LogFormatter::ptr val);
     void setFormatter(const std::string& val);
@@ -230,8 +230,7 @@ private:
 };
 
 // 输出到控制台的Appender
-class StdoutLogAppender : public LogAppender
-{
+class StdoutLogAppender : public LogAppender {
 public:
     typedef std::shared_ptr<StdoutLogAppender> ptr;
 

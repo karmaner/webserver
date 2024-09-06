@@ -16,12 +16,14 @@ set(LIB_SRC
     src/basic/config.cpp
     src/basic/thread.cpp
     src/basic/fiber.cpp
+    src/basic/mutex.cpp
     src/basic/scheduler.cpp
     src/basic/env.cpp
     )
 
 find_library(YAMLCPP yaml-cpp)
 find_library(PTHREAD pthread)
+find_package(Boost REQUIRED)
 
 set(LIBS
     webserver

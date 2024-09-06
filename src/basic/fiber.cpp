@@ -4,7 +4,7 @@
 #include "config.h"
 #include "log.h"
 #include "macro.h"
-
+#include "scheduler.h"
 
 
 namespace webserver {
@@ -18,7 +18,7 @@ static thread_local Fiber* t_fiber = nullptr;                             // 当
 static thread_local Fiber::ptr t_threadFiber = nullptr;                   // 当前线程的主协程
 
 static ConfigVar<uint32_t>::ptr g_fiber_stack_size =
-    Config::Lookup<uint32_t>("fiber.stack_size", 1024 * 1024, "fiber stack size");
+    Config::Lookup<uint32_t>("fiber.stack_size", 1024 * 1024, "fiber stack size");  // new一个配置
 
 // 内存分配器
 class MallocStackAllocator {
@@ -39,7 +39,7 @@ Fiber::Fiber() {
     m_state = EXEC;
     SetThis(this);
 
-    if (getcontext(&m_ctx)) {
+    if(getcontext(&m_ctx)) {
         WEBSERVER_ASSERT2(false, "getcontext");
     }
 
@@ -47,7 +47,7 @@ Fiber::Fiber() {
     WEBSERVER_LOG_DEBUG(g_logger) << "FIber::Fiber main";
 }
 
-// 创建协程
+// 创建协程  线程上下文给到协程
 Fiber::Fiber(std::function<void()> cb, size_t stacksize, bool use_caller) 
     :m_id(++s_fiber_id)
     ,m_cb(cb) {
@@ -56,33 +56,37 @@ Fiber::Fiber(std::function<void()> cb, size_t stacksize, bool use_caller)
     m_stacksize = stacksize ? stacksize : g_fiber_stack_size->getValue();
 
     m_stack = StackAllocator::Alloc(m_stacksize);
-    if (getcontext(&m_ctx)) {
+    if(getcontext(&m_ctx)) {
         WEBSERVER_ASSERT2(false, "gencontext");
     }
     m_ctx.uc_link = nullptr;
     m_ctx.uc_stack.ss_sp = m_stack;
     m_ctx.uc_stack.ss_size = m_stacksize;
 
-    if (!use_caller) {
+    if(!use_caller) {
         makecontext(&m_ctx, &Fiber::MainFunc, 0);
     } else {
         makecontext(&m_ctx, &Fiber::callerMainFunc, 0);
     }
 
-    WEBSERVER_LOG_DEBUG(g_logger) << "Fiber::Fiber id = " << m_id;
+    WEBSERVER_LOG_DEBUG(g_logger) << "Fiber::Fiber id= " << m_id;
 }
 
 
 Fiber::~Fiber() {
     --s_fiber_count;
-    if (m_stack) {
+    if(m_stack) {
+        WEBSERVER_ASSERT((m_state == TERM
+        || m_state == EXCEPT
+        || m_state == INIT));
+
         StackAllocator::Dealloc(m_stack, m_stacksize);
     } else {
         WEBSERVER_ASSERT(!m_cb);
         WEBSERVER_ASSERT((m_state == EXEC));
 
         Fiber* cur = t_fiber;
-        if (cur == this) {
+        if(cur == this) {
             SetThis(nullptr);
         }
     }
@@ -99,7 +103,7 @@ void Fiber::reset(std::function<void()> cb) {
             || m_state == INIT));
     m_cb = cb;
 
-    if (getcontext(&m_ctx)) {
+    if(getcontext(&m_ctx)) {
         WEBSERVER_ASSERT2(false, "getcontext");
     }
 
@@ -113,15 +117,16 @@ void Fiber::reset(std::function<void()> cb) {
 
 void Fiber::swapIn() {
     SetThis(this);
+    WEBSERVER_ASSERT((m_state != EXEC));
     m_state = EXEC;
-    if (swapcontext(&t_threadFiber->m_ctx, &m_ctx)) {
+    if(swapcontext(&Scheduler::GetMainFiber()->m_ctx, &m_ctx)) {
         WEBSERVER_ASSERT2(false, "swapcontext");
     }
 }
 void Fiber::swapOut() {
     SetThis(t_threadFiber.get());
 
-    if (swapcontext(&m_ctx, &t_threadFiber->m_ctx)) {
+    if(swapcontext(&m_ctx, &Scheduler::GetMainFiber()->m_ctx)) {
         WEBSERVER_ASSERT2(false, "swapcontext");
     }
 }
@@ -129,14 +134,15 @@ void Fiber::swapOut() {
 void Fiber::call() {
     SetThis(this);
     m_state = EXEC;
-    if (swapcontext(&t_threadFiber->m_ctx, &m_ctx)) {
+    WEBSERVER_LOG_ERROR(g_logger) << getId();
+    if(swapcontext(&t_threadFiber->m_ctx, &m_ctx)) {
         WEBSERVER_ASSERT2(false, "swapcontext"); 
     }
 }
 
 void Fiber::back() {
     SetThis(this);
-    if (swapcontext(&m_ctx, &t_threadFiber->m_ctx)) {
+    if(swapcontext(&m_ctx, &t_threadFiber->m_ctx)) {
         WEBSERVER_ASSERT2(false, "swapcontext");
     }
 }
@@ -146,7 +152,7 @@ void Fiber::SetThis(Fiber* f) {
 }
 
 Fiber::ptr Fiber::GetThis() {
-    if (t_fiber) {
+    if(t_fiber) {
         return t_fiber->shared_from_this();
     }
 
@@ -211,6 +217,7 @@ void Fiber::MainFunc() {
 
 void Fiber::callerMainFunc() {
     Fiber::ptr cur = GetThis();
+    WEBSERVER_ASSERT(cur);
     try {
         cur->m_cb();
         cur->m_cb = nullptr;

@@ -1,10 +1,11 @@
 #ifndef __SRC_ENV_H__
 #define __SRC_ENV_H__
 
-#include "src/basic/singleton.h"
-#include "src/basic/thread.h"
+#include "singleton.h"
+#include "thread.h"
 #include <map>
 #include <vector>
+#include <string>
 
 namespace webserver {
 

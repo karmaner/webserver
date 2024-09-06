@@ -306,6 +306,30 @@ src/basic/log.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/basic/log.cpp.s
 .PHONY : src/basic/log.cpp.s
 
+src/basic/mutex.o: src/basic/mutex.cpp.o
+.PHONY : src/basic/mutex.o
+
+# target to build an object file
+src/basic/mutex.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/basic/mutex.cpp.o
+.PHONY : src/basic/mutex.cpp.o
+
+src/basic/mutex.i: src/basic/mutex.cpp.i
+.PHONY : src/basic/mutex.i
+
+# target to preprocess a source file
+src/basic/mutex.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/basic/mutex.cpp.i
+.PHONY : src/basic/mutex.cpp.i
+
+src/basic/mutex.s: src/basic/mutex.cpp.s
+.PHONY : src/basic/mutex.s
+
+# target to generate assembly for a file
+src/basic/mutex.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/basic/mutex.cpp.s
+.PHONY : src/basic/mutex.cpp.s
+
 src/basic/scheduler.o: src/basic/scheduler.cpp.o
 .PHONY : src/basic/scheduler.o
 
@@ -549,6 +573,9 @@ help:
 	@echo "... src/basic/log.o"
 	@echo "... src/basic/log.i"
 	@echo "... src/basic/log.s"
+	@echo "... src/basic/mutex.o"
+	@echo "... src/basic/mutex.i"
+	@echo "... src/basic/mutex.s"
 	@echo "... src/basic/scheduler.o"
 	@echo "... src/basic/scheduler.i"
 	@echo "... src/basic/scheduler.s"

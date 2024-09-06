@@ -4,7 +4,6 @@
 #include <memory>
 #include <functional>
 #include <ucontext.h>
-#include "thread.h"
 
 namespace webserver {
 
@@ -27,21 +26,27 @@ public:
 
 private:
     Fiber();
-public: 
+public:
+        /**
+     * @brief 构造函数
+     * @param[in] cb 协程执行的函数
+     * @param[in] stacksize 协程栈大小
+     * @param[in] use_caller 是否在MainFiber上调度
+     */
     Fiber(std::function<void()> cb, size_t stacksize = 0, bool use_caller = false);
     ~Fiber();
 
     // 重置协程函数， 并重置状态
     void reset(std::function<void()> cb);
     // 切换当前协程
-    void swapIn();
+    void swapIn();  // 线程内容切换到协程执行
     // 切换到后台执行
-    void swapOut();
+    void swapOut(); // 保存协程的上下文并切换到其他任务
 
     // 线程切换到前台
-    void call();
+    void call();    // 切换当前线程到前台执行协程
     // 线程切换到后台
-    void back();
+    void back();    // 将当前线程切换到后台执行其他任务
 
     uint64_t getId() const { return m_id; }
 
@@ -50,20 +55,20 @@ public:
 
 public:
     // 设置当前线程的运行协程
-    static void SetThis(Fiber* f);
+    static void SetThis(Fiber* f);  // 设置当前线程的运行协程为 f。通常用于在协程开始执行时进行设置
     // 返回当前所在的协程
-    static Fiber::ptr GetThis();
+    static Fiber::ptr GetThis();    // 获取当前线程正在执行的协程
     
     // 将当前协程切换到后台,并设置为READY状态
-    static void YieldToReady();
+    static void YieldToReady();     // 将当前协程切换到后台并设置为 READY 状态，通常用于在协程中暂停执行，并将其放入待执行队列中。
     // 将当前协程切换到后台,并设置为HOLD状态
-    static void YieldToHold();
+    static void YieldToHold();      // 将当前协程切换到后台并设置为 HOLD 状态，通常用于在协程中暂停执行，但保持其当前状态。
 
     static uint64_t TotalFibers();
     static uint64_t GetFiberId();
     
-    static void MainFunc();
-    static void callerMainFunc();
+    static void MainFunc();         // 协程的主函数。通常包含协程的主要执行逻辑。
+    static void callerMainFunc();   // 处理协程的调用者逻辑 
 
 private:
     uint64_t m_id = 0;

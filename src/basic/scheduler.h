@@ -4,16 +4,22 @@
 #include <memory>
 #include <vector>
 #include <list>
-#include <atomic>
+#include <iostream>
 
 #include "fiber.h"
 #include "thread.h"
 
 namespace webserver {
+
+/**
+ *   封装的是N-M的协程调度器
+ *     内部有一个线程池,支持协程在线程池里面切换
+ */
 class Scheduler {
 public:
     typedef std::shared_ptr<Scheduler> ptr;
     typedef Mutex MutexType;
+
     Scheduler(size_t threads = 1, bool use_caller = true, const std::string& name = ""); 
     virtual ~Scheduler();
 
@@ -83,6 +89,9 @@ private:
     }
 
 private:
+    /**
+     * 封装任务 这个任务可以是函数、协程  
+     */
     struct FiberAndThread {
         Fiber::ptr fiber;
         std::function<void()> cb;

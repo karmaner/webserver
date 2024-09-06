@@ -1,5 +1,5 @@
-#ifndef __SRC_MUTEX_H__
-#define __SRC_MUTEX_H__
+#ifndef __SYLAR_MUTEX_H__
+#define __SYLAR_MUTEX_H__
 
 #include <thread>
 #include <functional>
@@ -9,7 +9,7 @@
 #include <stdint.h>
 #include <atomic>
 #include <list>
-#include <tbb/spin_rw_mutex.h>
+#include <string>
 
 #include "noncopyable.h"
 #include "fiber.h"
@@ -318,9 +318,9 @@ private:
 class NullRWMutex : Noncopyable {
 public:
     /// 局部读锁
-    typedef ReadScopedLockImpl<NullRWMutex> ReadLock;
+    typedef ReadScopedLockImpl<NullMutex> ReadLock;
     /// 局部写锁
-    typedef WriteScopedLockImpl<NullRWMutex> WriteLock;
+    typedef WriteScopedLockImpl<NullMutex> WriteLock;
 
     /**
      * @brief 构造函数
@@ -425,87 +425,29 @@ private:
     volatile std::atomic_flag m_mutex;
 };
 
-/**
- * @brief 读写自旋锁
- */
-class RWSpinlock : Noncopyable{
+class Scheduler;
+class FiberSemaphore : Noncopyable {
 public:
+    typedef Spinlock MutexType;
 
-    /// 局部读锁
-    typedef ReadScopedLockImpl<RWSpinlock> ReadLock;
+    FiberSemaphore(size_t initial_concurrency = 0);
+    ~FiberSemaphore();
 
-    /// 局部写锁
-    typedef WriteScopedLockImpl<RWSpinlock> WriteLock;
+    bool tryWait();
+    void wait();
+    void notify();
+    void notifyAll();
 
-    /**
-     * @brief 构造函数
-     */
-    RWSpinlock() {
-    }
-    
-    /**
-     * @brief 析构函数
-     */
-    ~RWSpinlock() {
-    }
-
-    /**
-     * @brief 上读锁
-     */
-    void rdlock() {
-        m_lock.lock_shared();
-        m_isRead = true;
-    }
-
-    /**
-     * @brief 上写锁
-     */
-    void wrlock() {
-        m_lock.lock();
-        m_isRead = false;
-    }
-
-    /**
-     * @brief 解锁
-     */
-    void unlock() {
-        if(m_isRead) {
-            m_lock.unlock_shared();
-        } else {
-            m_lock.unlock();
-        }
-    }
+    size_t getConcurrency() const { return m_concurrency;}
+    void reset() { m_concurrency = 0;}
 private:
-    /// 读写锁
-    tbb::spin_rw_mutex m_lock;
-    bool m_isRead = false;
+    MutexType m_mutex;
+    std::list<std::pair<Scheduler*, Fiber::ptr> > m_waiters;
+    size_t m_concurrency;
 };
 
 
 
-class Scheduler;
-// class FiberSemaphore : Noncopyable {
-// public:
-//     typedef Spinlock MutexType;
-
-//     FiberSemaphore(size_t initial_concurrency = 0);
-//     ~FiberSemaphore();
-
-//     bool tryWait();
-//     void wait();
-//     void notify();
-//     void notifyAll();
-
-//     size_t getConcurrency() const { return m_concurrency;}
-//     void reset() { m_concurrency = 0;}
-// private:
-//     MutexType m_mutex;
-//     std::list<std::pair<Scheduler*, Fiber::ptr> > m_waiters;
-//     size_t m_concurrency;
-// };
-
-
-
-}
+} // end of namespace
 
 #endif

@@ -1,0 +1,15 @@
+logs:
+    - name: root
+      level: info
+      appenders:
+          - type: StdoutLogAppender
+          - type: FileLogAppender
+            file: /home/karmaner/myRepo/webserver/log/root.log
+
+    - name: system
+      level: info
+      appenders:
+          - type: StdoutLogAppender
+          - type: FileLogAppender
+            file: /home/karmaner/myRepo/webserver/log/system.log
+

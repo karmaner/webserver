@@ -1,9 +1,14 @@
 #include "log.h"
-#include <functional>
-#include <iostream>
 #include <map>
+#include <iostream>
+#include <functional>
+#include <time.h>
+#include <string.h>
 
 #include "config.h"
+#include "util.h"
+#include "macro.h"
+#include "env.h"
 
 namespace webserver {
 
@@ -312,7 +317,7 @@ void LogFormatter::init()
     static std::map<std::string, std::function<FormatItem::ptr(const std::string &str)>> s_format_items = {
 #define XX(str, C)                                                                                                     \
     {                                                                                                                  \
-        #str, [](const std::string &fmt) { return FormatItem::ptr(new C(fmt)); }                                       \
+        #str, [](const std::string& fmt) { return FormatItem::ptr(new C(fmt)); }                                       \
     }
 
         XX(m, MessageFormatItem),    // m:消息
