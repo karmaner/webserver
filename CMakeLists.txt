@@ -19,6 +19,7 @@ set(LIB_SRC
     src/basic/mutex.cpp
     src/basic/scheduler.cpp
     src/basic/env.cpp
+    src/basic/iomanager.cpp
     )
 
 find_library(YAMLCPP yaml-cpp)
@@ -63,6 +64,12 @@ add_executable(test_scheduler tests/test_scheduler.cpp)
 add_dependencies(test_scheduler webserver)
 force_redefine_file_macro_for_sources(test_scheduler) #__FILE__
 target_link_libraries(test_scheduler webserver ${LIBS})
+
+add_executable(test_iomanager tests/test_iomanager.cpp)
+add_dependencies(test_iomanager webserver)
+force_redefine_file_macro_for_sources(test_iomanager) #__FILE__
+target_link_libraries(test_iomanager webserver ${LIBS})
+
 
 SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 SET(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)

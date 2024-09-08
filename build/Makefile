@@ -210,6 +210,19 @@ test_scheduler/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_scheduler.dir/build.make CMakeFiles/test_scheduler.dir/build
 .PHONY : test_scheduler/fast
 
+#=============================================================================
+# Target rules for targets named test_iomanager
+
+# Build rule for target.
+test_iomanager: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_iomanager
+.PHONY : test_iomanager
+
+# fast build rule for target.
+test_iomanager/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_iomanager.dir/build.make CMakeFiles/test_iomanager.dir/build
+.PHONY : test_iomanager/fast
+
 src/basic/config.o: src/basic/config.cpp.o
 .PHONY : src/basic/config.o
 
@@ -281,6 +294,30 @@ src/basic/fiber.s: src/basic/fiber.cpp.s
 src/basic/fiber.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/basic/fiber.cpp.s
 .PHONY : src/basic/fiber.cpp.s
+
+src/basic/iomanager.o: src/basic/iomanager.cpp.o
+.PHONY : src/basic/iomanager.o
+
+# target to build an object file
+src/basic/iomanager.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/basic/iomanager.cpp.o
+.PHONY : src/basic/iomanager.cpp.o
+
+src/basic/iomanager.i: src/basic/iomanager.cpp.i
+.PHONY : src/basic/iomanager.i
+
+# target to preprocess a source file
+src/basic/iomanager.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/basic/iomanager.cpp.i
+.PHONY : src/basic/iomanager.cpp.i
+
+src/basic/iomanager.s: src/basic/iomanager.cpp.s
+.PHONY : src/basic/iomanager.s
+
+# target to generate assembly for a file
+src/basic/iomanager.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/basic/iomanager.cpp.s
+.PHONY : src/basic/iomanager.cpp.s
 
 src/basic/log.o: src/basic/log.cpp.o
 .PHONY : src/basic/log.o
@@ -450,6 +487,30 @@ tests/test_fiber.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_fiber.dir/build.make CMakeFiles/test_fiber.dir/tests/test_fiber.cpp.s
 .PHONY : tests/test_fiber.cpp.s
 
+tests/test_iomanager.o: tests/test_iomanager.cpp.o
+.PHONY : tests/test_iomanager.o
+
+# target to build an object file
+tests/test_iomanager.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_iomanager.dir/build.make CMakeFiles/test_iomanager.dir/tests/test_iomanager.cpp.o
+.PHONY : tests/test_iomanager.cpp.o
+
+tests/test_iomanager.i: tests/test_iomanager.cpp.i
+.PHONY : tests/test_iomanager.i
+
+# target to preprocess a source file
+tests/test_iomanager.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_iomanager.dir/build.make CMakeFiles/test_iomanager.dir/tests/test_iomanager.cpp.i
+.PHONY : tests/test_iomanager.cpp.i
+
+tests/test_iomanager.s: tests/test_iomanager.cpp.s
+.PHONY : tests/test_iomanager.s
+
+# target to generate assembly for a file
+tests/test_iomanager.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_iomanager.dir/build.make CMakeFiles/test_iomanager.dir/tests/test_iomanager.cpp.s
+.PHONY : tests/test_iomanager.cpp.s
+
 tests/test_log.o: tests/test_log.cpp.o
 .PHONY : tests/test_log.o
 
@@ -556,6 +617,7 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... test_config"
 	@echo "... test_fiber"
+	@echo "... test_iomanager"
 	@echo "... test_log"
 	@echo "... test_scheduler"
 	@echo "... test_thread"
@@ -570,6 +632,9 @@ help:
 	@echo "... src/basic/fiber.o"
 	@echo "... src/basic/fiber.i"
 	@echo "... src/basic/fiber.s"
+	@echo "... src/basic/iomanager.o"
+	@echo "... src/basic/iomanager.i"
+	@echo "... src/basic/iomanager.s"
 	@echo "... src/basic/log.o"
 	@echo "... src/basic/log.i"
 	@echo "... src/basic/log.s"
@@ -591,6 +656,9 @@ help:
 	@echo "... tests/test_fiber.o"
 	@echo "... tests/test_fiber.i"
 	@echo "... tests/test_fiber.s"
+	@echo "... tests/test_iomanager.o"
+	@echo "... tests/test_iomanager.i"
+	@echo "... tests/test_iomanager.s"
 	@echo "... tests/test_log.o"
 	@echo "... tests/test_log.i"
 	@echo "... tests/test_log.s"
