@@ -19,7 +19,11 @@ set(LIB_SRC
     src/basic/mutex.cpp
     src/basic/scheduler.cpp
     src/basic/env.cpp
+    src/basic/timer.cpp
     src/basic/iomanager.cpp
+    src/basic/hook.cpp
+    src/basic/fd_manager.cpp
+    src/basic/address.cpp
     )
 
 find_library(YAMLCPP yaml-cpp)
@@ -69,6 +73,16 @@ add_executable(test_iomanager tests/test_iomanager.cpp)
 add_dependencies(test_iomanager webserver)
 force_redefine_file_macro_for_sources(test_iomanager) #__FILE__
 target_link_libraries(test_iomanager webserver ${LIBS})
+
+add_executable(test_hook tests/test_hook.cpp)
+add_dependencies(test_hook webserver)
+force_redefine_file_macro_for_sources(test_hook) #__FILE__
+target_link_libraries(test_hook webserver ${LIBS})
+
+add_executable(test_address tests/test_address.cpp)
+add_dependencies(test_address webserver)
+force_redefine_file_macro_for_sources(test_address) #__FILE__
+target_link_libraries(test_address webserver ${LIBS})
 
 
 SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)

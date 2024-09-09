@@ -1,5 +1,5 @@
-#ifndef __SYLAR_MUTEX_H__
-#define __SYLAR_MUTEX_H__
+#ifndef __SRC_MUTEX_H__
+#define __SRC_MUTEX_H__
 
 #include <thread>
 #include <functional>
@@ -264,7 +264,7 @@ public:
 /**
  * @brief 读写互斥量
  */
-class RWMutex : Noncopyable{
+class RWMutex : Noncopyable {
 public:
 
     /// 局部读锁

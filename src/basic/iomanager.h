@@ -2,47 +2,45 @@
 #define __SRC_IOMANAGER_H__
 
 #include "scheduler.h"
+#include "timer.h"
 
 namespace webserver {
 
-class IOManager : public Scheduler {
+class IOManager : public Scheduler, public TimerManager {
 public:
     typedef std::shared_ptr<IOManager> ptr;
     typedef RWMutex RWMutexType;
 
     enum Event {
-        NONE = 0x0,     // 无
-        READ = 0x1,     // 读 EPOLLIN
-        WRITE = 0x4,    // 写 EPOLLOUT
+        NONE    = 0x0,
+        READ    = 0x1, //EPOLLIN
+        WRITE   = 0x4, //EPOLLOUT
     };
-
-private: 
-    // socket   封装事件句柄和相关任务
+private:
     struct FdContext {
         typedef Mutex MutexType;
-        
-        // 事件上下文类
         struct EventContext {
-            Scheduler* scheduler = nullptr; // 执行任务的调度器
-            Fiber::ptr fiber;               // 事件回调协程
-            std::function<void()> cb;       // call back
+            Scheduler* scheduler = nullptr; //事件执行的scheduler
+            Fiber::ptr fiber;               //事件协程
+            std::function<void()> cb;       //事件的回调函数
         };
 
         EventContext& getContext(Event event);
         void resetContext(EventContext& ctx);
         void triggerEvent(Event event);
 
-        EventContext read;
-        EventContext write;
-
-        int fd = 0; // 事件关联句柄
-        Event events = NONE;
+        EventContext read;      //读事件
+        EventContext write;     //写事件
+        int fd = 0;             //事件关联的句柄
+        Event events = NONE;    //已经注册的事件
         MutexType mutex;
     };
+
 public:
-    IOManager(size_t threads = 1, bool use_call = true, const std::string& name = "");
+    IOManager(size_t threads = 1, bool use_caller = true, const std::string& name = "");
     ~IOManager();
 
+    //0 success, -1 error
     int addEvent(int fd, Event event, std::function<void()> cb = nullptr);
     bool delEvent(int fd, Event event);
     bool cancelEvent(int fd, Event event);
@@ -50,19 +48,22 @@ public:
     bool cancelAll(int fd);
 
     static IOManager* GetThis();
+
 protected:
     void tickle() override;
     bool stopping() override;
     void idle() override;
+    void onTimerInsertedAtFront() override;
 
     void contextResize(size_t size);
+    bool stopping(uint64_t& timeout);
 private:
-    RWMutexType m_mutex;
+    int m_epfd = 0;
+    int m_tickleFds[2];
 
-    int m_epfd = 0;     // epoll 文件句柄
-    int m_tickleFds[2]; // pipe 文件句柄， fd[0]读端, f[1]写端
-    std::atomic<size_t> m_pendingEventCount = {0};  // 当前等待执行的IO事件数量
-    std::vector<FdContext*> m_fdContexts;    // socket事件上下文的容器
+    std::atomic<size_t> m_pendingEventCount = {0};
+    RWMutexType m_mutex;
+    std::vector<FdContext*> m_fdContexts;
 };
 
 }

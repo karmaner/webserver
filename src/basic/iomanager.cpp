@@ -1,12 +1,12 @@
+#include "iomanager.h"
+#include "macro.h"
+#include "log.h"
+
 #include <errno.h>
 #include <fcntl.h>
 #include <sys/epoll.h>
 #include <string.h>
 #include <unistd.h>
-
-#include "macro.h"
-#include "iomanager.h"
-#include "log.h"
 
 namespace webserver {
 
@@ -252,10 +252,19 @@ void IOManager::tickle() {
     WEBSERVER_ASSERT(rt == 1);
 }
 
+bool IOManager::stopping(uint64_t& timeout) {
+    timeout = getNextTimer();
+    return timeout == ~0ull
+        && m_pendingEventCount == 0
+        && Scheduler::stopping();
+
+}
+
 bool IOManager::stopping() {
     return Scheduler::stopping()
         && m_pendingEventCount == 0;
 }
+
 void IOManager::idle() {
     epoll_event* events = new epoll_event[64]();
     std::shared_ptr<epoll_event> shared_events(events, [](epoll_event* ptr) {
@@ -341,6 +350,10 @@ void IOManager::contextResize(size_t size) {
             m_fdContexts[i]->fd = i;
         }
     }
+}
+
+void IOManager::onTimerInsertedAtFront() {
+    tickle();
 }
 
 }
