@@ -16,7 +16,7 @@
 
 namespace webserver {
 
-webserver::Logger::ptr g_logger = WEBSERVER_LOG_NAME("system");
+static webserver::Logger::ptr g_logger = WEBSERVER_LOG_NAME("system");
 
 pid_t GetThreadId() {
     return syscall(SYS_gettid);

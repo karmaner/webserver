@@ -1,6 +1,6 @@
 
-#ifndef __SRC_MACRO_H__
-#define __SRC_MACRO_H__
+#ifndef __SRC_BASIC_MACRO_H__
+#define __SRC_BASIC_MACRO_H__
 
 #include <string.h>
 #include <assert.h>

@@ -1,5 +1,5 @@
-#ifndef __SRC_TIMER_H__
-#define __SRC_TIMER_H__
+#ifndef __SRC_BASIC_TIMER_H__
+#define __SRC_BASIC_TIMER_H__
 
 #include <memory>
 #include <vector>

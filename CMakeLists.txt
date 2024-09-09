@@ -24,6 +24,9 @@ set(LIB_SRC
     src/basic/hook.cpp
     src/basic/fd_manager.cpp
     src/basic/address.cpp
+    src/basic/socket.cpp
+    src/basic/bytearray.cpp
+    src/http/http.cpp
     )
 
 find_library(YAMLCPP yaml-cpp)
@@ -84,6 +87,15 @@ add_dependencies(test_address webserver)
 force_redefine_file_macro_for_sources(test_address) #__FILE__
 target_link_libraries(test_address webserver ${LIBS})
 
+add_executable(test_socket tests/test_socket.cpp)
+add_dependencies(test_socket webserver)
+force_redefine_file_macro_for_sources(test_socket) #__FILE__
+target_link_libraries(test_socket webserver ${LIBS})
+
+add_executable(test_bytearray tests/test_bytearray.cpp)
+add_dependencies(test_bytearray webserver)
+force_redefine_file_macro_for_sources(test_bytearray) #__FILE__
+target_link_libraries(test_bytearray webserver ${LIBS})
 
 SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 SET(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)

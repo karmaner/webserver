@@ -1,5 +1,5 @@
-#ifndef __SRC_THREAD_H__
-#define __SRC_THREAD_H__
+#ifndef __SRC_BASIC_THREAD_H__
+#define __SRC_BASIC_THREAD_H__
 
 #include "mutex.h"
 

@@ -1,5 +1,5 @@
-#ifndef __SRC_LOG_H__
-#define __SRC_LOG_H__
+#ifndef __SRC_BASIC_LOG_H__
+#define __SRC_BASIC_LOG_H__
 
 #include <string>
 #include <stdint.h>

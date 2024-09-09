@@ -7,7 +7,7 @@ void test() {
     std::vector<webserver::Address::ptr> addrs;
 
     WEBSERVER_LOG_INFO(g_logger) << "begin";
-    bool v = webserver::Address::Lookup(addrs, "blog.akamini.xyz");
+    bool v = webserver::Address::Lookup(addrs, "blog.akamini.xyz", AF_INET);
     WEBSERVER_LOG_INFO(g_logger) << "end";
     if(!v) {
         WEBSERVER_LOG_ERROR(g_logger) << "lookup fail";

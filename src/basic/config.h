@@ -1,5 +1,5 @@
-#ifndef __SRC_CONFIG_H__
-#define __SRC_CONFIG_H__
+#ifndef __SRC_BASIC_CONFIG_H__
+#define __SRC_BASIC_CONFIG_H__
 
 #include <memory>
 #include <string>

@@ -249,6 +249,32 @@ test_address/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_address.dir/build.make CMakeFiles/test_address.dir/build
 .PHONY : test_address/fast
 
+#=============================================================================
+# Target rules for targets named test_socket
+
+# Build rule for target.
+test_socket: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_socket
+.PHONY : test_socket
+
+# fast build rule for target.
+test_socket/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_socket.dir/build.make CMakeFiles/test_socket.dir/build
+.PHONY : test_socket/fast
+
+#=============================================================================
+# Target rules for targets named test_bytearray
+
+# Build rule for target.
+test_bytearray: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_bytearray
+.PHONY : test_bytearray
+
+# fast build rule for target.
+test_bytearray/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_bytearray.dir/build.make CMakeFiles/test_bytearray.dir/build
+.PHONY : test_bytearray/fast
+
 src/basic/address.o: src/basic/address.cpp.o
 .PHONY : src/basic/address.o
 
@@ -272,6 +298,30 @@ src/basic/address.s: src/basic/address.cpp.s
 src/basic/address.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/basic/address.cpp.s
 .PHONY : src/basic/address.cpp.s
+
+src/basic/bytearray.o: src/basic/bytearray.cpp.o
+.PHONY : src/basic/bytearray.o
+
+# target to build an object file
+src/basic/bytearray.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/basic/bytearray.cpp.o
+.PHONY : src/basic/bytearray.cpp.o
+
+src/basic/bytearray.i: src/basic/bytearray.cpp.i
+.PHONY : src/basic/bytearray.i
+
+# target to preprocess a source file
+src/basic/bytearray.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/basic/bytearray.cpp.i
+.PHONY : src/basic/bytearray.cpp.i
+
+src/basic/bytearray.s: src/basic/bytearray.cpp.s
+.PHONY : src/basic/bytearray.s
+
+# target to generate assembly for a file
+src/basic/bytearray.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/basic/bytearray.cpp.s
+.PHONY : src/basic/bytearray.cpp.s
 
 src/basic/config.o: src/basic/config.cpp.o
 .PHONY : src/basic/config.o
@@ -489,6 +539,30 @@ src/basic/scheduler.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/basic/scheduler.cpp.s
 .PHONY : src/basic/scheduler.cpp.s
 
+src/basic/socket.o: src/basic/socket.cpp.o
+.PHONY : src/basic/socket.o
+
+# target to build an object file
+src/basic/socket.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/basic/socket.cpp.o
+.PHONY : src/basic/socket.cpp.o
+
+src/basic/socket.i: src/basic/socket.cpp.i
+.PHONY : src/basic/socket.i
+
+# target to preprocess a source file
+src/basic/socket.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/basic/socket.cpp.i
+.PHONY : src/basic/socket.cpp.i
+
+src/basic/socket.s: src/basic/socket.cpp.s
+.PHONY : src/basic/socket.s
+
+# target to generate assembly for a file
+src/basic/socket.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/basic/socket.cpp.s
+.PHONY : src/basic/socket.cpp.s
+
 src/basic/thread.o: src/basic/thread.cpp.o
 .PHONY : src/basic/thread.o
 
@@ -561,6 +635,30 @@ src/basic/util.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/basic/util.cpp.s
 .PHONY : src/basic/util.cpp.s
 
+src/http/http.o: src/http/http.cpp.o
+.PHONY : src/http/http.o
+
+# target to build an object file
+src/http/http.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/http/http.cpp.o
+.PHONY : src/http/http.cpp.o
+
+src/http/http.i: src/http/http.cpp.i
+.PHONY : src/http/http.i
+
+# target to preprocess a source file
+src/http/http.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/http/http.cpp.i
+.PHONY : src/http/http.cpp.i
+
+src/http/http.s: src/http/http.cpp.s
+.PHONY : src/http/http.s
+
+# target to generate assembly for a file
+src/http/http.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/http/http.cpp.s
+.PHONY : src/http/http.cpp.s
+
 tests/test_address.o: tests/test_address.cpp.o
 .PHONY : tests/test_address.o
 
@@ -584,6 +682,30 @@ tests/test_address.s: tests/test_address.cpp.s
 tests/test_address.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_address.dir/build.make CMakeFiles/test_address.dir/tests/test_address.cpp.s
 .PHONY : tests/test_address.cpp.s
+
+tests/test_bytearray.o: tests/test_bytearray.cpp.o
+.PHONY : tests/test_bytearray.o
+
+# target to build an object file
+tests/test_bytearray.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_bytearray.dir/build.make CMakeFiles/test_bytearray.dir/tests/test_bytearray.cpp.o
+.PHONY : tests/test_bytearray.cpp.o
+
+tests/test_bytearray.i: tests/test_bytearray.cpp.i
+.PHONY : tests/test_bytearray.i
+
+# target to preprocess a source file
+tests/test_bytearray.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_bytearray.dir/build.make CMakeFiles/test_bytearray.dir/tests/test_bytearray.cpp.i
+.PHONY : tests/test_bytearray.cpp.i
+
+tests/test_bytearray.s: tests/test_bytearray.cpp.s
+.PHONY : tests/test_bytearray.s
+
+# target to generate assembly for a file
+tests/test_bytearray.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_bytearray.dir/build.make CMakeFiles/test_bytearray.dir/tests/test_bytearray.cpp.s
+.PHONY : tests/test_bytearray.cpp.s
 
 tests/test_config.o: tests/test_config.cpp.o
 .PHONY : tests/test_config.o
@@ -729,6 +851,30 @@ tests/test_scheduler.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_scheduler.dir/build.make CMakeFiles/test_scheduler.dir/tests/test_scheduler.cpp.s
 .PHONY : tests/test_scheduler.cpp.s
 
+tests/test_socket.o: tests/test_socket.cpp.o
+.PHONY : tests/test_socket.o
+
+# target to build an object file
+tests/test_socket.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_socket.dir/build.make CMakeFiles/test_socket.dir/tests/test_socket.cpp.o
+.PHONY : tests/test_socket.cpp.o
+
+tests/test_socket.i: tests/test_socket.cpp.i
+.PHONY : tests/test_socket.i
+
+# target to preprocess a source file
+tests/test_socket.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_socket.dir/build.make CMakeFiles/test_socket.dir/tests/test_socket.cpp.i
+.PHONY : tests/test_socket.cpp.i
+
+tests/test_socket.s: tests/test_socket.cpp.s
+.PHONY : tests/test_socket.s
+
+# target to generate assembly for a file
+tests/test_socket.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_socket.dir/build.make CMakeFiles/test_socket.dir/tests/test_socket.cpp.s
+.PHONY : tests/test_socket.cpp.s
+
 tests/test_thread.o: tests/test_thread.cpp.o
 .PHONY : tests/test_thread.o
 
@@ -786,18 +932,23 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... test_address"
+	@echo "... test_bytearray"
 	@echo "... test_config"
 	@echo "... test_fiber"
 	@echo "... test_hook"
 	@echo "... test_iomanager"
 	@echo "... test_log"
 	@echo "... test_scheduler"
+	@echo "... test_socket"
 	@echo "... test_thread"
 	@echo "... test_util"
 	@echo "... webserver"
 	@echo "... src/basic/address.o"
 	@echo "... src/basic/address.i"
 	@echo "... src/basic/address.s"
+	@echo "... src/basic/bytearray.o"
+	@echo "... src/basic/bytearray.i"
+	@echo "... src/basic/bytearray.s"
 	@echo "... src/basic/config.o"
 	@echo "... src/basic/config.i"
 	@echo "... src/basic/config.s"
@@ -825,6 +976,9 @@ help:
 	@echo "... src/basic/scheduler.o"
 	@echo "... src/basic/scheduler.i"
 	@echo "... src/basic/scheduler.s"
+	@echo "... src/basic/socket.o"
+	@echo "... src/basic/socket.i"
+	@echo "... src/basic/socket.s"
 	@echo "... src/basic/thread.o"
 	@echo "... src/basic/thread.i"
 	@echo "... src/basic/thread.s"
@@ -834,9 +988,15 @@ help:
 	@echo "... src/basic/util.o"
 	@echo "... src/basic/util.i"
 	@echo "... src/basic/util.s"
+	@echo "... src/http/http.o"
+	@echo "... src/http/http.i"
+	@echo "... src/http/http.s"
 	@echo "... tests/test_address.o"
 	@echo "... tests/test_address.i"
 	@echo "... tests/test_address.s"
+	@echo "... tests/test_bytearray.o"
+	@echo "... tests/test_bytearray.i"
+	@echo "... tests/test_bytearray.s"
 	@echo "... tests/test_config.o"
 	@echo "... tests/test_config.i"
 	@echo "... tests/test_config.s"
@@ -855,6 +1015,9 @@ help:
 	@echo "... tests/test_scheduler.o"
 	@echo "... tests/test_scheduler.i"
 	@echo "... tests/test_scheduler.s"
+	@echo "... tests/test_socket.o"
+	@echo "... tests/test_socket.i"
+	@echo "... tests/test_socket.s"
 	@echo "... tests/test_thread.o"
 	@echo "... tests/test_thread.i"
 	@echo "... tests/test_thread.s"

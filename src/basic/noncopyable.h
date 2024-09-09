@@ -1,5 +1,5 @@
-#ifndef __SRC_NONCOPYABLE_H__
-#define __SRC_NONCOPYABLE_H__
+#ifndef __SRC_BASIC_NONCOPYABLE_H__
+#define __SRC_BASIC_NONCOPYABLE_H__
 
 namespace webserver {
 

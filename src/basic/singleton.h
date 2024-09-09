@@ -1,5 +1,5 @@
-#ifndef __SRC_SINGLETON_H__
-#define __SRC_SINGLETON_H__
+#ifndef __SRC_BASIC_SINGLETON_H__
+#define __SRC_BASIC_SINGLETON_H__
 
 #include <memory>
 
