@@ -6,6 +6,7 @@
 #include "fiber.h"
 #include "iomanager.h"
 #include "fd_manager.h"
+#include "macro.h"
 
 webserver::Logger::ptr g_logger = WEBSERVER_LOG_NAME("system");
 namespace webserver {
@@ -15,27 +16,27 @@ static webserver::ConfigVar<int>::ptr g_tcp_connect_timeout =
 
 static thread_local bool t_hook_enable = false;
 
-#define HOOK_FUN(XX) \
-    XX(sleep) \
-    XX(usleep) \
-    XX(nanosleep) \
-    XX(socket) \
-    XX(connect) \
-    XX(accept) \
-    XX(read) \
-    XX(readv) \
-    XX(recv) \
-    XX(recvfrom) \
-    XX(recvmsg) \
-    XX(write) \
-    XX(writev) \
-    XX(send) \
-    XX(sendto) \
-    XX(sendmsg) \
-    XX(close) \
-    XX(fcntl) \
-    XX(ioctl) \
-    XX(getsockopt) \
+#define HOOK_FUN(XX)    \
+    XX(sleep)           \
+    XX(usleep)          \
+    XX(nanosleep)       \
+    XX(socket)          \
+    XX(connect)         \
+    XX(accept)          \
+    XX(read)            \
+    XX(readv)           \
+    XX(recv)            \
+    XX(recvfrom)        \
+    XX(recvmsg)         \
+    XX(write)           \
+    XX(writev)          \
+    XX(send)            \
+    XX(sendto)          \
+    XX(sendmsg)         \
+    XX(close)           \
+    XX(fcntl)           \
+    XX(ioctl)           \
+    XX(getsockopt)      \
     XX(setsockopt)
 
 void hook_init() {
@@ -124,7 +125,7 @@ retry:
         }
 
         int rt = iom->addEvent(fd, (webserver::IOManager::Event)(event));
-        if(rt) {
+        if(WEBSERVER_UNLIKELY(rt)) {
             WEBSERVER_LOG_ERROR(g_logger) << hook_fun_name << " addEvent("
                 << fd << ", " << event << ")";
             if(timer) {
@@ -140,7 +141,7 @@ retry:
                 errno = tinfo->cancelled;
                 return -1;
             }
-
+            WEBSERVER_ASSERT(webserver::Fiber::GetThis()->getState() == webserver::Fiber::EXEC);
             goto retry;
         }
     }

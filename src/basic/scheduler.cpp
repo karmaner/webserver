@@ -3,12 +3,13 @@
 #include "macro.h"
 #include "hook.h"
 
+
 namespace webserver {
 
 static webserver::Logger::ptr g_logger = WEBSERVER_LOG_NAME("system");
 
 static thread_local Scheduler* t_scheduler = nullptr;
-static thread_local Fiber* t_fiber = nullptr;
+static thread_local Fiber* t_scheduler_fiber = nullptr;
 
 Scheduler::Scheduler(size_t threads, bool use_caller, const std::string& name)
     :m_name(name) {
@@ -24,7 +25,7 @@ Scheduler::Scheduler(size_t threads, bool use_caller, const std::string& name)
         m_rootFiber.reset(new Fiber(std::bind(&Scheduler::run, this), 0, true));
         webserver::Thread::SetName(m_name);
 
-        t_fiber = m_rootFiber.get();
+        t_scheduler_fiber = m_rootFiber.get();
         m_rootThread = webserver::GetThreadId();
         m_threadIds.push_back(m_rootThread);
     } else {
@@ -45,7 +46,7 @@ Scheduler* Scheduler::GetThis() {
 }
 
 Fiber* Scheduler::GetMainFiber() {
-    return t_fiber;
+    return t_scheduler_fiber;
 }
 
 void Scheduler::start() {
@@ -107,7 +108,7 @@ void Scheduler::stop() {
         //            || m_rootFiber->getState() == Fiber::EXCEPT) {
         //        m_rootFiber.reset(new Fiber(std::bind(&Scheduler::run, this), 0, true));
         //        WEBSERVER_LOG_INFO(g_logger) << " root fiber is term, reset";
-        //        t_fiber = m_rootFiber.get();
+        //        t_scheduler_fiber = m_rootFiber.get();
         //    }
         //    m_rootFiber->call();
         //}
@@ -138,7 +139,7 @@ void Scheduler::run() {
     set_hook_enable(true);
     setThis();
     if(webserver::GetThreadId() != m_rootThread) {
-        t_fiber = Fiber::GetThis().get();
+        t_scheduler_fiber = Fiber::GetThis().get();
     }
 
     Fiber::ptr idle_fiber(new Fiber(std::bind(&Scheduler::idle, this)));

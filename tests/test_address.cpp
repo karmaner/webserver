@@ -36,7 +36,7 @@ void test_iface() {
 
 void test_ipv4() {
     //auto addr = webserver::IPAddress::Create("www.webserver.top");
-    auto addr = webserver::IPAddress::Create("127.0.0.8");
+    auto addr = webserver::IPAddress::Create("139.159.241.37");
     if(addr) {
         WEBSERVER_LOG_INFO(g_logger) << addr->toString();
     }

@@ -3,7 +3,7 @@
 
 void test_request() {
     webserver::http::HttpRequest::ptr req(new webserver::http::HttpRequest);
-    req->setHeader("host" , "www.webserver.top");
+    req->setHeader("host" , "www.bilibili.com");
     req->setBody("hello webserver");
     req->dump(std::cout) << std::endl;
 }

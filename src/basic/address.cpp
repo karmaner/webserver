@@ -37,9 +37,9 @@ IPAddress::ptr Address::LookupAnyIPAddress(const std::string& host,
                                 int family, int type, int protocol) {
     std::vector<Address::ptr> result;
     if(Lookup(result, host, family, type, protocol)) {
-        for(auto& i : result) {
-            std::cout << i->toString() << std::endl;
-        }
+        // for(auto& i : result) {
+        //     std::cout << i->toString() << std::endl;
+        // }
         for(auto& i : result) {
             IPAddress::ptr v = std::dynamic_pointer_cast<IPAddress>(i);
             if(v) {
@@ -70,7 +70,6 @@ bool Address::Lookup(std::vector<Address::ptr>& result, const std::string& host,
     if(!host.empty() && host[0] == '[') {
         const char* endipv6 = (const char*)memchr(host.c_str() + 1, ']', host.size() - 1);
         if(endipv6) {
-            //TODO check out of range
             if(*(endipv6 + 1) == ':') {
                 service = endipv6 + 2;
             }
@@ -96,7 +95,7 @@ bool Address::Lookup(std::vector<Address::ptr>& result, const std::string& host,
     if(error) {
         WEBSERVER_LOG_ERROR(g_logger) << "Address::Lookup getaddress(" << host << ", "
             << family << ", " << type << ") err=" << error << " errstr="
-            << strerror(errno);
+            << gai_strerror(error);
         return false;
     }
 

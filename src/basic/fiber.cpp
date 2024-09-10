@@ -169,6 +169,7 @@ Fiber::ptr Fiber::GetThis() {
 //协程切换到后台，并且设置为Ready状态
 void Fiber::YieldToReady() {
     Fiber::ptr cur = GetThis();
+    WEBSERVER_ASSERT(cur->m_state == EXEC);
     cur->m_state = READY;
     cur->swapOut();
 }
@@ -176,6 +177,7 @@ void Fiber::YieldToReady() {
 //协程切换到后台，并且设置为Hold状态
 void Fiber::YieldToHold() {
     Fiber::ptr cur = GetThis();
+    WEBSERVER_ASSERT(cur->m_state == EXEC);
     cur->m_state = HOLD;
     cur->swapOut();
 }
@@ -188,23 +190,23 @@ uint64_t Fiber::TotalFibers() {
 void Fiber::MainFunc() {
     Fiber::ptr cur = GetThis();
     WEBSERVER_ASSERT(cur);
-    try {
+    //try {
         cur->m_cb();
         cur->m_cb = nullptr;
         cur->m_state = TERM;
-    } catch (std::exception& ex) {
-        cur->m_state = EXCEPT;
-        WEBSERVER_LOG_ERROR(g_logger) << "Fiber Except: " << ex.what()
-            << " fiber_id=" << cur->getId()
-            << std::endl
-            << webserver::BacktraceToString();
-    } catch (...) {
-        cur->m_state = EXCEPT;
-        WEBSERVER_LOG_ERROR(g_logger) << "Fiber Except"
-            << " fiber_id=" << cur->getId()
-            << std::endl
-            << webserver::BacktraceToString();
-    }
+    //} catch (std::exception& ex) {
+    //    cur->m_state = EXCEPT;
+    //    WEBSERVER_LOG_ERROR(g_logger) << "Fiber Except: " << ex.what()
+    //        << " fiber_id=" << cur->getId()
+    //        << std::endl
+    //        << webserver::BacktraceToString();
+    //} catch (...) {
+    //    cur->m_state = EXCEPT;
+    //    WEBSERVER_LOG_ERROR(g_logger) << "Fiber Except"
+    //        << " fiber_id=" << cur->getId()
+    //        << std::endl
+    //        << webserver::BacktraceToString();
+    //}
 
     auto raw_ptr = cur.get();
     cur.reset();
@@ -242,3 +244,4 @@ void Fiber::CallerMainFunc() {
 }
 
 }
+

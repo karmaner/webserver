@@ -49,7 +49,7 @@
 /** Machine **/
 
 
-#line 255 "/home/karmaner/myRepo/webserver/src/http/http11_parser.rl"
+#line 256 "/home/karmaner/myRepo/webserver/src/http/http11_parser.rl"
 
 
 /** Data **/
@@ -62,7 +62,7 @@ static const int http_parser_error = 0;
 static const int http_parser_en_main = 1;
 
 
-#line 259 "/home/karmaner/myRepo/webserver/src/http/http11_parser.rl"
+#line 260 "/home/karmaner/myRepo/webserver/src/http/http11_parser.rl"
 
 int http_parser_init(http_parser *parser) {
   int cs = 0;
@@ -72,7 +72,7 @@ int http_parser_init(http_parser *parser) {
 	cs = http_parser_start;
 	}
 
-#line 263 "/home/karmaner/myRepo/webserver/src/http/http11_parser.rl"
+#line 264 "/home/karmaner/myRepo/webserver/src/http/http11_parser.rl"
   parser->cs = cs;
   parser->body_start = 0;
   parser->content_len = 0;
@@ -92,6 +92,11 @@ size_t http_parser_execute(http_parser *parser, const char *buffer, size_t len, 
 {
   if(len == 0) return 0;
 
+  parser->nread = 0;
+  parser->mark = 0;
+  parser->field_len = 0;
+  parser->field_start = 0;
+
   const char *p, *pe;
   int cs = parser->cs;
 
@@ -103,7 +108,7 @@ size_t http_parser_execute(http_parser *parser, const char *buffer, size_t len, 
   assert(pe - p == (int)len - (int)off && "pointers aren't same distance");
 
   
-#line 107 "/home/karmaner/myRepo/webserver/src/http/http11_parser.rl.cpp"
+#line 112 "/home/karmaner/myRepo/webserver/src/http/http11_parser.rl.cpp"
 	{
 	short _widec;
 	if ( p == pe )
@@ -132,7 +137,7 @@ st2:
 	if ( ++p == pe )
 		goto _test_eof2;
 case 2:
-#line 136 "/home/karmaner/myRepo/webserver/src/http/http11_parser.rl.cpp"
+#line 141 "/home/karmaner/myRepo/webserver/src/http/http11_parser.rl.cpp"
 	if ( (*p) == 32 )
 		goto tr4;
 	if ( (*p) > 57 ) {
@@ -152,7 +157,7 @@ st3:
 	if ( ++p == pe )
 		goto _test_eof3;
 case 3:
-#line 156 "/home/karmaner/myRepo/webserver/src/http/http11_parser.rl.cpp"
+#line 161 "/home/karmaner/myRepo/webserver/src/http/http11_parser.rl.cpp"
 	_widec = (*p);
 	if ( (*p) < 123 ) {
 		if ( 94 <= (*p) && (*p) <= 94 ) {
@@ -225,7 +230,7 @@ tr37:
       parser->request_uri(parser->data, PTR_TO(mark), LEN(mark, p));
   }
 	goto st4;
-tr43:
+tr44:
 #line 53 "/home/karmaner/myRepo/webserver/src/http/http11_parser.rl"
 	{MARK(mark, p); }
 #line 79 "/home/karmaner/myRepo/webserver/src/http/http11_parser.rl"
@@ -234,14 +239,14 @@ tr43:
       parser->fragment(parser->data, PTR_TO(mark), LEN(mark, p));
   }
 	goto st4;
-tr46:
+tr47:
 #line 79 "/home/karmaner/myRepo/webserver/src/http/http11_parser.rl"
 	{
     if(parser->fragment != NULL)
       parser->fragment(parser->data, PTR_TO(mark), LEN(mark, p));
   }
 	goto st4;
-tr53:
+tr54:
 #line 84 "/home/karmaner/myRepo/webserver/src/http/http11_parser.rl"
 	{MARK(query_start, p); }
 #line 85 "/home/karmaner/myRepo/webserver/src/http/http11_parser.rl"
@@ -255,7 +260,7 @@ tr53:
       parser->request_uri(parser->data, PTR_TO(mark), LEN(mark, p));
   }
 	goto st4;
-tr57:
+tr58:
 #line 85 "/home/karmaner/myRepo/webserver/src/http/http11_parser.rl"
 	{ 
     if(parser->query_string != NULL)
@@ -271,7 +276,7 @@ st4:
 	if ( ++p == pe )
 		goto _test_eof4;
 case 4:
-#line 275 "/home/karmaner/myRepo/webserver/src/http/http11_parser.rl.cpp"
+#line 280 "/home/karmaner/myRepo/webserver/src/http/http11_parser.rl.cpp"
 	if ( (*p) == 72 )
 		goto tr13;
 	goto st0;
@@ -283,7 +288,7 @@ st5:
 	if ( ++p == pe )
 		goto _test_eof5;
 case 5:
-#line 287 "/home/karmaner/myRepo/webserver/src/http/http11_parser.rl.cpp"
+#line 292 "/home/karmaner/myRepo/webserver/src/http/http11_parser.rl.cpp"
 	if ( (*p) == 84 )
 		goto st6;
 	goto st0;
@@ -367,7 +372,7 @@ st13:
 	if ( ++p == pe )
 		goto _test_eof13;
 case 13:
-#line 371 "/home/karmaner/myRepo/webserver/src/http/http11_parser.rl.cpp"
+#line 376 "/home/karmaner/myRepo/webserver/src/http/http11_parser.rl.cpp"
 	switch( (*p) ) {
 		case 10: goto tr24;
 		case 13: goto tr25;
@@ -407,7 +412,7 @@ st14:
 	if ( ++p == pe )
 		goto _test_eof14;
 case 14:
-#line 411 "/home/karmaner/myRepo/webserver/src/http/http11_parser.rl.cpp"
+#line 416 "/home/karmaner/myRepo/webserver/src/http/http11_parser.rl.cpp"
 	switch( (*p) ) {
 		case 33: goto st14;
 		case 58: goto tr27;
@@ -452,7 +457,7 @@ st15:
 	if ( ++p == pe )
 		goto _test_eof15;
 case 15:
-#line 456 "/home/karmaner/myRepo/webserver/src/http/http11_parser.rl.cpp"
+#line 461 "/home/karmaner/myRepo/webserver/src/http/http11_parser.rl.cpp"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr29;
@@ -470,7 +475,7 @@ st16:
 	if ( ++p == pe )
 		goto _test_eof16;
 case 16:
-#line 474 "/home/karmaner/myRepo/webserver/src/http/http11_parser.rl.cpp"
+#line 479 "/home/karmaner/myRepo/webserver/src/http/http11_parser.rl.cpp"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 10: goto tr33;
@@ -507,7 +512,7 @@ st17:
 	if ( ++p == pe )
 		goto _test_eof17;
 case 17:
-#line 511 "/home/karmaner/myRepo/webserver/src/http/http11_parser.rl.cpp"
+#line 516 "/home/karmaner/myRepo/webserver/src/http/http11_parser.rl.cpp"
 	if ( (*p) == 10 )
 		goto st13;
 	goto st0;
@@ -551,7 +556,7 @@ st348:
 	if ( ++p == pe )
 		goto _test_eof348;
 case 348:
-#line 555 "/home/karmaner/myRepo/webserver/src/http/http11_parser.rl.cpp"
+#line 560 "/home/karmaner/myRepo/webserver/src/http/http11_parser.rl.cpp"
 	switch( (*p) ) {
 		case 33: goto st14;
 		case 58: goto tr27;
@@ -590,7 +595,7 @@ st18:
 	if ( ++p == pe )
 		goto _test_eof18;
 case 18:
-#line 594 "/home/karmaner/myRepo/webserver/src/http/http11_parser.rl.cpp"
+#line 599 "/home/karmaner/myRepo/webserver/src/http/http11_parser.rl.cpp"
 	switch( (*p) ) {
 		case 10: goto tr36;
 		case 33: goto st14;
@@ -630,7 +635,7 @@ st19:
 	if ( ++p == pe )
 		goto _test_eof19;
 case 19:
-#line 634 "/home/karmaner/myRepo/webserver/src/http/http11_parser.rl.cpp"
+#line 639 "/home/karmaner/myRepo/webserver/src/http/http11_parser.rl.cpp"
 	_widec = (*p);
 	if ( (*p) < 123 ) {
 		if ( 94 <= (*p) && (*p) <= 94 ) {
@@ -732,7 +737,7 @@ st20:
 	if ( ++p == pe )
 		goto _test_eof20;
 case 20:
-#line 736 "/home/karmaner/myRepo/webserver/src/http/http11_parser.rl.cpp"
+#line 741 "/home/karmaner/myRepo/webserver/src/http/http11_parser.rl.cpp"
 	_widec = (*p);
 	if ( (*p) < 123 ) {
 		if ( 94 <= (*p) && (*p) <= 94 ) {
@@ -755,26 +760,29 @@ case 20:
  parser->uri_relaxed  ) _widec += 256;
 	}
 	switch( _widec ) {
-		case 32: goto tr43;
-		case 33: goto tr44;
+		case 32: goto tr44;
+		case 33: goto tr43;
 		case 37: goto tr45;
-		case 61: goto tr44;
-		case 95: goto tr44;
-		case 126: goto tr44;
-		case 606: goto tr44;
-		case 635: goto tr44;
-		case 637: goto tr44;
+		case 61: goto tr43;
+		case 95: goto tr43;
+		case 126: goto tr43;
+		case 606: goto tr43;
+		case 635: goto tr43;
+		case 637: goto tr43;
 	}
-	if ( _widec < 63 ) {
-		if ( 36 <= _widec && _widec <= 59 )
-			goto tr44;
-	} else if ( _widec > 90 ) {
-		if ( 97 <= _widec && _widec <= 122 )
-			goto tr44;
+	if ( _widec < 36 ) {
+		if ( _widec <= -1 )
+			goto tr43;
+	} else if ( _widec > 59 ) {
+		if ( _widec > 90 ) {
+			if ( 97 <= _widec && _widec <= 122 )
+				goto tr43;
+		} else if ( _widec >= 63 )
+			goto tr43;
 	} else
-		goto tr44;
+		goto tr43;
 	goto st0;
-tr44:
+tr43:
 #line 53 "/home/karmaner/myRepo/webserver/src/http/http11_parser.rl"
 	{MARK(mark, p); }
 	goto st21;
@@ -782,7 +790,7 @@ st21:
 	if ( ++p == pe )
 		goto _test_eof21;
 case 21:
-#line 786 "/home/karmaner/myRepo/webserver/src/http/http11_parser.rl.cpp"
+#line 794 "/home/karmaner/myRepo/webserver/src/http/http11_parser.rl.cpp"
 	_widec = (*p);
 	if ( (*p) < 123 ) {
 		if ( 94 <= (*p) && (*p) <= 94 ) {
@@ -805,7 +813,7 @@ case 21:
  parser->uri_relaxed  ) _widec += 256;
 	}
 	switch( _widec ) {
-		case 32: goto tr46;
+		case 32: goto tr47;
 		case 33: goto st21;
 		case 37: goto st22;
 		case 61: goto st21;
@@ -815,11 +823,14 @@ case 21:
 		case 635: goto st21;
 		case 637: goto st21;
 	}
-	if ( _widec < 63 ) {
-		if ( 36 <= _widec && _widec <= 59 )
+	if ( _widec < 36 ) {
+		if ( _widec <= -1 )
 			goto st21;
-	} else if ( _widec > 90 ) {
-		if ( 97 <= _widec && _widec <= 122 )
+	} else if ( _widec > 59 ) {
+		if ( _widec > 90 ) {
+			if ( 97 <= _widec && _widec <= 122 )
+				goto st21;
+		} else if ( _widec >= 63 )
 			goto st21;
 	} else
 		goto st21;
@@ -832,7 +843,7 @@ st22:
 	if ( ++p == pe )
 		goto _test_eof22;
 case 22:
-#line 836 "/home/karmaner/myRepo/webserver/src/http/http11_parser.rl.cpp"
+#line 847 "/home/karmaner/myRepo/webserver/src/http/http11_parser.rl.cpp"
 	if ( (*p) < 65 ) {
 		if ( 48 <= (*p) && (*p) <= 57 )
 			goto st23;
@@ -863,7 +874,7 @@ st24:
 	if ( ++p == pe )
 		goto _test_eof24;
 case 24:
-#line 867 "/home/karmaner/myRepo/webserver/src/http/http11_parser.rl.cpp"
+#line 878 "/home/karmaner/myRepo/webserver/src/http/http11_parser.rl.cpp"
 	if ( (*p) < 65 ) {
 		if ( 48 <= (*p) && (*p) <= 57 )
 			goto st25;
@@ -894,7 +905,7 @@ st26:
 	if ( ++p == pe )
 		goto _test_eof26;
 case 26:
-#line 898 "/home/karmaner/myRepo/webserver/src/http/http11_parser.rl.cpp"
+#line 909 "/home/karmaner/myRepo/webserver/src/http/http11_parser.rl.cpp"
 	_widec = (*p);
 	if ( (*p) < 123 ) {
 		if ( 94 <= (*p) && (*p) <= 94 ) {
@@ -929,11 +940,14 @@ case 26:
 		case 635: goto st26;
 		case 637: goto st26;
 	}
-	if ( _widec < 64 ) {
-		if ( 36 <= _widec && _widec <= 59 )
+	if ( _widec < 36 ) {
+		if ( _widec <= -1 )
 			goto st26;
-	} else if ( _widec > 90 ) {
-		if ( 97 <= _widec && _widec <= 122 )
+	} else if ( _widec > 59 ) {
+		if ( _widec > 90 ) {
+			if ( 97 <= _widec && _widec <= 122 )
+				goto st26;
+		} else if ( _widec >= 64 )
 			goto st26;
 	} else
 		goto st26;
@@ -946,7 +960,7 @@ st27:
 	if ( ++p == pe )
 		goto _test_eof27;
 case 27:
-#line 950 "/home/karmaner/myRepo/webserver/src/http/http11_parser.rl.cpp"
+#line 964 "/home/karmaner/myRepo/webserver/src/http/http11_parser.rl.cpp"
 	if ( (*p) < 65 ) {
 		if ( 48 <= (*p) && (*p) <= 57 )
 			goto st28;
@@ -989,7 +1003,7 @@ st29:
 	if ( ++p == pe )
 		goto _test_eof29;
 case 29:
-#line 993 "/home/karmaner/myRepo/webserver/src/http/http11_parser.rl.cpp"
+#line 1007 "/home/karmaner/myRepo/webserver/src/http/http11_parser.rl.cpp"
 	_widec = (*p);
 	if ( (*p) < 123 ) {
 		if ( 94 <= (*p) && (*p) <= 94 ) {
@@ -1012,27 +1026,30 @@ case 29:
  parser->uri_relaxed  ) _widec += 256;
 	}
 	switch( _widec ) {
-		case 32: goto tr53;
-		case 33: goto tr54;
+		case 32: goto tr54;
+		case 33: goto tr53;
 		case 35: goto tr55;
 		case 37: goto tr56;
-		case 61: goto tr54;
-		case 95: goto tr54;
-		case 126: goto tr54;
-		case 606: goto tr54;
-		case 635: goto tr54;
-		case 637: goto tr54;
+		case 61: goto tr53;
+		case 95: goto tr53;
+		case 126: goto tr53;
+		case 606: goto tr53;
+		case 635: goto tr53;
+		case 637: goto tr53;
 	}
-	if ( _widec < 63 ) {
-		if ( 36 <= _widec && _widec <= 59 )
-			goto tr54;
-	} else if ( _widec > 90 ) {
-		if ( 97 <= _widec && _widec <= 122 )
-			goto tr54;
+	if ( _widec < 36 ) {
+		if ( _widec <= -1 )
+			goto tr53;
+	} else if ( _widec > 59 ) {
+		if ( _widec > 90 ) {
+			if ( 97 <= _widec && _widec <= 122 )
+				goto tr53;
+		} else if ( _widec >= 63 )
+			goto tr53;
 	} else
-		goto tr54;
+		goto tr53;
 	goto st0;
-tr54:
+tr53:
 #line 84 "/home/karmaner/myRepo/webserver/src/http/http11_parser.rl"
 	{MARK(query_start, p); }
 	goto st30;
@@ -1040,7 +1057,7 @@ st30:
 	if ( ++p == pe )
 		goto _test_eof30;
 case 30:
-#line 1044 "/home/karmaner/myRepo/webserver/src/http/http11_parser.rl.cpp"
+#line 1061 "/home/karmaner/myRepo/webserver/src/http/http11_parser.rl.cpp"
 	_widec = (*p);
 	if ( (*p) < 123 ) {
 		if ( 94 <= (*p) && (*p) <= 94 ) {
@@ -1063,7 +1080,7 @@ case 30:
  parser->uri_relaxed  ) _widec += 256;
 	}
 	switch( _widec ) {
-		case 32: goto tr57;
+		case 32: goto tr58;
 		case 33: goto st30;
 		case 35: goto tr59;
 		case 37: goto st31;
@@ -1074,11 +1091,14 @@ case 30:
 		case 635: goto st30;
 		case 637: goto st30;
 	}
-	if ( _widec < 63 ) {
-		if ( 36 <= _widec && _widec <= 59 )
+	if ( _widec < 36 ) {
+		if ( _widec <= -1 )
 			goto st30;
-	} else if ( _widec > 90 ) {
-		if ( 97 <= _widec && _widec <= 122 )
+	} else if ( _widec > 59 ) {
+		if ( _widec > 90 ) {
+			if ( 97 <= _widec && _widec <= 122 )
+				goto st30;
+		} else if ( _widec >= 63 )
 			goto st30;
 	} else
 		goto st30;
@@ -1091,7 +1111,7 @@ st31:
 	if ( ++p == pe )
 		goto _test_eof31;
 case 31:
-#line 1095 "/home/karmaner/myRepo/webserver/src/http/http11_parser.rl.cpp"
+#line 1115 "/home/karmaner/myRepo/webserver/src/http/http11_parser.rl.cpp"
 	if ( (*p) < 65 ) {
 		if ( 48 <= (*p) && (*p) <= 57 )
 			goto st32;
@@ -1122,7 +1142,7 @@ st33:
 	if ( ++p == pe )
 		goto _test_eof33;
 case 33:
-#line 1126 "/home/karmaner/myRepo/webserver/src/http/http11_parser.rl.cpp"
+#line 1146 "/home/karmaner/myRepo/webserver/src/http/http11_parser.rl.cpp"
 	_widec = (*p);
 	if ( (*p) < 123 ) {
 		if ( 94 <= (*p) && (*p) <= 94 ) {
@@ -1158,11 +1178,14 @@ case 33:
 		case 635: goto st26;
 		case 637: goto st26;
 	}
-	if ( _widec < 64 ) {
-		if ( 36 <= _widec && _widec <= 59 )
+	if ( _widec < 36 ) {
+		if ( _widec <= -1 )
 			goto st26;
-	} else if ( _widec > 90 ) {
-		if ( 97 <= _widec && _widec <= 122 )
+	} else if ( _widec > 59 ) {
+		if ( _widec > 90 ) {
+			if ( 97 <= _widec && _widec <= 122 )
+				goto st26;
+		} else if ( _widec >= 64 )
 			goto st26;
 	} else
 		goto st26;
@@ -3370,7 +3393,7 @@ st173:
 	if ( ++p == pe )
 		goto _test_eof173;
 case 173:
-#line 3374 "/home/karmaner/myRepo/webserver/src/http/http11_parser.rl.cpp"
+#line 3397 "/home/karmaner/myRepo/webserver/src/http/http11_parser.rl.cpp"
 	_widec = (*p);
 	if ( (*p) < 123 ) {
 		if ( 94 <= (*p) && (*p) <= 94 ) {
@@ -3461,11 +3484,14 @@ case 174:
 		case 635: goto tr203;
 		case 637: goto tr203;
 	}
-	if ( _widec < 64 ) {
-		if ( 36 <= _widec && _widec <= 59 )
+	if ( _widec < 36 ) {
+		if ( _widec <= -1 )
 			goto tr203;
-	} else if ( _widec > 90 ) {
-		if ( 97 <= _widec && _widec <= 122 )
+	} else if ( _widec > 59 ) {
+		if ( _widec > 90 ) {
+			if ( 97 <= _widec && _widec <= 122 )
+				goto tr203;
+		} else if ( _widec >= 64 )
 			goto tr203;
 	} else
 		goto tr203;
@@ -3701,7 +3727,7 @@ st194:
 	if ( ++p == pe )
 		goto _test_eof194;
 case 194:
-#line 3705 "/home/karmaner/myRepo/webserver/src/http/http11_parser.rl.cpp"
+#line 3731 "/home/karmaner/myRepo/webserver/src/http/http11_parser.rl.cpp"
 	if ( (*p) < 48 ) {
 		if ( 45 <= (*p) && (*p) <= 46 )
 			goto st195;
@@ -3746,7 +3772,7 @@ st196:
 	if ( ++p == pe )
 		goto _test_eof196;
 case 196:
-#line 3750 "/home/karmaner/myRepo/webserver/src/http/http11_parser.rl.cpp"
+#line 3776 "/home/karmaner/myRepo/webserver/src/http/http11_parser.rl.cpp"
 	if ( (*p) == 62 )
 		goto st197;
 	goto st196;
@@ -3805,7 +3831,7 @@ st349:
 	if ( ++p == pe )
 		goto _test_eof349;
 case 349:
-#line 3809 "/home/karmaner/myRepo/webserver/src/http/http11_parser.rl.cpp"
+#line 3835 "/home/karmaner/myRepo/webserver/src/http/http11_parser.rl.cpp"
 	goto st0;
 tr3:
 #line 53 "/home/karmaner/myRepo/webserver/src/http/http11_parser.rl"
@@ -3815,7 +3841,7 @@ st198:
 	if ( ++p == pe )
 		goto _test_eof198;
 case 198:
-#line 3819 "/home/karmaner/myRepo/webserver/src/http/http11_parser.rl.cpp"
+#line 3845 "/home/karmaner/myRepo/webserver/src/http/http11_parser.rl.cpp"
 	_widec = (*p);
 	if ( (*p) < 123 ) {
 		if ( 94 <= (*p) && (*p) <= 94 ) {
@@ -3870,7 +3896,7 @@ st199:
 	if ( ++p == pe )
 		goto _test_eof199;
 case 199:
-#line 3874 "/home/karmaner/myRepo/webserver/src/http/http11_parser.rl.cpp"
+#line 3900 "/home/karmaner/myRepo/webserver/src/http/http11_parser.rl.cpp"
 	if ( (*p) == 123 )
 		goto tr232;
 	goto st0;
@@ -3882,7 +3908,7 @@ st200:
 	if ( ++p == pe )
 		goto _test_eof200;
 case 200:
-#line 3886 "/home/karmaner/myRepo/webserver/src/http/http11_parser.rl.cpp"
+#line 3912 "/home/karmaner/myRepo/webserver/src/http/http11_parser.rl.cpp"
 	if ( (*p) == 125 )
 		goto st201;
 	goto st200;
@@ -4004,11 +4030,14 @@ case 205:
 		case 635: goto st205;
 		case 637: goto st205;
 	}
-	if ( _widec < 64 ) {
-		if ( 36 <= _widec && _widec <= 59 )
+	if ( _widec < 36 ) {
+		if ( _widec <= -1 )
 			goto st205;
-	} else if ( _widec > 90 ) {
-		if ( 97 <= _widec && _widec <= 122 )
+	} else if ( _widec > 59 ) {
+		if ( _widec > 90 ) {
+			if ( 97 <= _widec && _widec <= 122 )
+				goto st205;
+		} else if ( _widec >= 64 )
 			goto st205;
 	} else
 		goto st205;
@@ -4076,11 +4105,14 @@ case 208:
 		case 635: goto st205;
 		case 637: goto st205;
 	}
-	if ( _widec < 64 ) {
-		if ( 36 <= _widec && _widec <= 59 )
+	if ( _widec < 36 ) {
+		if ( _widec <= -1 )
 			goto st205;
-	} else if ( _widec > 90 ) {
-		if ( 97 <= _widec && _widec <= 122 )
+	} else if ( _widec > 59 ) {
+		if ( _widec > 90 ) {
+			if ( 97 <= _widec && _widec <= 122 )
+				goto st205;
+		} else if ( _widec >= 64 )
 			goto st205;
 	} else
 		goto st205;
@@ -6620,7 +6652,7 @@ case 347:
 	_out: {}
 	}
 
-#line 293 "/home/karmaner/myRepo/webserver/src/http/http11_parser.rl"
+#line 299 "/home/karmaner/myRepo/webserver/src/http/http11_parser.rl"
 
   assert(p <= pe && "Buffer overflow after parsing.");
 

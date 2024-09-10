@@ -29,9 +29,9 @@ void IOManager::FdContext::resetContext(EventContext& ctx) {
     ctx.cb = nullptr;
 }
 
-void IOManager::FdContext::triggerEvent(Event event) {
+void IOManager::FdContext::triggerEvent(IOManager::Event event) {
     WEBSERVER_ASSERT(events & event);
-    events = (Event) (events & ~event);
+    events = (Event)(events & ~event);
     EventContext& ctx = getContext(event);
     if(ctx.cb) {
         ctx.scheduler->schedule(&ctx.cb);
@@ -42,25 +42,20 @@ void IOManager::FdContext::triggerEvent(Event event) {
     return;
 }
 
-IOManager::IOManager(size_t threads, bool use_call, const std::string& name)
-    :Scheduler(threads, use_call, name) {
-    
-    // 创建epoll实例
+IOManager::IOManager(size_t threads, bool use_caller, const std::string& name)
+    :Scheduler(threads, use_caller, name) {
     m_epfd = epoll_create(5000);
     WEBSERVER_ASSERT(m_epfd > 0);
 
-    //  创建pipe，获取m_tickleFds[2]，其中m_tickleFds[0]是管道的读端，
-    //  m_tickleFds[1]是管道的写端
     int rt = pipe(m_tickleFds);
     WEBSERVER_ASSERT(!rt);
 
-    
     epoll_event event;
     memset(&event, 0, sizeof(epoll_event));
     event.events = EPOLLIN | EPOLLET;
     event.data.fd = m_tickleFds[0];
 
-    rt = fcntl(m_tickleFds[0], F_SETFL, 0, O_NONBLOCK);
+    rt = fcntl(m_tickleFds[0], F_SETFL, O_NONBLOCK);
     WEBSERVER_ASSERT(!rt);
 
     rt = epoll_ctl(m_epfd, EPOLL_CTL_ADD, m_tickleFds[0], &event);
@@ -69,7 +64,6 @@ IOManager::IOManager(size_t threads, bool use_call, const std::string& name)
     contextResize(32);
 
     start();
-
 }
 
 IOManager::~IOManager() {
@@ -85,8 +79,15 @@ IOManager::~IOManager() {
     }
 }
 
-IOManager* IOManager::GetThis() {
-    return dynamic_cast<IOManager*>(Scheduler::GetThis());
+void IOManager::contextResize(size_t size) {
+    m_fdContexts.resize(size);
+
+    for(size_t i = 0; i < m_fdContexts.size(); ++i) {
+        if(!m_fdContexts[i]) {
+            m_fdContexts[i] = new FdContext;
+            m_fdContexts[i]->fd = i;
+        }
+    }
 }
 
 int IOManager::addEvent(int fd, Event event, std::function<void()> cb) {
@@ -105,8 +106,8 @@ int IOManager::addEvent(int fd, Event event, std::function<void()> cb) {
     FdContext::MutexType::Lock lock2(fd_ctx->mutex);
     if(fd_ctx->events & event) {
         WEBSERVER_LOG_ERROR(g_logger) << "addEvent assert fd=" << fd
-            << " event=" << event
-            << " fd_ctx.event=" << fd_ctx->events;
+                    << " event=" << event
+                    << " fd_ctx.event=" << fd_ctx->events;
         WEBSERVER_ASSERT(!(fd_ctx->events & event));
     }
 
@@ -114,7 +115,7 @@ int IOManager::addEvent(int fd, Event event, std::function<void()> cb) {
     epoll_event epevent;
     epevent.events = EPOLLET | fd_ctx->events | event;
     epevent.data.ptr = fd_ctx;
-    
+
     int rt = epoll_ctl(m_epfd, op, fd, &epevent);
     if(rt) {
         WEBSERVER_LOG_ERROR(g_logger) << "epoll_ctl(" << m_epfd << ", "
@@ -127,18 +128,20 @@ int IOManager::addEvent(int fd, Event event, std::function<void()> cb) {
     fd_ctx->events = (Event)(fd_ctx->events | event);
     FdContext::EventContext& event_ctx = fd_ctx->getContext(event);
     WEBSERVER_ASSERT(!event_ctx.scheduler
-            && !event_ctx.fiber
-            && !event_ctx.cb);
+                && !event_ctx.fiber
+                && !event_ctx.cb);
 
     event_ctx.scheduler = Scheduler::GetThis();
     if(cb) {
         event_ctx.cb.swap(cb);
     } else {
         event_ctx.fiber = Fiber::GetThis();
-        WEBSERVER_ASSERT(event_ctx.fiber->getState() == Fiber::EXEC);
+        WEBSERVER_ASSERT2(event_ctx.fiber->getState() == Fiber::EXEC
+                            ,"state=" << event_ctx.fiber->getState());
     }
     return 0;
 }
+
 bool IOManager::delEvent(int fd, Event event) {
     RWMutexType::ReadLock lock(m_mutex);
     if((int)m_fdContexts.size() <= fd) {
@@ -151,7 +154,7 @@ bool IOManager::delEvent(int fd, Event event) {
     if(!(fd_ctx->events & event)) {
         return false;
     }
-    
+
     Event new_events = (Event)(fd_ctx->events & ~event);
     int op = new_events ? EPOLL_CTL_MOD : EPOLL_CTL_DEL;
     epoll_event epevent;
@@ -172,6 +175,7 @@ bool IOManager::delEvent(int fd, Event event) {
     fd_ctx->resetContext(event_ctx);
     return true;
 }
+
 bool IOManager::cancelEvent(int fd, Event event) {
     RWMutexType::ReadLock lock(m_mutex);
     if((int)m_fdContexts.size() <= fd) {
@@ -243,6 +247,9 @@ bool IOManager::cancelAll(int fd) {
     return true;
 }
 
+IOManager* IOManager::GetThis() {
+    return dynamic_cast<IOManager*>(Scheduler::GetThis());
+}
 
 void IOManager::tickle() {
     if(hasIdleThreads()) {
@@ -261,31 +268,47 @@ bool IOManager::stopping(uint64_t& timeout) {
 }
 
 bool IOManager::stopping() {
-    return Scheduler::stopping()
-        && m_pendingEventCount == 0;
+    uint64_t timeout = 0;
+    return stopping(timeout);
 }
 
 void IOManager::idle() {
     epoll_event* events = new epoll_event[64]();
-    std::shared_ptr<epoll_event> shared_events(events, [](epoll_event* ptr) {
+    std::shared_ptr<epoll_event> shared_events(events, [](epoll_event* ptr){
         delete[] ptr;
     });
 
     while(true) {
-        if(stopping()) {
-            WEBSERVER_LOG_INFO(g_logger) << "name=" << getName() << " idle stopping exit";
+        uint64_t next_timeout = 0;
+        if(stopping(next_timeout)) {
+            WEBSERVER_LOG_INFO(g_logger) << "name=" << getName()
+                                     << " idle stopping exit";
             break;
         }
 
         int rt = 0;
         do {
-            static const int MAX_TIMEOUT = 5000;
-            rt = epoll_wait(m_epfd, events, 64, MAX_TIMEOUT);
+            static const int MAX_TIMEOUT = 3000;
+            if(next_timeout != ~0ull) {
+                next_timeout = (int)next_timeout > MAX_TIMEOUT
+                                ? MAX_TIMEOUT : next_timeout;
+            } else {
+                next_timeout = MAX_TIMEOUT;
+            }
+            rt = epoll_wait(m_epfd, events, 64, (int)next_timeout);
             if(rt < 0 && errno == EINTR) {
             } else {
                 break;
             }
         } while(true);
+
+        std::vector<std::function<void()> > cbs;
+        listExpiredCb(cbs);
+        if(!cbs.empty()) {
+            //WEBSERVER_LOG_DEBUG(g_logger) << "on timer cbs.size=" << cbs.size();
+            schedule(cbs.begin(), cbs.end());
+            cbs.clear();
+        }
 
         for(int i = 0; i < rt; ++i) {
             epoll_event& event = events[i];
@@ -333,22 +356,12 @@ void IOManager::idle() {
                 --m_pendingEventCount;
             }
         }
+
         Fiber::ptr cur = Fiber::GetThis();
         auto raw_ptr = cur.get();
         cur.reset();
 
         raw_ptr->swapOut();
-    }
-}
-
-void IOManager::contextResize(size_t size) {
-    m_fdContexts.resize(size);
-
-    for(size_t i = 0; i < m_fdContexts.size(); ++i) {
-        if(!m_fdContexts[i]) {
-            m_fdContexts[i] = new FdContext;
-            m_fdContexts[i]->fd = i;
-        }
     }
 }
 
