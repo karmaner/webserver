@@ -391,7 +391,9 @@ int fcntl(int fd, int cmd, ... /* arg */ ) {
         case F_SETSIG:
         case F_SETLEASE:
         case F_NOTIFY:
+#ifdef F_SETPIPE_SZ
         case F_SETPIPE_SZ:
+#endif
             {
                 int arg = va_arg(va, int);
                 va_end(va);
@@ -402,7 +404,9 @@ int fcntl(int fd, int cmd, ... /* arg */ ) {
         case F_GETOWN:
         case F_GETSIG:
         case F_GETLEASE:
+#ifdef F_GETPIPE_SZ
         case F_GETPIPE_SZ:
+#endif
             {
                 va_end(va);
                 return fcntl_f(fd, cmd);

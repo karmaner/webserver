@@ -5,6 +5,8 @@ static webserver::Logger::ptr g_logger = WEBSERVER_LOG_ROOT();
 
 #define XX(...) #__VA_ARGS__
 
+
+webserver::IOManager::ptr woker;
 void run() {
     g_logger->setLevel(webserver::LogLevel::INFO);
     webserver::http::HttpServer::ptr server(new webserver::http::HttpServer(true));
@@ -49,7 +51,9 @@ void run() {
 }
 
 int main(int argc, char** argv) {
-    webserver::IOManager iom(4);
+    //webserver::IOManager iom(4);
+    webserver::IOManager iom(1, true, "main");
+    woker.reset(new webserver::IOManager(3, false, "worker"));
     iom.schedule(run);
     return 0;
 }

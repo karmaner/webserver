@@ -353,6 +353,117 @@ test_uri/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_uri.dir/build.make CMakeFiles/test_uri.dir/build
 .PHONY : test_uri/fast
 
+#=============================================================================
+# Target rules for targets named my_http_server
+
+# Build rule for target.
+my_http_server: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 my_http_server
+.PHONY : my_http_server
+
+# fast build rule for target.
+my_http_server/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/my_http_server.dir/build.make CMakeFiles/my_http_server.dir/build
+.PHONY : my_http_server/fast
+
+#=============================================================================
+# Target rules for targets named echo_udp_client
+
+# Build rule for target.
+echo_udp_client: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 echo_udp_client
+.PHONY : echo_udp_client
+
+# fast build rule for target.
+echo_udp_client/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/echo_udp_client.dir/build.make CMakeFiles/echo_udp_client.dir/build
+.PHONY : echo_udp_client/fast
+
+#=============================================================================
+# Target rules for targets named echo_server_upd
+
+# Build rule for target.
+echo_server_upd: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 echo_server_upd
+.PHONY : echo_server_upd
+
+# fast build rule for target.
+echo_server_upd/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/echo_server_upd.dir/build.make CMakeFiles/echo_server_upd.dir/build
+.PHONY : echo_server_upd/fast
+
+samples/echo_server_udp.o: samples/echo_server_udp.cpp.o
+.PHONY : samples/echo_server_udp.o
+
+# target to build an object file
+samples/echo_server_udp.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/echo_server_upd.dir/build.make CMakeFiles/echo_server_upd.dir/samples/echo_server_udp.cpp.o
+.PHONY : samples/echo_server_udp.cpp.o
+
+samples/echo_server_udp.i: samples/echo_server_udp.cpp.i
+.PHONY : samples/echo_server_udp.i
+
+# target to preprocess a source file
+samples/echo_server_udp.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/echo_server_upd.dir/build.make CMakeFiles/echo_server_upd.dir/samples/echo_server_udp.cpp.i
+.PHONY : samples/echo_server_udp.cpp.i
+
+samples/echo_server_udp.s: samples/echo_server_udp.cpp.s
+.PHONY : samples/echo_server_udp.s
+
+# target to generate assembly for a file
+samples/echo_server_udp.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/echo_server_upd.dir/build.make CMakeFiles/echo_server_upd.dir/samples/echo_server_udp.cpp.s
+.PHONY : samples/echo_server_udp.cpp.s
+
+samples/echo_udp_client.o: samples/echo_udp_client.cpp.o
+.PHONY : samples/echo_udp_client.o
+
+# target to build an object file
+samples/echo_udp_client.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/echo_udp_client.dir/build.make CMakeFiles/echo_udp_client.dir/samples/echo_udp_client.cpp.o
+.PHONY : samples/echo_udp_client.cpp.o
+
+samples/echo_udp_client.i: samples/echo_udp_client.cpp.i
+.PHONY : samples/echo_udp_client.i
+
+# target to preprocess a source file
+samples/echo_udp_client.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/echo_udp_client.dir/build.make CMakeFiles/echo_udp_client.dir/samples/echo_udp_client.cpp.i
+.PHONY : samples/echo_udp_client.cpp.i
+
+samples/echo_udp_client.s: samples/echo_udp_client.cpp.s
+.PHONY : samples/echo_udp_client.s
+
+# target to generate assembly for a file
+samples/echo_udp_client.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/echo_udp_client.dir/build.make CMakeFiles/echo_udp_client.dir/samples/echo_udp_client.cpp.s
+.PHONY : samples/echo_udp_client.cpp.s
+
+samples/my_http_server.o: samples/my_http_server.cpp.o
+.PHONY : samples/my_http_server.o
+
+# target to build an object file
+samples/my_http_server.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/my_http_server.dir/build.make CMakeFiles/my_http_server.dir/samples/my_http_server.cpp.o
+.PHONY : samples/my_http_server.cpp.o
+
+samples/my_http_server.i: samples/my_http_server.cpp.i
+.PHONY : samples/my_http_server.i
+
+# target to preprocess a source file
+samples/my_http_server.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/my_http_server.dir/build.make CMakeFiles/my_http_server.dir/samples/my_http_server.cpp.i
+.PHONY : samples/my_http_server.cpp.i
+
+samples/my_http_server.s: samples/my_http_server.cpp.s
+.PHONY : samples/my_http_server.s
+
+# target to generate assembly for a file
+samples/my_http_server.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/my_http_server.dir/build.make CMakeFiles/my_http_server.dir/samples/my_http_server.cpp.s
+.PHONY : samples/my_http_server.cpp.s
+
 src/basic/address.o: src/basic/address.cpp.o
 .PHONY : src/basic/address.o
 
@@ -1418,6 +1529,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... echo_server"
+	@echo "... echo_server_upd"
+	@echo "... echo_udp_client"
+	@echo "... my_http_server"
 	@echo "... test_address"
 	@echo "... test_bytearray"
 	@echo "... test_config"
@@ -1435,6 +1549,15 @@ help:
 	@echo "... test_uri"
 	@echo "... test_util"
 	@echo "... webserver"
+	@echo "... samples/echo_server_udp.o"
+	@echo "... samples/echo_server_udp.i"
+	@echo "... samples/echo_server_udp.s"
+	@echo "... samples/echo_udp_client.o"
+	@echo "... samples/echo_udp_client.i"
+	@echo "... samples/echo_udp_client.s"
+	@echo "... samples/my_http_server.o"
+	@echo "... samples/my_http_server.i"
+	@echo "... samples/my_http_server.s"
 	@echo "... src/basic/address.o"
 	@echo "... src/basic/address.i"
 	@echo "... src/basic/address.s"

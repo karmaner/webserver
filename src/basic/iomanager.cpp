@@ -273,6 +273,7 @@ bool IOManager::stopping() {
 }
 
 void IOManager::idle() {
+    WEBSERVER_LOG_DEBUG(g_logger) << "idle";
     epoll_event* events = new epoll_event[64]();
     std::shared_ptr<epoll_event> shared_events(events, [](epoll_event* ptr){
         delete[] ptr;
@@ -282,7 +283,7 @@ void IOManager::idle() {
         uint64_t next_timeout = 0;
         if(stopping(next_timeout)) {
             WEBSERVER_LOG_INFO(g_logger) << "name=" << getName()
-                                     << " idle stopping exit";
+                                        << " idle stopping exit";
             break;
         }
 
