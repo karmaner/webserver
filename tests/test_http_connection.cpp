@@ -8,7 +8,7 @@ static webserver::Logger::ptr g_logger = WEBSERVER_LOG_ROOT();
 
 void test_pool() {
     webserver::http::HttpConnectionPool::ptr pool(new webserver::http::HttpConnectionPool(
-                "www.bilibili.com", "", 80, 10, 1000 * 30, 5));
+                "www.bilibili.com", "", 80, false, 10, 1000 * 30, 5));
 
     webserver::IOManager::GetThis()->addTimer(1000, [pool](){
             auto r = pool->doGet("/", 300);
@@ -62,8 +62,26 @@ void run() {
     test_pool();
 }
 
+void test_https() {
+    auto r = webserver::http::HttpConnection::DoGet("https://www.baidu.com/", 300);
+    WEBSERVER_LOG_INFO(g_logger) << "result=" << r->result
+        << " error=" << r->error
+        << " rsp=" << (r->response ? r->response->toString() : "");
+
+    //sylar::http::HttpConnectionPool::ptr pool(new sylar::http::HttpConnectionPool(
+    //            "www.baidu.com", "", 443, true, 10, 1000 * 30, 5));
+    auto pool = webserver::http::HttpConnectionPool::Create(
+                    "https://www.baidu.com", "", 10, 1000 * 30, 5);
+
+    webserver::IOManager::GetThis()->addTimer(1000, [pool](){
+            auto r = pool->doGet("/", 300);
+            WEBSERVER_LOG_INFO(g_logger) << r->toString();
+    }, true);
+}
+
 int main(int argc, char** argv) {
     webserver::IOManager iom(2);
-    iom.schedule(run);
+    //iom.schedule(run);
+    iom.schedule(test_https);
     return 0;
 }

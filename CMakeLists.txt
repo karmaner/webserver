@@ -57,6 +57,7 @@ set(LIB_SRC
 
     src/util/hash_util.cpp
 
+    src/application/application.cpp
     )
 
 ragelmaker(src/http/http11_parser.rl LIB_SRC ${CMAKE_CURRENT_SOURCE_DIR}/src/http)
@@ -112,6 +113,7 @@ webserver_add_executable(test_env "tests/test_env.cpp" webserver "${LIBS}")
 
 webserver_add_executable(test_ws_client "tests/test_ws_client.cpp" webserver "${LIBS}")
 webserver_add_executable(test_ws_server "tests/test_ws_server.cpp" webserver "${LIBS}")
+webserver_add_executable(test_application "tests/test_application.cpp" webserver "${LIBS}")
 
 SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 SET(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)

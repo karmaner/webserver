@@ -83,10 +83,13 @@ private:
 class NotFoundServlet : public Servlet {
 public:
     typedef std::shared_ptr<NotFoundServlet> ptr;
-    NotFoundServlet();
+    NotFoundServlet(const std::string& name);
     virtual int32_t handle(webserver::http::HttpRequest::ptr request
                     , webserver::http::HttpResponse::ptr response
                     , webserver::http::HttpSession::ptr session) override;
+private:
+    std::string m_name;
+    std::string m_content;
 
 };
 

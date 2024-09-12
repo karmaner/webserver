@@ -54,8 +54,8 @@ HttpRequest::ptr WSSession::handleShake() {
         rsp->setHeader("Sec-WebSocket-Accept", v);
 
         sendResponse(rsp);
-        WEBSERVER_LOG_INFO(g_logger) << *req;
-        WEBSERVER_LOG_INFO(g_logger) << *rsp;
+        WEBSERVER_LOG_DEBUG(g_logger) << *req;
+        WEBSERVER_LOG_DEBUG(g_logger) << *rsp;
         return req;
     } while(false);
     if(req) {

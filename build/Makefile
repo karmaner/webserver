@@ -457,6 +457,19 @@ test_ws_server/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_ws_server.dir/build.make CMakeFiles/test_ws_server.dir/build
 .PHONY : test_ws_server/fast
 
+#=============================================================================
+# Target rules for targets named test_application
+
+# Build rule for target.
+test_application: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_application
+.PHONY : test_application
+
+# fast build rule for target.
+test_application/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_application.dir/build.make CMakeFiles/test_application.dir/build
+.PHONY : test_application/fast
+
 samples/echo_server_udp.o: samples/echo_server_udp.cpp.o
 .PHONY : samples/echo_server_udp.o
 
@@ -528,6 +541,30 @@ samples/my_http_server.s: samples/my_http_server.cpp.s
 samples/my_http_server.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/my_http_server.dir/build.make CMakeFiles/my_http_server.dir/samples/my_http_server.cpp.s
 .PHONY : samples/my_http_server.cpp.s
+
+src/application/application.o: src/application/application.cpp.o
+.PHONY : src/application/application.o
+
+# target to build an object file
+src/application/application.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/application/application.cpp.o
+.PHONY : src/application/application.cpp.o
+
+src/application/application.i: src/application/application.cpp.i
+.PHONY : src/application/application.i
+
+# target to preprocess a source file
+src/application/application.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/application/application.cpp.i
+.PHONY : src/application/application.cpp.i
+
+src/application/application.s: src/application/application.cpp.s
+.PHONY : src/application/application.s
+
+# target to generate assembly for a file
+src/application/application.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/application/application.cpp.s
+.PHONY : src/application/application.cpp.s
 
 src/basic/address.o: src/basic/address.cpp.o
 .PHONY : src/basic/address.o
@@ -1369,6 +1406,30 @@ tests/test_address.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_address.dir/build.make CMakeFiles/test_address.dir/tests/test_address.cpp.s
 .PHONY : tests/test_address.cpp.s
 
+tests/test_application.o: tests/test_application.cpp.o
+.PHONY : tests/test_application.o
+
+# target to build an object file
+tests/test_application.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_application.dir/build.make CMakeFiles/test_application.dir/tests/test_application.cpp.o
+.PHONY : tests/test_application.cpp.o
+
+tests/test_application.i: tests/test_application.cpp.i
+.PHONY : tests/test_application.i
+
+# target to preprocess a source file
+tests/test_application.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_application.dir/build.make CMakeFiles/test_application.dir/tests/test_application.cpp.i
+.PHONY : tests/test_application.cpp.i
+
+tests/test_application.s: tests/test_application.cpp.s
+.PHONY : tests/test_application.s
+
+# target to generate assembly for a file
+tests/test_application.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_application.dir/build.make CMakeFiles/test_application.dir/tests/test_application.cpp.s
+.PHONY : tests/test_application.cpp.s
+
 tests/test_bytearray.o: tests/test_bytearray.cpp.o
 .PHONY : tests/test_bytearray.o
 
@@ -1862,6 +1923,7 @@ help:
 	@echo "... echo_udp_client"
 	@echo "... my_http_server"
 	@echo "... test_address"
+	@echo "... test_application"
 	@echo "... test_bytearray"
 	@echo "... test_config"
 	@echo "... test_daemon"
@@ -1892,6 +1954,9 @@ help:
 	@echo "... samples/my_http_server.o"
 	@echo "... samples/my_http_server.i"
 	@echo "... samples/my_http_server.s"
+	@echo "... src/application/application.o"
+	@echo "... src/application/application.i"
+	@echo "... src/application/application.s"
 	@echo "... src/basic/address.o"
 	@echo "... src/basic/address.i"
 	@echo "... src/basic/address.s"
@@ -1997,6 +2062,9 @@ help:
 	@echo "... tests/test_address.o"
 	@echo "... tests/test_address.i"
 	@echo "... tests/test_address.s"
+	@echo "... tests/test_application.o"
+	@echo "... tests/test_application.i"
+	@echo "... tests/test_application.s"
 	@echo "... tests/test_bytearray.o"
 	@echo "... tests/test_bytearray.i"
 	@echo "... tests/test_bytearray.s"

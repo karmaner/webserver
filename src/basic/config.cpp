@@ -27,14 +27,16 @@ static void ListAllMember(const std::string& prefix
 
     output.push_back(std::make_pair(prefix, node));
     if(node.IsMap()) {
-        for(auto it = node.begin(); it != node.end(); ++it) {
-            ListAllMember(prefix.empty() ? it->first.Scalar() : prefix + "." + it->first.Scalar(), it->second, output);
+        for(auto it = node.begin();
+            it != node.end(); ++it) {
+            ListAllMember(prefix.empty() ? it->first.Scalar() 
+                : prefix + "." + it->first.Scalar(), it->second, output);
         }
     }
 }
 
 void Config::LoadFromYaml(const YAML::Node& root) {
-    std::list<std::pair<std::string, const YAML::Node>> all_nodes;
+    std::list<std::pair<std::string, const YAML::Node> > all_nodes;
     ListAllMember("", root, all_nodes);
 
     for(auto& i : all_nodes) {
@@ -62,7 +64,7 @@ void Config::LoadFromYaml(const YAML::Node& root) {
 static std::map<std::string, uint64_t> s_file2modifytime;
 static webserver::Mutex s_mutex;
 
-void Config::LoadFromConfDir(const std::string& path, bool force) {
+void Config::LoadFromConfDir(const std::string& path) {
     std::string absoulte_path = webserver::EnvMgr::GetInstance()->getAbsolutePath(path);
     std::vector<std::string> files;
     FSUtil::ListAllFile(files, absoulte_path, ".yml");
@@ -72,7 +74,7 @@ void Config::LoadFromConfDir(const std::string& path, bool force) {
             struct stat st;
             lstat(i.c_str(), &st);
             webserver::Mutex::Lock lock(s_mutex);
-            if(!force && s_file2modifytime[i] == (uint64_t)st.st_mtime) {
+            if(s_file2modifytime[i] == (uint64_t)st.st_mtime) {
                 continue;
             }
             s_file2modifytime[i] = st.st_mtime;

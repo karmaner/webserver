@@ -10,6 +10,7 @@
 #include <unistd.h>
 #include <vector>
 #include <iomanip>
+#include <boost/lexical_cast.hpp>
 
 #include "src/util/hash_util.h"
 
@@ -47,6 +48,32 @@ public:
                     ,std::ios_base::openmode mode = std::ios_base::out);
 };
 
+template<class Map, class K, class V>
+V GetParamValue(const Map& m, const K& k, const V& def = V()) {
+    auto it = m.find(k);
+    if(it == m.end()) {
+        return def;
+    }
+    try {
+        return boost::lexical_cast<V>(it->second);
+    } catch (...) {
+    }
+    return def;
+}
+
+template<class Map, class K, class V>
+bool CheckGetParamValue(const Map& m, const K& k, V& v) {
+    auto it = m.find(k);
+    if(it == m.end()) {
+        return false;
+    }
+    try {
+        v = boost::lexical_cast<V>(it->second);
+        return true;
+    } catch (...) {
+    }
+    return false;
+}
 
 } // namespace webserver
 
