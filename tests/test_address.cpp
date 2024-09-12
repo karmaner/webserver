@@ -7,7 +7,9 @@ void test() {
     std::vector<webserver::Address::ptr> addrs;
 
     WEBSERVER_LOG_INFO(g_logger) << "begin";
-    bool v = webserver::Address::Lookup(addrs, "blog.akamini.xyz", AF_INET);
+    //bool v = webserver::Address::Lookup(addrs, "localhost:3080");
+    //bool v = webserver::Address::Lookup(addrs, "www.baidu.com", AF_INET);
+    bool v = webserver::Address::Lookup(addrs, "www.bilibili.com", AF_INET);
     WEBSERVER_LOG_INFO(g_logger) << "end";
     if(!v) {
         WEBSERVER_LOG_ERROR(g_logger) << "lookup fail";
@@ -16,6 +18,13 @@ void test() {
 
     for(size_t i = 0; i < addrs.size(); ++i) {
         WEBSERVER_LOG_INFO(g_logger) << i << " - " << addrs[i]->toString();
+    }
+
+    auto addr = webserver::Address::LookupAny("localhost:4080");
+    if(addr) {
+        WEBSERVER_LOG_INFO(g_logger) << *addr;
+    } else {
+        WEBSERVER_LOG_ERROR(g_logger) << "error";
     }
 }
 
@@ -36,7 +45,7 @@ void test_iface() {
 
 void test_ipv4() {
     //auto addr = webserver::IPAddress::Create("www.webserver.top");
-    auto addr = webserver::IPAddress::Create("139.159.241.37");
+    auto addr = webserver::IPAddress::Create("127.0.0.8");
     if(addr) {
         WEBSERVER_LOG_INFO(g_logger) << addr->toString();
     }

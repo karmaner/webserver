@@ -34,6 +34,7 @@ set(LIB_SRC
     src/http/ws_server.cpp
     src/http/ws_connection.cpp
 
+    src/basic/worker.cpp
     src/basic/daemon.cpp
     src/basic/address.cpp
     src/basic/bytearray.cpp

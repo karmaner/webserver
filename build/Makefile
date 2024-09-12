@@ -1046,6 +1046,30 @@ src/basic/util.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/basic/util.cpp.s
 .PHONY : src/basic/util.cpp.s
 
+src/basic/worker.o: src/basic/worker.cpp.o
+.PHONY : src/basic/worker.o
+
+# target to build an object file
+src/basic/worker.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/basic/worker.cpp.o
+.PHONY : src/basic/worker.cpp.o
+
+src/basic/worker.i: src/basic/worker.cpp.i
+.PHONY : src/basic/worker.i
+
+# target to preprocess a source file
+src/basic/worker.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/basic/worker.cpp.i
+.PHONY : src/basic/worker.cpp.i
+
+src/basic/worker.s: src/basic/worker.cpp.s
+.PHONY : src/basic/worker.s
+
+# target to generate assembly for a file
+src/basic/worker.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/basic/worker.cpp.s
+.PHONY : src/basic/worker.cpp.s
+
 src/examples/echo_server.o: src/examples/echo_server.cpp.o
 .PHONY : src/examples/echo_server.o
 
@@ -2017,6 +2041,9 @@ help:
 	@echo "... src/basic/util.o"
 	@echo "... src/basic/util.i"
 	@echo "... src/basic/util.s"
+	@echo "... src/basic/worker.o"
+	@echo "... src/basic/worker.i"
+	@echo "... src/basic/worker.s"
 	@echo "... src/examples/echo_server.o"
 	@echo "... src/examples/echo_server.i"
 	@echo "... src/examples/echo_server.s"
