@@ -8,7 +8,7 @@ static webserver::Logger::ptr g_logger = WEBSERVER_LOG_ROOT();
 
 void test_pool() {
     webserver::http::HttpConnectionPool::ptr pool(new webserver::http::HttpConnectionPool(
-                "www.sylar.top", "", 80, 10, 1000 * 30, 5));
+                "www.bilibili.com", "", 80, 10, 1000 * 30, 5));
 
     webserver::IOManager::GetThis()->addTimer(1000, [pool](){
             auto r = pool->doGet("/", 300);

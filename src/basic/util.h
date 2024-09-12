@@ -9,6 +9,9 @@
 #include <sys/types.h>
 #include <unistd.h>
 #include <vector>
+#include <iomanip>
+
+#include "src/util/hash_util.h"
 
 namespace webserver {
 pid_t GetThreadId();
@@ -22,6 +25,7 @@ uint64_t GetCurrentUS();
 void Backtrace(std::vector<std::string>& bt, int size, int skip = 1);
 std::string BacktraceToString(int size = 64, int skip = 2, const std::string& prefix = "");
 
+std::string Time2Str(time_t ts = time(0), const std::string& format = "%Y-%m-%d %H:%M:%S");
 
 class FSUtil {
 public:

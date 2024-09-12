@@ -133,6 +133,19 @@ webserver/fast:
 .PHONY : webserver/fast
 
 #=============================================================================
+# Target rules for targets named test_log
+
+# Build rule for target.
+test_log: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_log
+.PHONY : test_log
+
+# fast build rule for target.
+test_log/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_log.dir/build.make CMakeFiles/test_log.dir/build
+.PHONY : test_log/fast
+
+#=============================================================================
 # Target rules for targets named test_config
 
 # Build rule for target.
@@ -392,6 +405,58 @@ echo_server_upd/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/echo_server_upd.dir/build.make CMakeFiles/echo_server_upd.dir/build
 .PHONY : echo_server_upd/fast
 
+#=============================================================================
+# Target rules for targets named test_daemon
+
+# Build rule for target.
+test_daemon: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_daemon
+.PHONY : test_daemon
+
+# fast build rule for target.
+test_daemon/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_daemon.dir/build.make CMakeFiles/test_daemon.dir/build
+.PHONY : test_daemon/fast
+
+#=============================================================================
+# Target rules for targets named test_env
+
+# Build rule for target.
+test_env: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_env
+.PHONY : test_env
+
+# fast build rule for target.
+test_env/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_env.dir/build.make CMakeFiles/test_env.dir/build
+.PHONY : test_env/fast
+
+#=============================================================================
+# Target rules for targets named test_ws_client
+
+# Build rule for target.
+test_ws_client: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_ws_client
+.PHONY : test_ws_client
+
+# fast build rule for target.
+test_ws_client/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_ws_client.dir/build.make CMakeFiles/test_ws_client.dir/build
+.PHONY : test_ws_client/fast
+
+#=============================================================================
+# Target rules for targets named test_ws_server
+
+# Build rule for target.
+test_ws_server: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_ws_server
+.PHONY : test_ws_server
+
+# fast build rule for target.
+test_ws_server/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_ws_server.dir/build.make CMakeFiles/test_ws_server.dir/build
+.PHONY : test_ws_server/fast
+
 samples/echo_server_udp.o: samples/echo_server_udp.cpp.o
 .PHONY : samples/echo_server_udp.o
 
@@ -535,6 +600,30 @@ src/basic/config.s: src/basic/config.cpp.s
 src/basic/config.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/basic/config.cpp.s
 .PHONY : src/basic/config.cpp.s
+
+src/basic/daemon.o: src/basic/daemon.cpp.o
+.PHONY : src/basic/daemon.o
+
+# target to build an object file
+src/basic/daemon.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/basic/daemon.cpp.o
+.PHONY : src/basic/daemon.cpp.o
+
+src/basic/daemon.i: src/basic/daemon.cpp.i
+.PHONY : src/basic/daemon.i
+
+# target to preprocess a source file
+src/basic/daemon.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/basic/daemon.cpp.i
+.PHONY : src/basic/daemon.cpp.i
+
+src/basic/daemon.s: src/basic/daemon.cpp.s
+.PHONY : src/basic/daemon.s
+
+# target to generate assembly for a file
+src/basic/daemon.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/basic/daemon.cpp.s
+.PHONY : src/basic/daemon.cpp.s
 
 src/basic/env.o: src/basic/env.cpp.o
 .PHONY : src/basic/env.o
@@ -1136,6 +1225,126 @@ src/http/servlet.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/http/servlet.cpp.s
 .PHONY : src/http/servlet.cpp.s
 
+src/http/ws_connection.o: src/http/ws_connection.cpp.o
+.PHONY : src/http/ws_connection.o
+
+# target to build an object file
+src/http/ws_connection.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/http/ws_connection.cpp.o
+.PHONY : src/http/ws_connection.cpp.o
+
+src/http/ws_connection.i: src/http/ws_connection.cpp.i
+.PHONY : src/http/ws_connection.i
+
+# target to preprocess a source file
+src/http/ws_connection.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/http/ws_connection.cpp.i
+.PHONY : src/http/ws_connection.cpp.i
+
+src/http/ws_connection.s: src/http/ws_connection.cpp.s
+.PHONY : src/http/ws_connection.s
+
+# target to generate assembly for a file
+src/http/ws_connection.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/http/ws_connection.cpp.s
+.PHONY : src/http/ws_connection.cpp.s
+
+src/http/ws_server.o: src/http/ws_server.cpp.o
+.PHONY : src/http/ws_server.o
+
+# target to build an object file
+src/http/ws_server.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/http/ws_server.cpp.o
+.PHONY : src/http/ws_server.cpp.o
+
+src/http/ws_server.i: src/http/ws_server.cpp.i
+.PHONY : src/http/ws_server.i
+
+# target to preprocess a source file
+src/http/ws_server.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/http/ws_server.cpp.i
+.PHONY : src/http/ws_server.cpp.i
+
+src/http/ws_server.s: src/http/ws_server.cpp.s
+.PHONY : src/http/ws_server.s
+
+# target to generate assembly for a file
+src/http/ws_server.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/http/ws_server.cpp.s
+.PHONY : src/http/ws_server.cpp.s
+
+src/http/ws_servlet.o: src/http/ws_servlet.cpp.o
+.PHONY : src/http/ws_servlet.o
+
+# target to build an object file
+src/http/ws_servlet.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/http/ws_servlet.cpp.o
+.PHONY : src/http/ws_servlet.cpp.o
+
+src/http/ws_servlet.i: src/http/ws_servlet.cpp.i
+.PHONY : src/http/ws_servlet.i
+
+# target to preprocess a source file
+src/http/ws_servlet.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/http/ws_servlet.cpp.i
+.PHONY : src/http/ws_servlet.cpp.i
+
+src/http/ws_servlet.s: src/http/ws_servlet.cpp.s
+.PHONY : src/http/ws_servlet.s
+
+# target to generate assembly for a file
+src/http/ws_servlet.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/http/ws_servlet.cpp.s
+.PHONY : src/http/ws_servlet.cpp.s
+
+src/http/ws_session.o: src/http/ws_session.cpp.o
+.PHONY : src/http/ws_session.o
+
+# target to build an object file
+src/http/ws_session.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/http/ws_session.cpp.o
+.PHONY : src/http/ws_session.cpp.o
+
+src/http/ws_session.i: src/http/ws_session.cpp.i
+.PHONY : src/http/ws_session.i
+
+# target to preprocess a source file
+src/http/ws_session.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/http/ws_session.cpp.i
+.PHONY : src/http/ws_session.cpp.i
+
+src/http/ws_session.s: src/http/ws_session.cpp.s
+.PHONY : src/http/ws_session.s
+
+# target to generate assembly for a file
+src/http/ws_session.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/http/ws_session.cpp.s
+.PHONY : src/http/ws_session.cpp.s
+
+src/util/hash_util.o: src/util/hash_util.cpp.o
+.PHONY : src/util/hash_util.o
+
+# target to build an object file
+src/util/hash_util.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/util/hash_util.cpp.o
+.PHONY : src/util/hash_util.cpp.o
+
+src/util/hash_util.i: src/util/hash_util.cpp.i
+.PHONY : src/util/hash_util.i
+
+# target to preprocess a source file
+src/util/hash_util.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/util/hash_util.cpp.i
+.PHONY : src/util/hash_util.cpp.i
+
+src/util/hash_util.s: src/util/hash_util.cpp.s
+.PHONY : src/util/hash_util.s
+
+# target to generate assembly for a file
+src/util/hash_util.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/util/hash_util.cpp.s
+.PHONY : src/util/hash_util.cpp.s
+
 tests/test_address.o: tests/test_address.cpp.o
 .PHONY : tests/test_address.o
 
@@ -1207,6 +1416,54 @@ tests/test_config.s: tests/test_config.cpp.s
 tests/test_config.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_config.dir/build.make CMakeFiles/test_config.dir/tests/test_config.cpp.s
 .PHONY : tests/test_config.cpp.s
+
+tests/test_daemon.o: tests/test_daemon.cpp.o
+.PHONY : tests/test_daemon.o
+
+# target to build an object file
+tests/test_daemon.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_daemon.dir/build.make CMakeFiles/test_daemon.dir/tests/test_daemon.cpp.o
+.PHONY : tests/test_daemon.cpp.o
+
+tests/test_daemon.i: tests/test_daemon.cpp.i
+.PHONY : tests/test_daemon.i
+
+# target to preprocess a source file
+tests/test_daemon.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_daemon.dir/build.make CMakeFiles/test_daemon.dir/tests/test_daemon.cpp.i
+.PHONY : tests/test_daemon.cpp.i
+
+tests/test_daemon.s: tests/test_daemon.cpp.s
+.PHONY : tests/test_daemon.s
+
+# target to generate assembly for a file
+tests/test_daemon.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_daemon.dir/build.make CMakeFiles/test_daemon.dir/tests/test_daemon.cpp.s
+.PHONY : tests/test_daemon.cpp.s
+
+tests/test_env.o: tests/test_env.cpp.o
+.PHONY : tests/test_env.o
+
+# target to build an object file
+tests/test_env.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_env.dir/build.make CMakeFiles/test_env.dir/tests/test_env.cpp.o
+.PHONY : tests/test_env.cpp.o
+
+tests/test_env.i: tests/test_env.cpp.i
+.PHONY : tests/test_env.i
+
+# target to preprocess a source file
+tests/test_env.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_env.dir/build.make CMakeFiles/test_env.dir/tests/test_env.cpp.i
+.PHONY : tests/test_env.cpp.i
+
+tests/test_env.s: tests/test_env.cpp.s
+.PHONY : tests/test_env.s
+
+# target to generate assembly for a file
+tests/test_env.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_env.dir/build.make CMakeFiles/test_env.dir/tests/test_env.cpp.s
+.PHONY : tests/test_env.cpp.s
 
 tests/test_fiber.o: tests/test_fiber.cpp.o
 .PHONY : tests/test_fiber.o
@@ -1376,6 +1633,30 @@ tests/test_iomanager.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_iomanager.dir/build.make CMakeFiles/test_iomanager.dir/tests/test_iomanager.cpp.s
 .PHONY : tests/test_iomanager.cpp.s
 
+tests/test_log.o: tests/test_log.cpp.o
+.PHONY : tests/test_log.o
+
+# target to build an object file
+tests/test_log.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_log.dir/build.make CMakeFiles/test_log.dir/tests/test_log.cpp.o
+.PHONY : tests/test_log.cpp.o
+
+tests/test_log.i: tests/test_log.cpp.i
+.PHONY : tests/test_log.i
+
+# target to preprocess a source file
+tests/test_log.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_log.dir/build.make CMakeFiles/test_log.dir/tests/test_log.cpp.i
+.PHONY : tests/test_log.cpp.i
+
+tests/test_log.s: tests/test_log.cpp.s
+.PHONY : tests/test_log.s
+
+# target to generate assembly for a file
+tests/test_log.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_log.dir/build.make CMakeFiles/test_log.dir/tests/test_log.cpp.s
+.PHONY : tests/test_log.cpp.s
+
 tests/test_scheduler.o: tests/test_scheduler.cpp.o
 .PHONY : tests/test_scheduler.o
 
@@ -1520,6 +1801,54 @@ tests/test_util.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_util.dir/build.make CMakeFiles/test_util.dir/tests/test_util.cpp.s
 .PHONY : tests/test_util.cpp.s
 
+tests/test_ws_client.o: tests/test_ws_client.cpp.o
+.PHONY : tests/test_ws_client.o
+
+# target to build an object file
+tests/test_ws_client.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_ws_client.dir/build.make CMakeFiles/test_ws_client.dir/tests/test_ws_client.cpp.o
+.PHONY : tests/test_ws_client.cpp.o
+
+tests/test_ws_client.i: tests/test_ws_client.cpp.i
+.PHONY : tests/test_ws_client.i
+
+# target to preprocess a source file
+tests/test_ws_client.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_ws_client.dir/build.make CMakeFiles/test_ws_client.dir/tests/test_ws_client.cpp.i
+.PHONY : tests/test_ws_client.cpp.i
+
+tests/test_ws_client.s: tests/test_ws_client.cpp.s
+.PHONY : tests/test_ws_client.s
+
+# target to generate assembly for a file
+tests/test_ws_client.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_ws_client.dir/build.make CMakeFiles/test_ws_client.dir/tests/test_ws_client.cpp.s
+.PHONY : tests/test_ws_client.cpp.s
+
+tests/test_ws_server.o: tests/test_ws_server.cpp.o
+.PHONY : tests/test_ws_server.o
+
+# target to build an object file
+tests/test_ws_server.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_ws_server.dir/build.make CMakeFiles/test_ws_server.dir/tests/test_ws_server.cpp.o
+.PHONY : tests/test_ws_server.cpp.o
+
+tests/test_ws_server.i: tests/test_ws_server.cpp.i
+.PHONY : tests/test_ws_server.i
+
+# target to preprocess a source file
+tests/test_ws_server.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_ws_server.dir/build.make CMakeFiles/test_ws_server.dir/tests/test_ws_server.cpp.i
+.PHONY : tests/test_ws_server.cpp.i
+
+tests/test_ws_server.s: tests/test_ws_server.cpp.s
+.PHONY : tests/test_ws_server.s
+
+# target to generate assembly for a file
+tests/test_ws_server.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_ws_server.dir/build.make CMakeFiles/test_ws_server.dir/tests/test_ws_server.cpp.s
+.PHONY : tests/test_ws_server.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -1535,6 +1864,8 @@ help:
 	@echo "... test_address"
 	@echo "... test_bytearray"
 	@echo "... test_config"
+	@echo "... test_daemon"
+	@echo "... test_env"
 	@echo "... test_fiber"
 	@echo "... test_hook"
 	@echo "... test_http"
@@ -1542,12 +1873,15 @@ help:
 	@echo "... test_http_parser"
 	@echo "... test_http_server"
 	@echo "... test_iomanager"
+	@echo "... test_log"
 	@echo "... test_scheduler"
 	@echo "... test_socket"
 	@echo "... test_tcp_server"
 	@echo "... test_thread"
 	@echo "... test_uri"
 	@echo "... test_util"
+	@echo "... test_ws_client"
+	@echo "... test_ws_server"
 	@echo "... webserver"
 	@echo "... samples/echo_server_udp.o"
 	@echo "... samples/echo_server_udp.i"
@@ -1567,6 +1901,9 @@ help:
 	@echo "... src/basic/config.o"
 	@echo "... src/basic/config.i"
 	@echo "... src/basic/config.s"
+	@echo "... src/basic/daemon.o"
+	@echo "... src/basic/daemon.i"
+	@echo "... src/basic/daemon.s"
 	@echo "... src/basic/env.o"
 	@echo "... src/basic/env.i"
 	@echo "... src/basic/env.s"
@@ -1642,6 +1979,21 @@ help:
 	@echo "... src/http/servlet.o"
 	@echo "... src/http/servlet.i"
 	@echo "... src/http/servlet.s"
+	@echo "... src/http/ws_connection.o"
+	@echo "... src/http/ws_connection.i"
+	@echo "... src/http/ws_connection.s"
+	@echo "... src/http/ws_server.o"
+	@echo "... src/http/ws_server.i"
+	@echo "... src/http/ws_server.s"
+	@echo "... src/http/ws_servlet.o"
+	@echo "... src/http/ws_servlet.i"
+	@echo "... src/http/ws_servlet.s"
+	@echo "... src/http/ws_session.o"
+	@echo "... src/http/ws_session.i"
+	@echo "... src/http/ws_session.s"
+	@echo "... src/util/hash_util.o"
+	@echo "... src/util/hash_util.i"
+	@echo "... src/util/hash_util.s"
 	@echo "... tests/test_address.o"
 	@echo "... tests/test_address.i"
 	@echo "... tests/test_address.s"
@@ -1651,6 +2003,12 @@ help:
 	@echo "... tests/test_config.o"
 	@echo "... tests/test_config.i"
 	@echo "... tests/test_config.s"
+	@echo "... tests/test_daemon.o"
+	@echo "... tests/test_daemon.i"
+	@echo "... tests/test_daemon.s"
+	@echo "... tests/test_env.o"
+	@echo "... tests/test_env.i"
+	@echo "... tests/test_env.s"
 	@echo "... tests/test_fiber.o"
 	@echo "... tests/test_fiber.i"
 	@echo "... tests/test_fiber.s"
@@ -1672,6 +2030,9 @@ help:
 	@echo "... tests/test_iomanager.o"
 	@echo "... tests/test_iomanager.i"
 	@echo "... tests/test_iomanager.s"
+	@echo "... tests/test_log.o"
+	@echo "... tests/test_log.i"
+	@echo "... tests/test_log.s"
 	@echo "... tests/test_scheduler.o"
 	@echo "... tests/test_scheduler.i"
 	@echo "... tests/test_scheduler.s"
@@ -1690,6 +2051,12 @@ help:
 	@echo "... tests/test_util.o"
 	@echo "... tests/test_util.i"
 	@echo "... tests/test_util.s"
+	@echo "... tests/test_ws_client.o"
+	@echo "... tests/test_ws_client.i"
+	@echo "... tests/test_ws_client.s"
+	@echo "... tests/test_ws_server.o"
+	@echo "... tests/test_ws_server.i"
+	@echo "... tests/test_ws_server.s"
 .PHONY : help
 
 

@@ -6,7 +6,6 @@
 #include <string>
 #include <vector>
 #include <unordered_map>
-#include "http.h"
 
 #include "http_session.h"
 #include "src/basic/mutex.h"

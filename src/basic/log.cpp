@@ -1,10 +1,10 @@
-#include "log.h"
 #include <map>
 #include <iostream>
 #include <functional>
 #include <time.h>
 #include <string.h>
 
+#include "log.h"
 #include "config.h"
 #include "util.h"
 #include "macro.h"
@@ -503,8 +503,8 @@ void Logger::setFormatter(const std::string& val) {
     webserver::LogFormatter::ptr new_val(new webserver::LogFormatter(val));
     if(new_val->isError()) {
         std::cout << "Logger setFormatter name=" << m_name
-                  << " value=" << val << " invalid formatter"
-                  << std::endl;
+                    << " value=" << val << " invalid formatter"
+                    << std::endl;
         return;
     }
     //m_formatter = new_val;
@@ -763,7 +763,11 @@ struct LogIniter {
                         ap.reset(new FileLogAppender(a.file));
                     }
                     else if (a.type == 2) {
+                        if(!webserver::EnvMgr::GetInstance()->has("d")) {
                         ap.reset(new StdoutLogAppender());
+                        } else {
+                            continue;
+                        }
                     }
                     ap->setLevel(a.level);
                     logger->addAppender(ap);

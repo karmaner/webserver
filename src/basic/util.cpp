@@ -83,6 +83,15 @@ std::string BacktraceToString(int size, int skip, const std::string& prefix) {
     return ss.str();
 }
 
+std::string Time2Str(time_t ts, const std::string& format) {
+    struct tm tm;
+    localtime_r(&ts, &tm);
+    char buf[64];
+    strftime(buf, sizeof(buf), format.c_str(), &tm);
+    return buf;
+}
+
+
 // FS工具
 void FSUtil::ListAllFile(std::vector<std::string>& files
                         ,const std::string& path

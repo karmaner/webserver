@@ -1,3 +1,4 @@
+#pragma once
 #ifndef __SRC_HEEP_HTTP_SESSION_H__
 #define __SRC_HTTP_HTTP_SESSION_H__
 

@@ -2,14 +2,12 @@ logs:
     - name: root
       level: info
       appenders:
-          - type: StdoutLogAppender
           - type: FileLogAppender
-            file: /home/karmaner/myRepo/webserver/log/root.log
-
+            file: /apps/logs/sylar/root.txt
+          - type: StdoutLogAppender
     - name: system
-      level: info
+      level: debug
       appenders:
-          - type: StdoutLogAppender
           - type: FileLogAppender
-            file: /home/karmaner/myRepo/webserver/log/system.log
-
+            file: /apps/logs/sylar/system.txt
+          - type: StdoutLogAppender

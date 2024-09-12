@@ -1,13 +1,6 @@
-/**
- * @file uri.h
- * @brief URI封装类
- * @author sylar.yin
- * @email 564628276@qq.com
- * @date 2019-06-13
- * @copyright Copyright (c) 2019年 sylar.yin All rights reserved (www.sylar.top)
- */
-#ifndef __SYLAR_URI_H__
-#define __SYLAR_URI_H__
+#pragma once
+#ifndef __SRC_BASIC_URI_H__
+#define __SRC_SASIC_URI_H__
 
 #include <memory>
 #include <string>
