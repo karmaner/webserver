@@ -11,6 +11,8 @@ include_directories(.)
 include_directories(/apps/webserver/include)
 link_directories(/apps/webserver/lib)
 
+cmake_policy(SET CMP0064 NEW)
+option(TEST "ON for complile test" ON)
 
 find_package(Boost REQUIRED)
 if(Boost_FOUND)
@@ -34,6 +36,8 @@ set(LIB_SRC
     src/http/ws_server.cpp
     src/http/ws_connection.cpp
 
+    src/basic/module.cpp
+    src/basic/library.cpp
     src/basic/worker.cpp
     src/basic/daemon.cpp
     src/basic/address.cpp
@@ -86,6 +90,7 @@ set(LIBS
 
 #${PROTOBUF_LIBRARIES})
 
+if(TEST)
 webserver_add_executable(test_log "tests/test_log.cpp" webserver "${LIBS}")
 webserver_add_executable(test_config "tests/test_config.cpp" webserver "${LIBS}")
 webserver_add_executable(test_thread "tests/test_thread.cpp" webserver "${LIBS}")
@@ -115,6 +120,12 @@ webserver_add_executable(test_env "tests/test_env.cpp" webserver "${LIBS}")
 webserver_add_executable(test_ws_client "tests/test_ws_client.cpp" webserver "${LIBS}")
 webserver_add_executable(test_ws_server "tests/test_ws_server.cpp" webserver "${LIBS}")
 webserver_add_executable(test_application "tests/test_application.cpp" webserver "${LIBS}")
+
+add_library(test SHARED tests/test_module.cpp)
+endif()
+
+webserver_add_executable(bin_webserver "src/basic/main.cpp" webserver "${LIBS}")
+set_target_properties(bin_webserver PROPERTIES OUTPUT_NAME "webserver")
 
 SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 SET(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
