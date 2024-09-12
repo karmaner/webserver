@@ -52,7 +52,7 @@ IPAddress::ptr Address::LookupAnyIPAddress(const std::string& host,
 
 
 bool Address::Lookup(std::vector<Address::ptr>& result, const std::string& host,
-                     int family, int type, int protocol) {
+                        int family, int type, int protocol) {
     addrinfo hints, *results, *next;
     hints.ai_flags = 0;
     hints.ai_family = family;

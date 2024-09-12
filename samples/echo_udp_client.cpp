@@ -1,36 +1,62 @@
 #include "src/basic/socket.h"
-#include "src/basic/log.h"
 #include "src/basic/iomanager.h"
+#include "src/basic/log.h"
+#include <stdlib.h>
 
 static webserver::Logger::ptr g_logger = WEBSERVER_LOG_ROOT();
 
+const char* ip = nullptr;
+uint16_t port = 0;
+
 void run() {
-    webserver::IPAddress::ptr addr = webserver::Address::LookupAnyIPAddress("0.0.0.0:8050");
-    webserver::Socket::ptr sock = webserver::Socket::CreateUDP(addr);
-    if(sock->bind(addr)) {
-        WEBSERVER_LOG_INFO(g_logger) << "udp bind : " << *addr;
-    } else {
-        WEBSERVER_LOG_ERROR(g_logger) << "udp bind : " << *addr << " fail";
+    webserver::IPAddress::ptr addr = webserver::Address::LookupAnyIPAddress(ip);
+    if(!addr) {
+        WEBSERVER_LOG_ERROR(g_logger) << "invalid ip: " << ip;
         return;
     }
+    addr->setPort(port);
+
+    webserver::Socket::ptr sock = webserver::Socket::CreateUDP(addr);
+
+    webserver::IOManager::GetThis()->schedule([sock](){
+        webserver::Address::ptr addr(new webserver::IPv4Address);
+            WEBSERVER_LOG_INFO(g_logger) << "begin recv";
+            while(true) {
+                char buff[1024];
+                int len = sock->recvFrom(buff, 1024, addr);
+                if(len > 0) {
+                    std::cout << std::endl << "recv: " << std::string(buff, len) << " from: " << *addr << std::endl;
+                }
+            }
+    });
+    sleep(1);
     while(true) {
-        char buff[1024];
-        webserver::Address::ptr from(new webserver::IPv4Address);
-        int len = sock->recvFrom(buff, 1024, from);
-        if(len > 0) {
-            buff[len] = '\0';
-            WEBSERVER_LOG_INFO(g_logger) << "recv: " << buff << " from: " << *from;
-            len = sock->sendTo(buff, len, from);
+        std::string line;
+        std::cout << "input>";
+        std::getline(std::cin, line);
+        if(!line.empty()) {
+            int len = sock->sendTo(line.c_str(), line.size(), addr);
             if(len < 0) {
-                WEBSERVER_LOG_INFO(g_logger) << "send: " << buff << " to: " << *from
-                    << " error=" << len;
+                int err = sock->getError();
+                WEBSERVER_LOG_ERROR(g_logger) << "send error err=" << err
+                        << " errstr=" << strerror(err) << " len=" << len
+                        << " addr=" << *addr
+                        << " sock=" << *sock;
+            } else {
+                WEBSERVER_LOG_INFO(g_logger) << "send " << line << " len:" << len;
             }
         }
     }
 }
 
 int main(int argc, char** argv) {
-    webserver::IOManager iom(1);
+    if(argc < 3) {
+        WEBSERVER_LOG_INFO(g_logger) << "use as[" << argv[0] << " ip port]";
+        return 0;
+    }
+    ip = argv[1];
+    port = atoi(argv[2]);
+    webserver::IOManager iom(2);
     iom.schedule(run);
     return 0;
 }

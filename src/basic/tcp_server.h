@@ -19,9 +19,10 @@ public:
                 ,webserver::IOManager* accept_woker = webserver::IOManager::GetThis());
     virtual ~TcpServer();
 
-    virtual bool bind(webserver::Address::ptr addr);
+    virtual bool bind(webserver::Address::ptr addr, bool ssl = false);
     virtual bool bind(const std::vector<Address::ptr>& addrs
-                        ,std::vector<Address::ptr>& fails);
+                        ,std::vector<Address::ptr>& fails
+                        ,bool ssl = false);
     virtual bool start();
     virtual void stop();
 

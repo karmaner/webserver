@@ -1,7 +1,6 @@
 #include "http_connection.h"
 #include "http_parser.h"
 #include "src/basic/log.h"
-#include "src/basic/uri.h"
 
 namespace webserver {
 namespace http {

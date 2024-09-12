@@ -4,9 +4,9 @@ namespace webserver {
 namespace http {
 
 HttpMethod StringToHttpMethod(const std::string& m) {
-#define XX(num, name, string)                             \
-    if(strcmp(#string, m.c_str()) == 0) {                 \
-        return HttpMethod::name;                          \
+#define XX(num, name, string) \
+    if(strcmp(#string, m.c_str()) == 0) { \
+        return HttpMethod::name; \
     }
     HTTP_METHOD_MAP(XX);
 #undef XX
@@ -14,9 +14,9 @@ HttpMethod StringToHttpMethod(const std::string& m) {
 }
 
 HttpMethod CharsToHttpMethod(const char* m) {
-#define XX(num, name, string)                               \
-    if(strncmp(#string, m, strlen(#string)) == 0) {         \
-        return HttpMethod::name;                            \
+#define XX(num, name, string) \
+    if(strncmp(#string, m, strlen(#string)) == 0) { \
+        return HttpMethod::name; \
     }
     HTTP_METHOD_MAP(XX);
 #undef XX
@@ -39,8 +39,8 @@ const char* HttpMethodToString(const HttpMethod& m) {
 
 const char* HttpStatusToString(const HttpStatus& s) {
     switch(s) {
-#define XX(code, name, msg)                                     \
-        case HttpStatus::name:                                  \
+#define XX(code, name, msg) \
+        case HttpStatus::name: \
             return #msg;
         HTTP_STATUS_MAP(XX);
 #undef XX
@@ -58,6 +58,7 @@ HttpRequest::HttpRequest(uint8_t version, bool close)
     :m_method(HttpMethod::GET)
     ,m_version(version)
     ,m_close(close)
+    ,m_websocket(false)
     ,m_path("/") {
 }
 
@@ -65,6 +66,12 @@ std::string HttpRequest::getHeader(const std::string& key
                             ,const std::string& def) const {
     auto it = m_headers.find(key);
     return it == m_headers.end() ? def : it->second;
+}
+
+std::shared_ptr<HttpResponse> HttpRequest::createResponse() {
+    HttpResponse::ptr rsp(new HttpResponse(getVersion()
+                            ,isClose()));
+    return rsp;
 }
 
 std::string HttpRequest::getParam(const std::string& key
@@ -144,23 +151,25 @@ std::string HttpRequest::toString() const {
 
 std::ostream& HttpRequest::dump(std::ostream& os) const {
     //GET /uri HTTP/1.1
-    //Host: wwww.github.top
+    //Host: wwww.sylar.top
     //
     //
     os << HttpMethodToString(m_method) << " "
-        << m_path
-        << (m_query.empty() ? "" : "?")
-        << m_query
-        << (m_fragment.empty() ? "" : "#")
-        << m_fragment
-        << " HTTP/"
-        << ((uint32_t)(m_version >> 4))
-        << "."
-        << ((uint32_t)(m_version & 0x0F))
-        << "\r\n";
-    os << "connection: " << (m_close ? "close" : "keep-alive") << "\r\n";
+       << m_path
+       << (m_query.empty() ? "" : "?")
+       << m_query
+       << (m_fragment.empty() ? "" : "#")
+       << m_fragment
+       << " HTTP/"
+       << ((uint32_t)(m_version >> 4))
+       << "."
+       << ((uint32_t)(m_version & 0x0F))
+       << "\r\n";
+    if(!m_websocket) {
+        os << "connection: " << (m_close ? "close" : "keep-alive") << "\r\n";
+    }
     for(auto& i : m_headers) {
-        if(strcasecmp(i.first.c_str(), "connection") == 0) {
+        if(!m_websocket && strcasecmp(i.first.c_str(), "connection") == 0) {
             continue;
         }
         os << i.first << ":" << i.second << "\r\n";
@@ -168,7 +177,7 @@ std::ostream& HttpRequest::dump(std::ostream& os) const {
 
     if(!m_body.empty()) {
         os << "content-length: " << m_body.size() << "\r\n\r\n"
-            << m_body;
+           << m_body;
     } else {
         os << "\r\n";
     }
@@ -178,7 +187,8 @@ std::ostream& HttpRequest::dump(std::ostream& os) const {
 HttpResponse::HttpResponse(uint8_t version, bool close)
     :m_status(HttpStatus::OK)
     ,m_version(version)
-    ,m_close(close) {
+    ,m_close(close)
+    ,m_websocket(false) {
 }
 
 std::string HttpResponse::getHeader(const std::string& key, const std::string& def) const {
@@ -202,26 +212,28 @@ std::string HttpResponse::toString() const {
 
 std::ostream& HttpResponse::dump(std::ostream& os) const {
     os << "HTTP/"
-        << ((uint32_t)(m_version >> 4))
-        << "."
-        << ((uint32_t)(m_version & 0x0F))
-        << " "
-        << (uint32_t)m_status
-        << " "
-        << (m_reason.empty() ? HttpStatusToString(m_status) : m_reason)
-        << "\r\n";
+       << ((uint32_t)(m_version >> 4))
+       << "."
+       << ((uint32_t)(m_version & 0x0F))
+       << " "
+       << (uint32_t)m_status
+       << " "
+       << (m_reason.empty() ? HttpStatusToString(m_status) : m_reason)
+       << "\r\n";
 
     for(auto& i : m_headers) {
-        if(strcasecmp(i.first.c_str(), "connection") == 0) {
+        if(!m_websocket && strcasecmp(i.first.c_str(), "connection") == 0) {
             continue;
         }
         os << i.first << ": " << i.second << "\r\n";
     }
-    os << "connection: " << (m_close ? "close" : "keep-alive") << "\r\n";
+    if(!m_websocket) {
+        os << "connection: " << (m_close ? "close" : "keep-alive") << "\r\n";
+    }
 
     if(!m_body.empty()) {
         os << "content-length: " << m_body.size() << "\r\n\r\n"
-            << m_body;
+           << m_body;
     } else {
         os << "\r\n";
     }

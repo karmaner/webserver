@@ -1,6 +1,7 @@
 #include "src/basic/config.h"
 #include "src/basic/log.h"
 #include <yaml-cpp/yaml.h>
+#include <iostream>
 
 webserver::ConfigVar<int>::ptr g_int_value_config = webserver::Config::Lookup("system.port", (int)8080, "system port");
 

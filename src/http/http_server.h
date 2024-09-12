@@ -2,6 +2,7 @@
 #define __SRC_HTTP_HTTP_SERVER_H__
 
 #include "src/basic/tcp_server.h"
+#include "http_session.h"
 #include "servlet.h"
 
 namespace webserver {
