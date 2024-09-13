@@ -1,6 +1,7 @@
 #include "application.h"
 
 #include <unistd.h>
+#include <signal.h>
 
 #include "src/basic/tcp_server.h"
 #include "src/basic/daemon.h"
@@ -111,6 +112,7 @@ bool Application::run() {
 }
 
 int Application::main(int argc, char** argv) {
+    signal(SIGPIPE, SIG_IGN);
     WEBSERVER_LOG_INFO(g_logger) << "main";
     std::string conf_path = webserver::EnvMgr::GetInstance()->getConfigPath();
     webserver::Config::LoadFromConfDir(conf_path, true);

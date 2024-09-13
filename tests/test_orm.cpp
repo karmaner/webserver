@@ -2,7 +2,7 @@
 #include "src/db/sqlite3.h"
 
 int main(int argc, char** argv) {
-    sylar::SQLite3::ptr db = sylar::SQLite3::Create("abc.db");
+    webserver::SQLite3::ptr db = webserver::SQLite3::Create("abc.db");
     std::cout << "create table: " << test::orm::UserInfoDao::CreateTable(db) << std::endl;
     for(int i = 0; i < 10; ++i) {
         test::orm::UserInfo::ptr u(new test::orm::UserInfo);
