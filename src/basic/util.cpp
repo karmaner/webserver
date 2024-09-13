@@ -7,12 +7,9 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <signal.h>
-#include <arpa/inet.h>
-#include <ifaddrs.h>
-#include <google/protobuf/unknown_field_set.h>
 
-#include "fiber.h"
 #include "log.h"
+#include "fiber.h"
 
 namespace webserver {
 

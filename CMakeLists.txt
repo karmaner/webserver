@@ -3,6 +3,7 @@ project(webserver)
 
 
 include (cmake/utils.cmake)
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
 set(CMAKE_VERBOSE_MAKEFILE ON)
 set(CMAKE_CXX_FLAGS "$ENV{CXXFLAGS} -rdynamic -O0 -ggdb -std=c++11 -Wall -Wno-deprecated -Werror -Wno-unused-function -Wno-builtin-macro-redefined -Wno-deprecated-declarations")
@@ -13,6 +14,11 @@ link_directories(/apps/webserver/lib)
 
 cmake_policy(SET CMP0064 NEW)
 option(TEST "ON for complile test" ON)
+
+find_package(MySQL REQUIRED)
+if(MYSQL_FOUND)
+    include_directories(${MYSQL_INCLUDE_DIR})
+endif()
 
 find_package(SQLite3 REQUIRED)
 if(SQLite3_FOUND)
@@ -127,6 +133,7 @@ set(LIBS
         ${OPENSSL_LIBRARIES}
         ${ZLIB_LIBRARIES}
         ${PROTOBUF_LIBRARIES}
+        ${MYSQL_LIBRARIES}
         )
 
 #${PROTOBUF_LIBRARIES})
