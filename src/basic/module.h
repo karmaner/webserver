@@ -35,6 +35,12 @@ public:
     virtual bool onServerReady();
     virtual bool onServerUp();
 
+    virtual bool handleRequest(webserver::Message::ptr req
+                                ,webserver::Message::ptr rsp
+                                ,webserver::Stream::ptr stream);
+    virtual bool handleNotify(webserver::Message::ptr notify
+                                ,webserver::Stream::ptr stream);
+
     virtual std::string statusString();
 
     const std::string& getName() const { return m_name;}
@@ -57,14 +63,20 @@ class RockModule : public Module {
 public:
     typedef std::shared_ptr<RockModule> ptr;
     RockModule(const std::string& name
-               ,const std::string& version
-               ,const std::string& filename);
+                ,const std::string& version
+                ,const std::string& filename);
 
-    virtual bool handle(webserver::RockRequest::ptr request
+    virtual bool handleRockRequest(webserver::RockRequest::ptr request
                         ,webserver::RockResponse::ptr response
                         ,webserver::RockStream::ptr stream) = 0;
-    virtual bool handle(webserver::RockNotify::ptr request
+    virtual bool handleRockNotify(webserver::RockNotify::ptr request
                         ,webserver::RockStream::ptr stream) = 0;
+
+    virtual bool handleRequest(webserver::Message::ptr req
+                                ,webserver::Message::ptr rsp
+                                ,webserver::Stream::ptr stream);
+    virtual bool handleNotify(webserver::Message::ptr notify
+                                ,webserver::Stream::ptr stream);
 };
 
 class ModuleManager {

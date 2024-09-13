@@ -3,11 +3,14 @@
 #include "env.h"
 #include "library.h"
 #include "util.h"
+#include "log.h"
 
 namespace webserver {
 
 static webserver::ConfigVar<std::string>::ptr g_module_path
     = Config::Lookup("module.path", std::string("module"), "module path");
+
+static webserver::Logger::ptr g_logger = WEBSERVER_LOG_NAME("system");
 
 Module::Module(const std::string& name
             ,const std::string& version
@@ -24,6 +27,21 @@ void Module::onBeforeArgsParse(int argc, char** argv) {
 }
 
 void Module::onAfterArgsParse(int argc, char** argv) {
+}
+
+bool Module::handleRequest(webserver::Message::ptr req
+                            ,webserver::Message::ptr rsp
+                            ,webserver::Stream::ptr stream) {
+    WEBSERVER_LOG_DEBUG(g_logger) << "handleRequest req=" << req->toString()
+            << " rsp=" << rsp->toString() << " stream=" << stream;
+    return true;
+}
+
+bool Module::handleNotify(webserver::Message::ptr notify
+                            ,webserver::Stream::ptr stream) {
+    WEBSERVER_LOG_DEBUG(g_logger) << "handleNotify nty=" << notify->toString()
+            << " stream=" << stream;
+    return true;
 }
 
 bool Module::onLoad() {
@@ -58,6 +76,22 @@ RockModule::RockModule(const std::string& name
                         ,const std::string& version
                         ,const std::string& filename)
     :Module(name, version, filename, ROCK) {
+}
+
+bool RockModule::handleRequest(webserver::Message::ptr req
+                                ,webserver::Message::ptr rsp
+                                ,webserver::Stream::ptr stream) {
+    auto rock_req = std::dynamic_pointer_cast<webserver::RockRequest>(req);
+    auto rock_rsp = std::dynamic_pointer_cast<webserver::RockResponse>(rsp);
+    auto rock_stream = std::dynamic_pointer_cast<webserver::RockStream>(stream);
+    return handleRockRequest(rock_req, rock_rsp, rock_stream);
+}
+
+bool RockModule::handleNotify(webserver::Message::ptr notify
+                                ,webserver::Stream::ptr stream) {
+    auto rock_nty = std::dynamic_pointer_cast<webserver::RockNotify>(notify);
+    auto rock_stream = std::dynamic_pointer_cast<webserver::RockStream>(stream);
+    return handleRockNotify(rock_nty, rock_stream);
 }
 
 ModuleManager::ModuleManager() {

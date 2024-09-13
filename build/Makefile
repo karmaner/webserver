@@ -146,17 +146,43 @@ bin_webserver/fast:
 .PHONY : bin_webserver/fast
 
 #=============================================================================
-# Target rules for targets named test_sqlite3
+# Target rules for targets named test_rock
 
 # Build rule for target.
-test_sqlite3: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_sqlite3
-.PHONY : test_sqlite3
+test_rock: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_rock
+.PHONY : test_rock
 
 # fast build rule for target.
-test_sqlite3/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_sqlite3.dir/build.make CMakeFiles/test_sqlite3.dir/build
-.PHONY : test_sqlite3/fast
+test_rock/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_rock.dir/build.make CMakeFiles/test_rock.dir/build
+.PHONY : test_rock/fast
+
+#=============================================================================
+# Target rules for targets named test_email
+
+# Build rule for target.
+test_email: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_email
+.PHONY : test_email
+
+# fast build rule for target.
+test_email/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_email.dir/build.make CMakeFiles/test_email.dir/build
+.PHONY : test_email/fast
+
+#=============================================================================
+# Target rules for targets named test
+
+# Build rule for target.
+test: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test
+.PHONY : test
+
+# fast build rule for target.
+test/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/build
+.PHONY : test/fast
 
 src/application/application.o: src/application/application.cpp.o
 .PHONY : src/application/application.o
@@ -782,6 +808,54 @@ src/db/sqlite3.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/db/sqlite3.cpp.s
 .PHONY : src/db/sqlite3.cpp.s
 
+src/email/email.o: src/email/email.cpp.o
+.PHONY : src/email/email.o
+
+# target to build an object file
+src/email/email.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/email/email.cpp.o
+.PHONY : src/email/email.cpp.o
+
+src/email/email.i: src/email/email.cpp.i
+.PHONY : src/email/email.i
+
+# target to preprocess a source file
+src/email/email.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/email/email.cpp.i
+.PHONY : src/email/email.cpp.i
+
+src/email/email.s: src/email/email.cpp.s
+.PHONY : src/email/email.s
+
+# target to generate assembly for a file
+src/email/email.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/email/email.cpp.s
+.PHONY : src/email/email.cpp.s
+
+src/email/smtp.o: src/email/smtp.cpp.o
+.PHONY : src/email/smtp.o
+
+# target to build an object file
+src/email/smtp.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/email/smtp.cpp.o
+.PHONY : src/email/smtp.cpp.o
+
+src/email/smtp.i: src/email/smtp.cpp.i
+.PHONY : src/email/smtp.i
+
+# target to preprocess a source file
+src/email/smtp.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/email/smtp.cpp.i
+.PHONY : src/email/smtp.cpp.i
+
+src/email/smtp.s: src/email/smtp.cpp.s
+.PHONY : src/email/smtp.s
+
+# target to generate assembly for a file
+src/email/smtp.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/email/smtp.cpp.s
+.PHONY : src/email/smtp.cpp.s
+
 src/http/http.o: src/http/http.cpp.o
 .PHONY : src/http/http.o
 
@@ -1166,6 +1240,30 @@ src/streams/async_socket_stream.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/streams/async_socket_stream.cpp.s
 .PHONY : src/streams/async_socket_stream.cpp.s
 
+src/streams/load_balance.o: src/streams/load_balance.cpp.o
+.PHONY : src/streams/load_balance.o
+
+# target to build an object file
+src/streams/load_balance.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/streams/load_balance.cpp.o
+.PHONY : src/streams/load_balance.cpp.o
+
+src/streams/load_balance.i: src/streams/load_balance.cpp.i
+.PHONY : src/streams/load_balance.i
+
+# target to preprocess a source file
+src/streams/load_balance.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/streams/load_balance.cpp.i
+.PHONY : src/streams/load_balance.cpp.i
+
+src/streams/load_balance.s: src/streams/load_balance.cpp.s
+.PHONY : src/streams/load_balance.s
+
+# target to generate assembly for a file
+src/streams/load_balance.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/streams/load_balance.cpp.s
+.PHONY : src/streams/load_balance.cpp.s
+
 src/streams/socket_stream.o: src/streams/socket_stream.cpp.o
 .PHONY : src/streams/socket_stream.o
 
@@ -1286,29 +1384,77 @@ src/util/json_util.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/util/json_util.cpp.s
 .PHONY : src/util/json_util.cpp.s
 
-tests/test_sqlite3.o: tests/test_sqlite3.cpp.o
-.PHONY : tests/test_sqlite3.o
+tests/test_email.o: tests/test_email.cpp.o
+.PHONY : tests/test_email.o
 
 # target to build an object file
-tests/test_sqlite3.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_sqlite3.dir/build.make CMakeFiles/test_sqlite3.dir/tests/test_sqlite3.cpp.o
-.PHONY : tests/test_sqlite3.cpp.o
+tests/test_email.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_email.dir/build.make CMakeFiles/test_email.dir/tests/test_email.cpp.o
+.PHONY : tests/test_email.cpp.o
 
-tests/test_sqlite3.i: tests/test_sqlite3.cpp.i
-.PHONY : tests/test_sqlite3.i
+tests/test_email.i: tests/test_email.cpp.i
+.PHONY : tests/test_email.i
 
 # target to preprocess a source file
-tests/test_sqlite3.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_sqlite3.dir/build.make CMakeFiles/test_sqlite3.dir/tests/test_sqlite3.cpp.i
-.PHONY : tests/test_sqlite3.cpp.i
+tests/test_email.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_email.dir/build.make CMakeFiles/test_email.dir/tests/test_email.cpp.i
+.PHONY : tests/test_email.cpp.i
 
-tests/test_sqlite3.s: tests/test_sqlite3.cpp.s
-.PHONY : tests/test_sqlite3.s
+tests/test_email.s: tests/test_email.cpp.s
+.PHONY : tests/test_email.s
 
 # target to generate assembly for a file
-tests/test_sqlite3.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_sqlite3.dir/build.make CMakeFiles/test_sqlite3.dir/tests/test_sqlite3.cpp.s
-.PHONY : tests/test_sqlite3.cpp.s
+tests/test_email.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_email.dir/build.make CMakeFiles/test_email.dir/tests/test_email.cpp.s
+.PHONY : tests/test_email.cpp.s
+
+tests/test_module.o: tests/test_module.cpp.o
+.PHONY : tests/test_module.o
+
+# target to build an object file
+tests/test_module.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/tests/test_module.cpp.o
+.PHONY : tests/test_module.cpp.o
+
+tests/test_module.i: tests/test_module.cpp.i
+.PHONY : tests/test_module.i
+
+# target to preprocess a source file
+tests/test_module.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/tests/test_module.cpp.i
+.PHONY : tests/test_module.cpp.i
+
+tests/test_module.s: tests/test_module.cpp.s
+.PHONY : tests/test_module.s
+
+# target to generate assembly for a file
+tests/test_module.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/tests/test_module.cpp.s
+.PHONY : tests/test_module.cpp.s
+
+tests/test_rock.o: tests/test_rock.cpp.o
+.PHONY : tests/test_rock.o
+
+# target to build an object file
+tests/test_rock.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_rock.dir/build.make CMakeFiles/test_rock.dir/tests/test_rock.cpp.o
+.PHONY : tests/test_rock.cpp.o
+
+tests/test_rock.i: tests/test_rock.cpp.i
+.PHONY : tests/test_rock.i
+
+# target to preprocess a source file
+tests/test_rock.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_rock.dir/build.make CMakeFiles/test_rock.dir/tests/test_rock.cpp.i
+.PHONY : tests/test_rock.cpp.i
+
+tests/test_rock.s: tests/test_rock.cpp.s
+.PHONY : tests/test_rock.s
+
+# target to generate assembly for a file
+tests/test_rock.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_rock.dir/build.make CMakeFiles/test_rock.dir/tests/test_rock.cpp.s
+.PHONY : tests/test_rock.cpp.s
 
 # Help Target
 help:
@@ -1319,7 +1465,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... bin_webserver"
-	@echo "... test_sqlite3"
+	@echo "... test"
+	@echo "... test_email"
+	@echo "... test_rock"
 	@echo "... webserver"
 	@echo "... src/application/application.o"
 	@echo "... src/application/application.i"
@@ -1399,6 +1547,12 @@ help:
 	@echo "... src/db/sqlite3.o"
 	@echo "... src/db/sqlite3.i"
 	@echo "... src/db/sqlite3.s"
+	@echo "... src/email/email.o"
+	@echo "... src/email/email.i"
+	@echo "... src/email/email.s"
+	@echo "... src/email/smtp.o"
+	@echo "... src/email/smtp.i"
+	@echo "... src/email/smtp.s"
 	@echo "... src/http/http.o"
 	@echo "... src/http/http.i"
 	@echo "... src/http/http.s"
@@ -1447,6 +1601,9 @@ help:
 	@echo "... src/streams/async_socket_stream.o"
 	@echo "... src/streams/async_socket_stream.i"
 	@echo "... src/streams/async_socket_stream.s"
+	@echo "... src/streams/load_balance.o"
+	@echo "... src/streams/load_balance.i"
+	@echo "... src/streams/load_balance.s"
 	@echo "... src/streams/socket_stream.o"
 	@echo "... src/streams/socket_stream.i"
 	@echo "... src/streams/socket_stream.s"
@@ -1462,9 +1619,15 @@ help:
 	@echo "... src/util/json_util.o"
 	@echo "... src/util/json_util.i"
 	@echo "... src/util/json_util.s"
-	@echo "... tests/test_sqlite3.o"
-	@echo "... tests/test_sqlite3.i"
-	@echo "... tests/test_sqlite3.s"
+	@echo "... tests/test_email.o"
+	@echo "... tests/test_email.i"
+	@echo "... tests/test_email.s"
+	@echo "... tests/test_module.o"
+	@echo "... tests/test_module.i"
+	@echo "... tests/test_module.s"
+	@echo "... tests/test_rock.o"
+	@echo "... tests/test_rock.i"
+	@echo "... tests/test_rock.s"
 .PHONY : help
 
 

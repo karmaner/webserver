@@ -88,11 +88,15 @@ set(LIB_SRC
 
     src/application/application.cpp
 
+    src/streams/load_balance.cpp
     src/streams/socket_stream.cpp
     src/streams/zlib_stream.cpp
     src/streams/async_socket_stream.cpp
 
     src/db/sqlite3.cpp
+
+    src/email/email.cpp
+    src/email/smtp.cpp
     )
 
 ragelmaker(src/http/http11_parser.rl LIB_SRC ${CMAKE_CURRENT_SOURCE_DIR}/src/http)
@@ -164,6 +168,7 @@ webserver_add_executable(test_timed_cache "tests/test_timed_cache.cpp" webserver
 webserver_add_executable(test_timed_lru_cache "tests/test_timed_lru_cache.cpp" webserver "${LIBS}")
 webserver_add_executable(test_zlib_stream "tests/test_zlib_stream.cpp" webserver "${LIBS}")
 webserver_add_executable(test_sqlite3 "tests/test_sqlite3.cpp" webserver "${LIBS}")
+webserver_add_executable(test_rock "tests/test_rock.cpp" webserver "${LIBS}")
 
 add_library(test SHARED tests/test_module.cpp)
 endif()
@@ -171,7 +176,10 @@ endif()
 webserver_add_executable(bin_webserver "src/basic/main.cpp" webserver "${LIBS}")
 set_target_properties(bin_webserver PROPERTIES OUTPUT_NAME "webserver")
 
-webserver_add_executable(test_sqlite3 "tests/test_sqlite3.cpp" webserver "${LIBS}")
+webserver_add_executable(test_rock "tests/test_rock.cpp" webserver "${LIBS}")
+webserver_add_executable(test_email "tests/test_email.cpp" webserver "${LIBS}")
+
+add_library(test SHARED tests/test_module.cpp)
 
 SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 SET(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)

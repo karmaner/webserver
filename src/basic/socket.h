@@ -11,6 +11,7 @@
 
 #include "address.h"
 #include "noncopyable.h"
+#include "log.h"
 
 namespace webserver {
 
@@ -326,6 +327,8 @@ public:
      * @brief 输出信息到流中
      */
     virtual std::ostream& dump(std::ostream& os) const;
+
+    virtual std::string toString() const;
 
     /**
      * @brief 返回socket句柄

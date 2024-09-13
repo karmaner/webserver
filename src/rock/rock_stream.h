@@ -3,16 +3,17 @@
 
 #include "src/streams/async_socket_stream.h"
 #include "rock_protocol.h"
+#include "src/streams/load_balance.h"
 
 namespace webserver {
 
 struct RockResult {
     typedef std::shared_ptr<RockResult> ptr; 
-    RockResult(uint32_t _result, RockResponse::ptr rsp)
+    RockResult(int32_t _result, RockResponse::ptr rsp)
         :result(_result)
         ,response(rsp) {
     }
-    uint32_t result;
+    int32_t result;
     RockResponse::ptr response;
 };
 
@@ -26,6 +27,7 @@ public:
                                 ,webserver::RockStream::ptr)> notify_handler;
 
     RockStream(Socket::ptr sock);
+    ~RockStream();
 
     int32_t sendMessage(Message::ptr msg);
     RockResult::ptr request(RockRequest::ptr req, uint32_t timeout_ms);
@@ -74,6 +76,15 @@ public:
     bool connect(webserver::Address::ptr addr);
 };
 
+class RockFairLoadBalance : public FairLoadBalance {
+public:
+    typedef std::shared_ptr<RockFairLoadBalance> ptr;
+    RockResult::ptr request(RockRequest::ptr req, uint32_t timeout_ms);
+private:
+    uint64_t m_lastInitTime = 0;
+};
+
 }
 
 #endif
+
