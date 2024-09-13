@@ -122,6 +122,7 @@ set(LIBS
         pthread
         yaml-cpp
         jsoncpp
+        tinyxml2
         ${SQLite3_LIBRARIES}
         ${OPENSSL_LIBRARIES}
         ${ZLIB_LIBRARIES}
@@ -173,13 +174,30 @@ webserver_add_executable(test_rock "tests/test_rock.cpp" webserver "${LIBS}")
 add_library(test SHARED tests/test_module.cpp)
 endif()
 
+webserver_add_executable(test_crypto "tests/test_crypto.cpp" webserver "${LIBS}")
+webserver_add_executable(test_sqlite3 "tests/test_sqlite3.cpp" webserver "${LIBS}")
+webserver_add_executable(test_rock "tests/test_rock.cpp" webserver "${LIBS}")
+webserver_add_executable(test_email  "tests/test_email.cpp" webserver "${LIBS}")
+
+set(ORM_SRCS
+    src/orm/table.cpp
+    src/orm/column.cpp
+    src/orm/index.cpp
+    src/orm/orm.cpp
+    src/orm/util.cpp
+    )
+webserver_add_executable(orm "${ORM_SRCS}" webserver "${LIBS}")
+
+add_library(test SHARED tests/test_module.cpp)
+
 webserver_add_executable(bin_webserver "src/basic/main.cpp" webserver "${LIBS}")
 set_target_properties(bin_webserver PROPERTIES OUTPUT_NAME "webserver")
 
-webserver_add_executable(test_rock "tests/test_rock.cpp" webserver "${LIBS}")
-webserver_add_executable(test_email "tests/test_email.cpp" webserver "${LIBS}")
 
-add_library(test SHARED tests/test_module.cpp)
+# add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/orm_out)
+# set(OLIBS ${LIBS})
+# set(OLIBS ${OLIBS} orm_data)
+# webserver_add_executable(test_orm "tests/test_orm.cpp" orm_data "${OLIBS}")
 
 SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 SET(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)

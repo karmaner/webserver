@@ -1,6 +1,7 @@
 #include "hash_util.h"
 
 #include <algorithm>
+#include <cstdlib>
 #include <stdexcept>
 #include <string.h>
 #include <openssl/md5.h>
@@ -17,19 +18,19 @@ static inline uint32_t fmix32(uint32_t h)
   h ^= h >> 13;
   h *= 0xc2b2ae35;
   h ^= h >> 16;
-
+  
   return h;
 }
 
 uint32_t murmur3_hash(const void* data, const uint32_t& size, const uint32_t & seed) {
   if (!data) return 0;
-
+  
   const char* str = (const char*)data;
   uint32_t s, h = seed,
           seed1 = 0xcc9e2d51,
           seed2 = 0x1b873593,
           * ptr = (uint32_t *)str;
-
+  
   // handle begin blocks
   int len = size;
   int blk = len / 4;
@@ -38,7 +39,7 @@ uint32_t murmur3_hash(const void* data, const uint32_t& size, const uint32_t & s
     s *= seed1;
     s  = ROTL(s, 15);
     s *= seed2;
-
+    
     h ^= s;
     h  = ROTL(h, 13);
     h *= 5;
@@ -53,25 +54,25 @@ uint32_t murmur3_hash(const void* data, const uint32_t& size, const uint32_t & s
     case 3: s |= tail[2] << 16;
     case 2: s |= tail[1] << 8;
     case 1: s |= tail[0];
-
+      
       s *= seed1;
       s  = ROTL(s, 15);
       s *= seed2;
       h ^= s;
   };
-
+  
   return fmix32(h ^ len);
 }
 
 
 uint32_t murmur3_hash(const char * str, const uint32_t & seed) {
   if (!str) return 0;
-
+  
   uint32_t s, h = seed,
           seed1 = 0xcc9e2d51,
           seed2 = 0x1b873593,
           * ptr = (uint32_t *)str;
-
+  
   // handle begin blocks
   int len = (int)strlen(str);
   int blk = len / 4;
@@ -80,7 +81,7 @@ uint32_t murmur3_hash(const char * str, const uint32_t & seed) {
     s *= seed1;
     s  = ROTL(s, 15);
     s *= seed2;
-
+    
     h ^= s;
     h  = ROTL(h, 13);
     h *= 5;
@@ -95,13 +96,13 @@ uint32_t murmur3_hash(const char * str, const uint32_t & seed) {
     case 3: s |= tail[2] << 16;
     case 2: s |= tail[1] << 8;
     case 1: s |= tail[0];
-
+      
       s *= seed1;
       s  = ROTL(s, 15);
       s *= seed2;
       h ^= s;
   };
-
+  
   return fmix32(h ^ len);
 }
 
@@ -475,28 +476,34 @@ std::string data_from_hexstring(const std::string &hexstring) {
     return data_from_hexstring(hexstring.c_str(), hexstring.size());
 }
 
-void replace(std::string &str, char find, char replaceWith) {
+std::string replace(const std::string &str1, char find, char replaceWith) {
+    auto str = str1;
     size_t index = str.find(find);
     while (index != std::string::npos) {
         str[index] = replaceWith;
         index = str.find(find, index + 1);
     }
+    return str;
 }
 
-void replace(std::string &str, char find, const std::string &replaceWith) {
+std::string replace(const std::string &str1, char find, const std::string &replaceWith) {
+    auto str = str1;
     size_t index = str.find(find);
     while (index != std::string::npos) {
         str = str.substr(0, index) + replaceWith + str.substr(index + 1);
         index = str.find(find, index + replaceWith.size());
     }
+    return str;
 }
 
-void replace(std::string &str, const std::string &find, const std::string &replaceWith) {
+std::string replace(const std::string &str1, const std::string &find, const std::string &replaceWith) {
+    auto str = str1;
     size_t index = str.find(find);
     while (index != std::string::npos) {
         str = str.substr(0, index) + replaceWith + str.substr(index + find.size());
         index = str.find(find, index + replaceWith.size());
     }
+    return str;
 }
 
 std::vector<std::string> split(const std::string &str, char delim, size_t max) {
@@ -548,6 +555,32 @@ std::string random_string(size_t len) {
         rt[i] = CHARS[rand() % sizeof(CHARS)];
     }
     return rt;
+}
+
+std::string WStringToString(const std::wstring& ws) {
+    std::string str_locale = setlocale(LC_ALL, "");
+    const wchar_t* wch_src = ws.c_str();
+    size_t n_dest_size = wcstombs(NULL, wch_src, 0) + 1;
+    char *ch_dest = new char[n_dest_size];
+    memset(ch_dest,0,n_dest_size);
+    wcstombs(ch_dest,wch_src,n_dest_size);
+    std::string str_result = ch_dest;
+    delete []ch_dest;
+    setlocale(LC_ALL, str_locale.c_str());
+    return str_result;
+}
+
+std::wstring StringToWString(const std::string& s) {
+    std::string str_locale = setlocale(LC_ALL, "");
+    const char* chSrc = s.c_str();
+    size_t n_dest_size = mbstowcs(NULL, chSrc, 0) + 1;
+    wchar_t* wch_dest = new wchar_t[n_dest_size];
+    wmemset(wch_dest, 0, n_dest_size);
+    mbstowcs(wch_dest,chSrc,n_dest_size);
+    std::wstring wstr_result = wch_dest;
+    delete []wch_dest;
+    setlocale(LC_ALL, str_locale.c_str());
+    return wstr_result;
 }
 
 }

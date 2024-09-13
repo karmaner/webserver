@@ -133,17 +133,30 @@ webserver/fast:
 .PHONY : webserver/fast
 
 #=============================================================================
-# Target rules for targets named bin_webserver
+# Target rules for targets named test_crypto
 
 # Build rule for target.
-bin_webserver: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 bin_webserver
-.PHONY : bin_webserver
+test_crypto: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_crypto
+.PHONY : test_crypto
 
 # fast build rule for target.
-bin_webserver/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/bin_webserver.dir/build.make CMakeFiles/bin_webserver.dir/build
-.PHONY : bin_webserver/fast
+test_crypto/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_crypto.dir/build.make CMakeFiles/test_crypto.dir/build
+.PHONY : test_crypto/fast
+
+#=============================================================================
+# Target rules for targets named test_sqlite3
+
+# Build rule for target.
+test_sqlite3: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_sqlite3
+.PHONY : test_sqlite3
+
+# fast build rule for target.
+test_sqlite3/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_sqlite3.dir/build.make CMakeFiles/test_sqlite3.dir/build
+.PHONY : test_sqlite3/fast
 
 #=============================================================================
 # Target rules for targets named test_rock
@@ -172,6 +185,19 @@ test_email/fast:
 .PHONY : test_email/fast
 
 #=============================================================================
+# Target rules for targets named orm
+
+# Build rule for target.
+orm: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 orm
+.PHONY : orm
+
+# fast build rule for target.
+orm/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/orm.dir/build.make CMakeFiles/orm.dir/build
+.PHONY : orm/fast
+
+#=============================================================================
 # Target rules for targets named test
 
 # Build rule for target.
@@ -183,6 +209,19 @@ test: cmake_check_build_system
 test/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/build
 .PHONY : test/fast
+
+#=============================================================================
+# Target rules for targets named bin_webserver
+
+# Build rule for target.
+bin_webserver: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 bin_webserver
+.PHONY : bin_webserver
+
+# fast build rule for target.
+bin_webserver/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bin_webserver.dir/build.make CMakeFiles/bin_webserver.dir/build
+.PHONY : bin_webserver/fast
 
 src/application/application.o: src/application/application.cpp.o
 .PHONY : src/application/application.o
@@ -1144,6 +1183,126 @@ src/http/ws_session.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/http/ws_session.cpp.s
 .PHONY : src/http/ws_session.cpp.s
 
+src/orm/column.o: src/orm/column.cpp.o
+.PHONY : src/orm/column.o
+
+# target to build an object file
+src/orm/column.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/orm.dir/build.make CMakeFiles/orm.dir/src/orm/column.cpp.o
+.PHONY : src/orm/column.cpp.o
+
+src/orm/column.i: src/orm/column.cpp.i
+.PHONY : src/orm/column.i
+
+# target to preprocess a source file
+src/orm/column.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/orm.dir/build.make CMakeFiles/orm.dir/src/orm/column.cpp.i
+.PHONY : src/orm/column.cpp.i
+
+src/orm/column.s: src/orm/column.cpp.s
+.PHONY : src/orm/column.s
+
+# target to generate assembly for a file
+src/orm/column.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/orm.dir/build.make CMakeFiles/orm.dir/src/orm/column.cpp.s
+.PHONY : src/orm/column.cpp.s
+
+src/orm/index.o: src/orm/index.cpp.o
+.PHONY : src/orm/index.o
+
+# target to build an object file
+src/orm/index.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/orm.dir/build.make CMakeFiles/orm.dir/src/orm/index.cpp.o
+.PHONY : src/orm/index.cpp.o
+
+src/orm/index.i: src/orm/index.cpp.i
+.PHONY : src/orm/index.i
+
+# target to preprocess a source file
+src/orm/index.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/orm.dir/build.make CMakeFiles/orm.dir/src/orm/index.cpp.i
+.PHONY : src/orm/index.cpp.i
+
+src/orm/index.s: src/orm/index.cpp.s
+.PHONY : src/orm/index.s
+
+# target to generate assembly for a file
+src/orm/index.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/orm.dir/build.make CMakeFiles/orm.dir/src/orm/index.cpp.s
+.PHONY : src/orm/index.cpp.s
+
+src/orm/orm.o: src/orm/orm.cpp.o
+.PHONY : src/orm/orm.o
+
+# target to build an object file
+src/orm/orm.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/orm.dir/build.make CMakeFiles/orm.dir/src/orm/orm.cpp.o
+.PHONY : src/orm/orm.cpp.o
+
+src/orm/orm.i: src/orm/orm.cpp.i
+.PHONY : src/orm/orm.i
+
+# target to preprocess a source file
+src/orm/orm.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/orm.dir/build.make CMakeFiles/orm.dir/src/orm/orm.cpp.i
+.PHONY : src/orm/orm.cpp.i
+
+src/orm/orm.s: src/orm/orm.cpp.s
+.PHONY : src/orm/orm.s
+
+# target to generate assembly for a file
+src/orm/orm.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/orm.dir/build.make CMakeFiles/orm.dir/src/orm/orm.cpp.s
+.PHONY : src/orm/orm.cpp.s
+
+src/orm/table.o: src/orm/table.cpp.o
+.PHONY : src/orm/table.o
+
+# target to build an object file
+src/orm/table.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/orm.dir/build.make CMakeFiles/orm.dir/src/orm/table.cpp.o
+.PHONY : src/orm/table.cpp.o
+
+src/orm/table.i: src/orm/table.cpp.i
+.PHONY : src/orm/table.i
+
+# target to preprocess a source file
+src/orm/table.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/orm.dir/build.make CMakeFiles/orm.dir/src/orm/table.cpp.i
+.PHONY : src/orm/table.cpp.i
+
+src/orm/table.s: src/orm/table.cpp.s
+.PHONY : src/orm/table.s
+
+# target to generate assembly for a file
+src/orm/table.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/orm.dir/build.make CMakeFiles/orm.dir/src/orm/table.cpp.s
+.PHONY : src/orm/table.cpp.s
+
+src/orm/util.o: src/orm/util.cpp.o
+.PHONY : src/orm/util.o
+
+# target to build an object file
+src/orm/util.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/orm.dir/build.make CMakeFiles/orm.dir/src/orm/util.cpp.o
+.PHONY : src/orm/util.cpp.o
+
+src/orm/util.i: src/orm/util.cpp.i
+.PHONY : src/orm/util.i
+
+# target to preprocess a source file
+src/orm/util.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/orm.dir/build.make CMakeFiles/orm.dir/src/orm/util.cpp.i
+.PHONY : src/orm/util.cpp.i
+
+src/orm/util.s: src/orm/util.cpp.s
+.PHONY : src/orm/util.s
+
+# target to generate assembly for a file
+src/orm/util.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/orm.dir/build.make CMakeFiles/orm.dir/src/orm/util.cpp.s
+.PHONY : src/orm/util.cpp.s
+
 src/rock/rock_protocol.o: src/rock/rock_protocol.cpp.o
 .PHONY : src/rock/rock_protocol.o
 
@@ -1384,6 +1543,30 @@ src/util/json_util.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/util/json_util.cpp.s
 .PHONY : src/util/json_util.cpp.s
 
+tests/test_crypto.o: tests/test_crypto.cpp.o
+.PHONY : tests/test_crypto.o
+
+# target to build an object file
+tests/test_crypto.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_crypto.dir/build.make CMakeFiles/test_crypto.dir/tests/test_crypto.cpp.o
+.PHONY : tests/test_crypto.cpp.o
+
+tests/test_crypto.i: tests/test_crypto.cpp.i
+.PHONY : tests/test_crypto.i
+
+# target to preprocess a source file
+tests/test_crypto.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_crypto.dir/build.make CMakeFiles/test_crypto.dir/tests/test_crypto.cpp.i
+.PHONY : tests/test_crypto.cpp.i
+
+tests/test_crypto.s: tests/test_crypto.cpp.s
+.PHONY : tests/test_crypto.s
+
+# target to generate assembly for a file
+tests/test_crypto.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_crypto.dir/build.make CMakeFiles/test_crypto.dir/tests/test_crypto.cpp.s
+.PHONY : tests/test_crypto.cpp.s
+
 tests/test_email.o: tests/test_email.cpp.o
 .PHONY : tests/test_email.o
 
@@ -1456,6 +1639,30 @@ tests/test_rock.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_rock.dir/build.make CMakeFiles/test_rock.dir/tests/test_rock.cpp.s
 .PHONY : tests/test_rock.cpp.s
 
+tests/test_sqlite3.o: tests/test_sqlite3.cpp.o
+.PHONY : tests/test_sqlite3.o
+
+# target to build an object file
+tests/test_sqlite3.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_sqlite3.dir/build.make CMakeFiles/test_sqlite3.dir/tests/test_sqlite3.cpp.o
+.PHONY : tests/test_sqlite3.cpp.o
+
+tests/test_sqlite3.i: tests/test_sqlite3.cpp.i
+.PHONY : tests/test_sqlite3.i
+
+# target to preprocess a source file
+tests/test_sqlite3.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_sqlite3.dir/build.make CMakeFiles/test_sqlite3.dir/tests/test_sqlite3.cpp.i
+.PHONY : tests/test_sqlite3.cpp.i
+
+tests/test_sqlite3.s: tests/test_sqlite3.cpp.s
+.PHONY : tests/test_sqlite3.s
+
+# target to generate assembly for a file
+tests/test_sqlite3.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_sqlite3.dir/build.make CMakeFiles/test_sqlite3.dir/tests/test_sqlite3.cpp.s
+.PHONY : tests/test_sqlite3.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -1465,9 +1672,12 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... bin_webserver"
+	@echo "... orm"
 	@echo "... test"
+	@echo "... test_crypto"
 	@echo "... test_email"
 	@echo "... test_rock"
+	@echo "... test_sqlite3"
 	@echo "... webserver"
 	@echo "... src/application/application.o"
 	@echo "... src/application/application.i"
@@ -1589,6 +1799,21 @@ help:
 	@echo "... src/http/ws_session.o"
 	@echo "... src/http/ws_session.i"
 	@echo "... src/http/ws_session.s"
+	@echo "... src/orm/column.o"
+	@echo "... src/orm/column.i"
+	@echo "... src/orm/column.s"
+	@echo "... src/orm/index.o"
+	@echo "... src/orm/index.i"
+	@echo "... src/orm/index.s"
+	@echo "... src/orm/orm.o"
+	@echo "... src/orm/orm.i"
+	@echo "... src/orm/orm.s"
+	@echo "... src/orm/table.o"
+	@echo "... src/orm/table.i"
+	@echo "... src/orm/table.s"
+	@echo "... src/orm/util.o"
+	@echo "... src/orm/util.i"
+	@echo "... src/orm/util.s"
 	@echo "... src/rock/rock_protocol.o"
 	@echo "... src/rock/rock_protocol.i"
 	@echo "... src/rock/rock_protocol.s"
@@ -1619,6 +1844,9 @@ help:
 	@echo "... src/util/json_util.o"
 	@echo "... src/util/json_util.i"
 	@echo "... src/util/json_util.s"
+	@echo "... tests/test_crypto.o"
+	@echo "... tests/test_crypto.i"
+	@echo "... tests/test_crypto.s"
 	@echo "... tests/test_email.o"
 	@echo "... tests/test_email.i"
 	@echo "... tests/test_email.s"
@@ -1628,6 +1856,9 @@ help:
 	@echo "... tests/test_rock.o"
 	@echo "... tests/test_rock.i"
 	@echo "... tests/test_rock.s"
+	@echo "... tests/test_sqlite3.o"
+	@echo "... tests/test_sqlite3.i"
+	@echo "... tests/test_sqlite3.s"
 .PHONY : help
 
 
