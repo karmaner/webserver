@@ -155,16 +155,16 @@ std::ostream& HttpRequest::dump(std::ostream& os) const {
     //
     //
     os << HttpMethodToString(m_method) << " "
-       << m_path
-       << (m_query.empty() ? "" : "?")
-       << m_query
-       << (m_fragment.empty() ? "" : "#")
-       << m_fragment
-       << " HTTP/"
-       << ((uint32_t)(m_version >> 4))
-       << "."
-       << ((uint32_t)(m_version & 0x0F))
-       << "\r\n";
+        << m_path
+        << (m_query.empty() ? "" : "?")
+        << m_query
+        << (m_fragment.empty() ? "" : "#")
+        << m_fragment
+        << " HTTP/"
+        << ((uint32_t)(m_version >> 4))
+        << "."
+        << ((uint32_t)(m_version & 0x0F))
+        << "\r\n";
     if(!m_websocket) {
         os << "connection: " << (m_close ? "close" : "keep-alive") << "\r\n";
     }
@@ -172,12 +172,12 @@ std::ostream& HttpRequest::dump(std::ostream& os) const {
         if(!m_websocket && strcasecmp(i.first.c_str(), "connection") == 0) {
             continue;
         }
-        os << i.first << ":" << i.second << "\r\n";
+        os << i.first << ": " << i.second << "\r\n";
     }
 
     if(!m_body.empty()) {
         os << "content-length: " << m_body.size() << "\r\n\r\n"
-           << m_body;
+            << m_body;
     } else {
         os << "\r\n";
     }

@@ -1,7 +1,7 @@
 #ifndef __SRC_HTTP_HTTP_CONNECTION_H__
 #define __SRC_HTTP_HTTP_CONNECTION_H__
 
-#include "src/basic/socket_stream.h"
+#include "src/streams/socket_stream.h"
 #include "http.h"
 #include "src/basic/uri.h" 
 #include "src/basic/mutex.h"

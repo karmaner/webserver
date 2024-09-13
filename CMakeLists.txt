@@ -24,6 +24,13 @@ if(OPENSSL_FOUND)
     include_directories(${OPENSSL_INCLUDE_DIR})
 endif()
 
+find_package(ZLIB REQUIRED)
+
+if(ZLIB_FOUND)
+    include_directories(${ZLIB_INCLUDE_DIRS})
+endif()
+
+
 set(LIB_SRC
     src/http/http.cpp
     src/http/http_connection.cpp
@@ -50,7 +57,7 @@ set(LIB_SRC
     src/basic/log.cpp
     src/basic/scheduler.cpp
     src/basic/socket.cpp
-    src/basic/socket_stream.cpp
+
     src/basic/stream.cpp
     src/basic/tcp_server.cpp
     src/basic/timer.cpp
@@ -63,6 +70,9 @@ set(LIB_SRC
     src/util/hash_util.cpp
 
     src/application/application.cpp
+
+    src/streams/socket_stream.cpp
+    src/streams/zlib_stream.cpp
     )
 
 ragelmaker(src/http/http11_parser.rl LIB_SRC ${CMAKE_CURRENT_SOURCE_DIR}/src/http)
@@ -86,7 +96,8 @@ set(LIBS
         dl
         pthread
         yaml-cpp
-        ${OPENSSL_LIBRARIES})
+        ${OPENSSL_LIBRARIES}
+        ${ZLIB_LIBRARIES})
 
 #${PROTOBUF_LIBRARIES})
 
@@ -126,6 +137,12 @@ endif()
 
 webserver_add_executable(bin_webserver "src/basic/main.cpp" webserver "${LIBS}")
 set_target_properties(bin_webserver PROPERTIES OUTPUT_NAME "webserver")
+
+webserver_add_executable(test_http_connection "tests/test_http_connection.cpp" webserver "${LIBS}")
+webserver_add_executable(test_lru "tests/test_lru.cpp" webserver "${LIBS}")
+webserver_add_executable(test_timed_cache "tests/test_timed_cache.cpp" webserver "${LIBS}")
+webserver_add_executable(test_timed_lru_cache "tests/test_timed_lru_cache.cpp" webserver "${LIBS}")
+webserver_add_executable(test_zlib_stream "tests/test_zlib_stream.cpp" webserver "${LIBS}")
 
 SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 SET(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)

@@ -2,7 +2,7 @@
 #ifndef __SRC_HEEP_HTTP_SESSION_H__
 #define __SRC_HTTP_HTTP_SESSION_H__
 
-#include "src/basic/socket_stream.h"
+#include "src/streams/socket_stream.h"
 #include "http.h"
 
 namespace webserver {
