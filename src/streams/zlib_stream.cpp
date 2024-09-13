@@ -196,6 +196,15 @@ int ZlibStream::flush() {
     }
 }
 
+webserver::ByteArray::ptr ZlibStream::getByteArray() {
+    webserver::ByteArray::ptr ba(new webserver::ByteArray);
+    for(auto& i : m_buffs) {
+        ba->write(i.iov_base, i.iov_len);
+    }
+    ba->setPosition(0);
+    return ba;
+}
+
 std::string ZlibStream::getResult() const {
     std::string rt;
     for(auto& i : m_buffs) {

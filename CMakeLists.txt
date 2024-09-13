@@ -14,6 +14,11 @@ link_directories(/apps/webserver/lib)
 cmake_policy(SET CMP0064 NEW)
 option(TEST "ON for complile test" ON)
 
+find_package(Protobuf REQUIRED)
+if(Protobuf_FOUND)
+    include_directories(${Protobuf_INCLUDE_DIRS})
+endif()
+
 find_package(Boost REQUIRED)
 if(Boost_FOUND)
     include_directories(${Boost_INCLUDE_DIRS})
@@ -43,6 +48,8 @@ set(LIB_SRC
     src/http/ws_server.cpp
     src/http/ws_connection.cpp
 
+    src/rock/rock_protocol.cpp
+
     src/basic/protocol.cpp
     src/basic/module.cpp
     src/basic/library.cpp
@@ -68,6 +75,8 @@ set(LIB_SRC
     src/basic/scheduler.cpp
     src/basic/mutex.cpp
 
+    src/util/crypto_util.cpp
+    src/util/json_util.cpp
     src/util/hash_util.cpp
 
     src/application/application.cpp
@@ -87,6 +96,7 @@ force_redefine_file_macro_for_sources(webserver)
 
 find_library(YAMLCPP yaml-cpp)
 find_library(PTHREAD pthread)
+find_library(JSONCPP jsoncpp)
 
 #set(LIBS ${LIBS} webserver)
 #set(LIBS ${LIBS} dl)
@@ -98,8 +108,11 @@ set(LIBS
         dl
         pthread
         yaml-cpp
+        jsoncpp
         ${OPENSSL_LIBRARIES}
-        ${ZLIB_LIBRARIES})
+        ${ZLIB_LIBRARIES}
+        ${PROTOBUF_LIBRARIES}
+        )
 
 #${PROTOBUF_LIBRARIES})
 
@@ -140,6 +153,7 @@ endif()
 webserver_add_executable(bin_webserver "src/basic/main.cpp" webserver "${LIBS}")
 set_target_properties(bin_webserver PROPERTIES OUTPUT_NAME "webserver")
 
+webserver_add_executable(test_crypto "tests/test_crypto.cpp" webserver "${LIBS}")
 webserver_add_executable(test_http_connection "tests/test_http_connection.cpp" webserver "${LIBS}")
 webserver_add_executable(test_lru "tests/test_lru.cpp" webserver "${LIBS}")
 webserver_add_executable(test_timed_cache "tests/test_timed_cache.cpp" webserver "${LIBS}")

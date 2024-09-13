@@ -106,8 +106,8 @@ double JsonUtil::GetDouble(const Json::Value& json
 }
 
 int32_t JsonUtil::GetInt32(const Json::Value& json
-                 ,const std::string& name
-                 ,int32_t default_value) {
+                    ,const std::string& name
+                    ,int32_t default_value) {
     if(!json.isMember(name)) {
         return default_value;
     }
@@ -121,8 +121,8 @@ int32_t JsonUtil::GetInt32(const Json::Value& json
 }
 
 uint32_t JsonUtil::GetUint32(const Json::Value& json
-                   ,const std::string& name
-                   ,uint32_t default_value) {
+                    ,const std::string& name
+                    ,uint32_t default_value) {
     if(!json.isMember(name)) {
         return default_value;
     }
@@ -136,8 +136,8 @@ uint32_t JsonUtil::GetUint32(const Json::Value& json
 }
 
 int64_t JsonUtil::GetInt64(const Json::Value& json
-                 ,const std::string& name
-                 ,int64_t default_value) {
+                    ,const std::string& name
+                    ,int64_t default_value) {
     if(!json.isMember(name)) {
         return default_value;
     }
@@ -151,8 +151,8 @@ int64_t JsonUtil::GetInt64(const Json::Value& json
 }
 
 uint64_t JsonUtil::GetUint64(const Json::Value& json
-                   ,const std::string& name
-                   ,uint64_t default_value) {
+                    ,const std::string& name
+                    ,uint64_t default_value) {
     if(!json.isMember(name)) {
         return default_value;
     }

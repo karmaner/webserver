@@ -146,6 +146,19 @@ bin_webserver/fast:
 .PHONY : bin_webserver/fast
 
 #=============================================================================
+# Target rules for targets named test_crypto
+
+# Build rule for target.
+test_crypto: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_crypto
+.PHONY : test_crypto
+
+# fast build rule for target.
+test_crypto/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_crypto.dir/build.make CMakeFiles/test_crypto.dir/build
+.PHONY : test_crypto/fast
+
+#=============================================================================
 # Target rules for targets named test_http_connection
 
 # Build rule for target.
@@ -1098,6 +1111,30 @@ src/http/ws_session.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/http/ws_session.cpp.s
 .PHONY : src/http/ws_session.cpp.s
 
+src/rock/rock_protocol.o: src/rock/rock_protocol.cpp.o
+.PHONY : src/rock/rock_protocol.o
+
+# target to build an object file
+src/rock/rock_protocol.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/rock/rock_protocol.cpp.o
+.PHONY : src/rock/rock_protocol.cpp.o
+
+src/rock/rock_protocol.i: src/rock/rock_protocol.cpp.i
+.PHONY : src/rock/rock_protocol.i
+
+# target to preprocess a source file
+src/rock/rock_protocol.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/rock/rock_protocol.cpp.i
+.PHONY : src/rock/rock_protocol.cpp.i
+
+src/rock/rock_protocol.s: src/rock/rock_protocol.cpp.s
+.PHONY : src/rock/rock_protocol.s
+
+# target to generate assembly for a file
+src/rock/rock_protocol.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/rock/rock_protocol.cpp.s
+.PHONY : src/rock/rock_protocol.cpp.s
+
 src/streams/async_socket_stream.o: src/streams/async_socket_stream.cpp.o
 .PHONY : src/streams/async_socket_stream.o
 
@@ -1170,6 +1207,30 @@ src/streams/zlib_stream.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/streams/zlib_stream.cpp.s
 .PHONY : src/streams/zlib_stream.cpp.s
 
+src/util/crypto_util.o: src/util/crypto_util.cpp.o
+.PHONY : src/util/crypto_util.o
+
+# target to build an object file
+src/util/crypto_util.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/util/crypto_util.cpp.o
+.PHONY : src/util/crypto_util.cpp.o
+
+src/util/crypto_util.i: src/util/crypto_util.cpp.i
+.PHONY : src/util/crypto_util.i
+
+# target to preprocess a source file
+src/util/crypto_util.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/util/crypto_util.cpp.i
+.PHONY : src/util/crypto_util.cpp.i
+
+src/util/crypto_util.s: src/util/crypto_util.cpp.s
+.PHONY : src/util/crypto_util.s
+
+# target to generate assembly for a file
+src/util/crypto_util.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/util/crypto_util.cpp.s
+.PHONY : src/util/crypto_util.cpp.s
+
 src/util/hash_util.o: src/util/hash_util.cpp.o
 .PHONY : src/util/hash_util.o
 
@@ -1193,6 +1254,54 @@ src/util/hash_util.s: src/util/hash_util.cpp.s
 src/util/hash_util.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/util/hash_util.cpp.s
 .PHONY : src/util/hash_util.cpp.s
+
+src/util/json_util.o: src/util/json_util.cpp.o
+.PHONY : src/util/json_util.o
+
+# target to build an object file
+src/util/json_util.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/util/json_util.cpp.o
+.PHONY : src/util/json_util.cpp.o
+
+src/util/json_util.i: src/util/json_util.cpp.i
+.PHONY : src/util/json_util.i
+
+# target to preprocess a source file
+src/util/json_util.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/util/json_util.cpp.i
+.PHONY : src/util/json_util.cpp.i
+
+src/util/json_util.s: src/util/json_util.cpp.s
+.PHONY : src/util/json_util.s
+
+# target to generate assembly for a file
+src/util/json_util.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/util/json_util.cpp.s
+.PHONY : src/util/json_util.cpp.s
+
+tests/test_crypto.o: tests/test_crypto.cpp.o
+.PHONY : tests/test_crypto.o
+
+# target to build an object file
+tests/test_crypto.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_crypto.dir/build.make CMakeFiles/test_crypto.dir/tests/test_crypto.cpp.o
+.PHONY : tests/test_crypto.cpp.o
+
+tests/test_crypto.i: tests/test_crypto.cpp.i
+.PHONY : tests/test_crypto.i
+
+# target to preprocess a source file
+tests/test_crypto.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_crypto.dir/build.make CMakeFiles/test_crypto.dir/tests/test_crypto.cpp.i
+.PHONY : tests/test_crypto.cpp.i
+
+tests/test_crypto.s: tests/test_crypto.cpp.s
+.PHONY : tests/test_crypto.s
+
+# target to generate assembly for a file
+tests/test_crypto.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_crypto.dir/build.make CMakeFiles/test_crypto.dir/tests/test_crypto.cpp.s
+.PHONY : tests/test_crypto.cpp.s
 
 tests/test_http_connection.o: tests/test_http_connection.cpp.o
 .PHONY : tests/test_http_connection.o
@@ -1323,6 +1432,7 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... bin_webserver"
+	@echo "... test_crypto"
 	@echo "... test_http_connection"
 	@echo "... test_lru"
 	@echo "... test_timed_cache"
@@ -1440,6 +1550,9 @@ help:
 	@echo "... src/http/ws_session.o"
 	@echo "... src/http/ws_session.i"
 	@echo "... src/http/ws_session.s"
+	@echo "... src/rock/rock_protocol.o"
+	@echo "... src/rock/rock_protocol.i"
+	@echo "... src/rock/rock_protocol.s"
 	@echo "... src/streams/async_socket_stream.o"
 	@echo "... src/streams/async_socket_stream.i"
 	@echo "... src/streams/async_socket_stream.s"
@@ -1449,9 +1562,18 @@ help:
 	@echo "... src/streams/zlib_stream.o"
 	@echo "... src/streams/zlib_stream.i"
 	@echo "... src/streams/zlib_stream.s"
+	@echo "... src/util/crypto_util.o"
+	@echo "... src/util/crypto_util.i"
+	@echo "... src/util/crypto_util.s"
 	@echo "... src/util/hash_util.o"
 	@echo "... src/util/hash_util.i"
 	@echo "... src/util/hash_util.s"
+	@echo "... src/util/json_util.o"
+	@echo "... src/util/json_util.i"
+	@echo "... src/util/json_util.s"
+	@echo "... tests/test_crypto.o"
+	@echo "... tests/test_crypto.i"
+	@echo "... tests/test_crypto.s"
 	@echo "... tests/test_http_connection.o"
 	@echo "... tests/test_http_connection.i"
 	@echo "... tests/test_http_connection.s"
