@@ -10,6 +10,7 @@
 #include "src/basic/module.h"
 #include "src/basic/worker.h"
 #include "src/http/ws_server.h"
+#include "src/rock/rock_server.h"
 
 namespace webserver {
 
@@ -215,10 +216,16 @@ int Application::run_fiber() {
         } else if(i.type == "ws") {
             server.reset(new webserver::http::WSServer(
                             process_worker, accept_worker));
+        } else if(i.type == "rock") {
+            server.reset(new webserver::RockServer(
+                            process_worker, accept_worker));
         } else {
             WEBSERVER_LOG_ERROR(g_logger) << "invalid server type=" << i.type
                 << LexicalCast<TcpServerConf, std::string>()(i);
             _exit(0);
+        }
+        if(!i.name.empty()) {
+            server->setName(i.name);
         }
         std::vector<Address::ptr> fails;
         if(!server->bind(address, fails, i.ssl)) {
@@ -233,9 +240,6 @@ int Application::run_fiber() {
                 WEBSERVER_LOG_ERROR(g_logger) << "loadCertificates fail, cert_file="
                     << i.cert_file << " key_file=" << i.key_file;
             }
-        }
-        if(!i.name.empty()) {
-            server->setName(i.name);
         }
         server->setConf(i);
         server->start();

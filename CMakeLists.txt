@@ -14,6 +14,11 @@ link_directories(/apps/webserver/lib)
 cmake_policy(SET CMP0064 NEW)
 option(TEST "ON for complile test" ON)
 
+find_package(SQLite3 REQUIRED)
+if(SQLite3_FOUND)
+    include_directories( ${SQLite3_INCLUDE_DIRS})
+endif()
+
 find_package(Protobuf REQUIRED)
 if(Protobuf_FOUND)
     include_directories(${Protobuf_INCLUDE_DIRS})
@@ -48,6 +53,7 @@ set(LIB_SRC
     src/http/ws_server.cpp
     src/http/ws_connection.cpp
 
+    src/rock/rock_server.cpp
     src/rock/rock_stream.cpp
     src/rock/rock_protocol.cpp
 
@@ -85,6 +91,8 @@ set(LIB_SRC
     src/streams/socket_stream.cpp
     src/streams/zlib_stream.cpp
     src/streams/async_socket_stream.cpp
+
+    src/db/sqlite3.cpp
     )
 
 ragelmaker(src/http/http11_parser.rl LIB_SRC ${CMAKE_CURRENT_SOURCE_DIR}/src/http)
@@ -110,6 +118,7 @@ set(LIBS
         pthread
         yaml-cpp
         jsoncpp
+        ${SQLite3_LIBRARIES}
         ${OPENSSL_LIBRARIES}
         ${ZLIB_LIBRARIES}
         ${PROTOBUF_LIBRARIES}
@@ -154,12 +163,15 @@ webserver_add_executable(test_lru "tests/test_lru.cpp" webserver "${LIBS}")
 webserver_add_executable(test_timed_cache "tests/test_timed_cache.cpp" webserver "${LIBS}")
 webserver_add_executable(test_timed_lru_cache "tests/test_timed_lru_cache.cpp" webserver "${LIBS}")
 webserver_add_executable(test_zlib_stream "tests/test_zlib_stream.cpp" webserver "${LIBS}")
+webserver_add_executable(test_sqlite3 "tests/test_sqlite3.cpp" webserver "${LIBS}")
 
 add_library(test SHARED tests/test_module.cpp)
 endif()
 
 webserver_add_executable(bin_webserver "src/basic/main.cpp" webserver "${LIBS}")
 set_target_properties(bin_webserver PROPERTIES OUTPUT_NAME "webserver")
+
+webserver_add_executable(test_sqlite3 "tests/test_sqlite3.cpp" webserver "${LIBS}")
 
 SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 SET(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)

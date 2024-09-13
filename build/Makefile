@@ -145,6 +145,19 @@ bin_webserver/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/bin_webserver.dir/build.make CMakeFiles/bin_webserver.dir/build
 .PHONY : bin_webserver/fast
 
+#=============================================================================
+# Target rules for targets named test_sqlite3
+
+# Build rule for target.
+test_sqlite3: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_sqlite3
+.PHONY : test_sqlite3
+
+# fast build rule for target.
+test_sqlite3/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_sqlite3.dir/build.make CMakeFiles/test_sqlite3.dir/build
+.PHONY : test_sqlite3/fast
+
 src/application/application.o: src/application/application.cpp.o
 .PHONY : src/application/application.o
 
@@ -745,6 +758,30 @@ src/basic/worker.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/basic/worker.cpp.s
 .PHONY : src/basic/worker.cpp.s
 
+src/db/sqlite3.o: src/db/sqlite3.cpp.o
+.PHONY : src/db/sqlite3.o
+
+# target to build an object file
+src/db/sqlite3.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/db/sqlite3.cpp.o
+.PHONY : src/db/sqlite3.cpp.o
+
+src/db/sqlite3.i: src/db/sqlite3.cpp.i
+.PHONY : src/db/sqlite3.i
+
+# target to preprocess a source file
+src/db/sqlite3.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/db/sqlite3.cpp.i
+.PHONY : src/db/sqlite3.cpp.i
+
+src/db/sqlite3.s: src/db/sqlite3.cpp.s
+.PHONY : src/db/sqlite3.s
+
+# target to generate assembly for a file
+src/db/sqlite3.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/db/sqlite3.cpp.s
+.PHONY : src/db/sqlite3.cpp.s
+
 src/http/http.o: src/http/http.cpp.o
 .PHONY : src/http/http.o
 
@@ -1057,6 +1094,30 @@ src/rock/rock_protocol.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/rock/rock_protocol.cpp.s
 .PHONY : src/rock/rock_protocol.cpp.s
 
+src/rock/rock_server.o: src/rock/rock_server.cpp.o
+.PHONY : src/rock/rock_server.o
+
+# target to build an object file
+src/rock/rock_server.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/rock/rock_server.cpp.o
+.PHONY : src/rock/rock_server.cpp.o
+
+src/rock/rock_server.i: src/rock/rock_server.cpp.i
+.PHONY : src/rock/rock_server.i
+
+# target to preprocess a source file
+src/rock/rock_server.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/rock/rock_server.cpp.i
+.PHONY : src/rock/rock_server.cpp.i
+
+src/rock/rock_server.s: src/rock/rock_server.cpp.s
+.PHONY : src/rock/rock_server.s
+
+# target to generate assembly for a file
+src/rock/rock_server.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/rock/rock_server.cpp.s
+.PHONY : src/rock/rock_server.cpp.s
+
 src/rock/rock_stream.o: src/rock/rock_stream.cpp.o
 .PHONY : src/rock/rock_stream.o
 
@@ -1225,6 +1286,30 @@ src/util/json_util.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/util/json_util.cpp.s
 .PHONY : src/util/json_util.cpp.s
 
+tests/test_sqlite3.o: tests/test_sqlite3.cpp.o
+.PHONY : tests/test_sqlite3.o
+
+# target to build an object file
+tests/test_sqlite3.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_sqlite3.dir/build.make CMakeFiles/test_sqlite3.dir/tests/test_sqlite3.cpp.o
+.PHONY : tests/test_sqlite3.cpp.o
+
+tests/test_sqlite3.i: tests/test_sqlite3.cpp.i
+.PHONY : tests/test_sqlite3.i
+
+# target to preprocess a source file
+tests/test_sqlite3.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_sqlite3.dir/build.make CMakeFiles/test_sqlite3.dir/tests/test_sqlite3.cpp.i
+.PHONY : tests/test_sqlite3.cpp.i
+
+tests/test_sqlite3.s: tests/test_sqlite3.cpp.s
+.PHONY : tests/test_sqlite3.s
+
+# target to generate assembly for a file
+tests/test_sqlite3.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_sqlite3.dir/build.make CMakeFiles/test_sqlite3.dir/tests/test_sqlite3.cpp.s
+.PHONY : tests/test_sqlite3.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -1234,6 +1319,7 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... bin_webserver"
+	@echo "... test_sqlite3"
 	@echo "... webserver"
 	@echo "... src/application/application.o"
 	@echo "... src/application/application.i"
@@ -1310,6 +1396,9 @@ help:
 	@echo "... src/basic/worker.o"
 	@echo "... src/basic/worker.i"
 	@echo "... src/basic/worker.s"
+	@echo "... src/db/sqlite3.o"
+	@echo "... src/db/sqlite3.i"
+	@echo "... src/db/sqlite3.s"
 	@echo "... src/http/http.o"
 	@echo "... src/http/http.i"
 	@echo "... src/http/http.s"
@@ -1349,6 +1438,9 @@ help:
 	@echo "... src/rock/rock_protocol.o"
 	@echo "... src/rock/rock_protocol.i"
 	@echo "... src/rock/rock_protocol.s"
+	@echo "... src/rock/rock_server.o"
+	@echo "... src/rock/rock_server.i"
+	@echo "... src/rock/rock_server.s"
 	@echo "... src/rock/rock_stream.o"
 	@echo "... src/rock/rock_stream.i"
 	@echo "... src/rock/rock_stream.s"
@@ -1370,6 +1462,9 @@ help:
 	@echo "... src/util/json_util.o"
 	@echo "... src/util/json_util.i"
 	@echo "... src/util/json_util.s"
+	@echo "... tests/test_sqlite3.o"
+	@echo "... tests/test_sqlite3.i"
+	@echo "... tests/test_sqlite3.s"
 .PHONY : help
 
 

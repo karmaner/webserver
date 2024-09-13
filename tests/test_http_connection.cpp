@@ -3,7 +3,7 @@
 #include "src/basic/log.h"
 #include "src/basic/iomanager.h"
 #include "src/http/http_parser.h"
-#include "src/streams/zlib_stream.cpp"
+#include "src/streams/zlib_stream.h"
 #include <fstream>
 
 static webserver::Logger::ptr g_logger = WEBSERVER_LOG_ROOT();
@@ -66,19 +66,21 @@ void run() {
 void test_https() {
     auto r = webserver::http::HttpConnection::DoGet("http://www.baidu.com/", 300, {
                         {"Accept-Encoding", "gzip, deflate, br"},
-                        {"Connection", "keep-alive"}
+                        {"Connection", "keep-alive"},
+                        {"User-Agent", "curl/7.29.0"}
             });
     WEBSERVER_LOG_INFO(g_logger) << "result=" << r->result
         << " error=" << r->error
         << " rsp=" << (r->response ? r->response->toString() : "");
 
-    webserver::http::HttpConnectionPool::ptr pool(new webserver::http::HttpConnectionPool(
-                "www.baidu.com", "", 443, true, 10, 1000 * 30, 5));
-    //auto pool = webserver::http::HttpConnectionPool::Create(
-    //                "https://www.baidu.com", "", 10, 1000 * 30, 5);
+    //webserver::http::HttpConnectionPool::ptr pool(new webserver::http::HttpConnectionPool(
+    //            "www.baidu.com", "", 80, false, 10, 1000 * 30, 5));
+    auto pool = webserver::http::HttpConnectionPool::Create(
+                    "https://www.baidu.com", "", 10, 1000 * 30, 5);
     webserver::IOManager::GetThis()->addTimer(1000, [pool](){
-            auto r = pool->doGet("/", 300, {
-                        {"Accept-Encoding", "gzip, deflate, br"}
+            auto r = pool->doGet("/", 3000, {
+                        {"Accept-Encoding", "gzip, deflate, br"},
+                        {"User-Agent", "curl/7.29.0"}
                     });
             WEBSERVER_LOG_INFO(g_logger) << r->toString();
     }, true);
@@ -159,5 +161,8 @@ int main(int argc, char** argv) {
     webserver::IOManager iom(2);
     //iom.schedule(run);
     //iom.schedule(test_https);
+    //iom.schedule(test_data);
+    //iom.schedule(test_pool);
+    iom.schedule(test_parser);
     return 0;
 }

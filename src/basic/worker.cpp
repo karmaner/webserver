@@ -5,7 +5,7 @@
 namespace webserver {
 
 static webserver::ConfigVar<std::map<std::string, std::map<std::string, std::string> > >::ptr g_worker_config
-    = webserver::Config::Lookup("workers", std::map<std::string, std::map<std::string, std::string> >(), "woker config");
+    = webserver::Config::Lookup("workers", std::map<std::string, std::map<std::string, std::string> >(), "worker config");
 
 WorkerGroup::WorkerGroup(uint32_t batch_size, webserver::Scheduler* s)
     :m_batchSize(batch_size)

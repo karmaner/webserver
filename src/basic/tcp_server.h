@@ -113,8 +113,8 @@ public:
      * @param[in] woker socket客户端工作的协程调度器
      * @param[in] accept_woker 服务器socket执行接收socket连接的协程调度器
      */
-    TcpServer(webserver::IOManager* woker = webserver::IOManager::GetThis()
-                ,webserver::IOManager* accept_woker = webserver::IOManager::GetThis());
+    TcpServer(webserver::IOManager* worker = webserver::IOManager::GetThis()
+                ,webserver::IOManager* accept_worker = webserver::IOManager::GetThis());
 
     /**
      * @brief 析构函数
