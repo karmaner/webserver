@@ -43,6 +43,7 @@ set(LIB_SRC
     src/http/ws_server.cpp
     src/http/ws_connection.cpp
 
+    src/basic/protocol.cpp
     src/basic/module.cpp
     src/basic/library.cpp
     src/basic/worker.cpp
@@ -73,6 +74,7 @@ set(LIB_SRC
 
     src/streams/socket_stream.cpp
     src/streams/zlib_stream.cpp
+    src/streams/async_socket_stream.cpp
     )
 
 ragelmaker(src/http/http11_parser.rl LIB_SRC ${CMAKE_CURRENT_SOURCE_DIR}/src/http)

@@ -570,6 +570,30 @@ src/basic/mutex.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/basic/mutex.cpp.s
 .PHONY : src/basic/mutex.cpp.s
 
+src/basic/protocol.o: src/basic/protocol.cpp.o
+.PHONY : src/basic/protocol.o
+
+# target to build an object file
+src/basic/protocol.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/basic/protocol.cpp.o
+.PHONY : src/basic/protocol.cpp.o
+
+src/basic/protocol.i: src/basic/protocol.cpp.i
+.PHONY : src/basic/protocol.i
+
+# target to preprocess a source file
+src/basic/protocol.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/basic/protocol.cpp.i
+.PHONY : src/basic/protocol.cpp.i
+
+src/basic/protocol.s: src/basic/protocol.cpp.s
+.PHONY : src/basic/protocol.s
+
+# target to generate assembly for a file
+src/basic/protocol.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/basic/protocol.cpp.s
+.PHONY : src/basic/protocol.cpp.s
+
 src/basic/scheduler.o: src/basic/scheduler.cpp.o
 .PHONY : src/basic/scheduler.o
 
@@ -1074,6 +1098,30 @@ src/http/ws_session.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/http/ws_session.cpp.s
 .PHONY : src/http/ws_session.cpp.s
 
+src/streams/async_socket_stream.o: src/streams/async_socket_stream.cpp.o
+.PHONY : src/streams/async_socket_stream.o
+
+# target to build an object file
+src/streams/async_socket_stream.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/streams/async_socket_stream.cpp.o
+.PHONY : src/streams/async_socket_stream.cpp.o
+
+src/streams/async_socket_stream.i: src/streams/async_socket_stream.cpp.i
+.PHONY : src/streams/async_socket_stream.i
+
+# target to preprocess a source file
+src/streams/async_socket_stream.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/streams/async_socket_stream.cpp.i
+.PHONY : src/streams/async_socket_stream.cpp.i
+
+src/streams/async_socket_stream.s: src/streams/async_socket_stream.cpp.s
+.PHONY : src/streams/async_socket_stream.s
+
+# target to generate assembly for a file
+src/streams/async_socket_stream.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/streams/async_socket_stream.cpp.s
+.PHONY : src/streams/async_socket_stream.cpp.s
+
 src/streams/socket_stream.o: src/streams/socket_stream.cpp.o
 .PHONY : src/streams/socket_stream.o
 
@@ -1326,6 +1374,9 @@ help:
 	@echo "... src/basic/mutex.o"
 	@echo "... src/basic/mutex.i"
 	@echo "... src/basic/mutex.s"
+	@echo "... src/basic/protocol.o"
+	@echo "... src/basic/protocol.i"
+	@echo "... src/basic/protocol.s"
 	@echo "... src/basic/scheduler.o"
 	@echo "... src/basic/scheduler.i"
 	@echo "... src/basic/scheduler.s"
@@ -1389,6 +1440,9 @@ help:
 	@echo "... src/http/ws_session.o"
 	@echo "... src/http/ws_session.i"
 	@echo "... src/http/ws_session.s"
+	@echo "... src/streams/async_socket_stream.o"
+	@echo "... src/streams/async_socket_stream.i"
+	@echo "... src/streams/async_socket_stream.s"
 	@echo "... src/streams/socket_stream.o"
 	@echo "... src/streams/socket_stream.i"
 	@echo "... src/streams/socket_stream.s"

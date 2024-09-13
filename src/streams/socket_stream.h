@@ -3,6 +3,8 @@
 
 #include "src/basic/stream.h"
 #include "src/basic/socket.h"
+#include "src/basic/mutex.h"
+#include "src/basic/iomanager.h"
 
 namespace webserver {
 

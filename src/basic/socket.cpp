@@ -144,6 +144,7 @@ bool Socket::init(int sock) {
 }
 
 bool Socket::bind(const Address::ptr addr) {
+    m_localAddress = addr;
     if(!isValid()) {
         newSock();
         if(WEBSERVER_UNLIKELY(!isValid())) {
@@ -177,7 +178,16 @@ bool Socket::bind(const Address::ptr addr) {
     return true;
 }
 
+bool Socket::reconnect(uint64_t timeout_ms) {
+    if(!m_localAddress) {
+        WEBSERVER_LOG_ERROR(g_logger) << "reconnect m_localAddress is null";
+        return false;
+    }
+    return connect(m_localAddress, timeout_ms);
+}
+
 bool Socket::connect(const Address::ptr addr, uint64_t timeout_ms) {
+    m_remoteAddress = addr;
     if(!isValid()) {
         newSock();
         if(WEBSERVER_UNLIKELY(!isValid())) {
