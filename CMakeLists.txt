@@ -48,6 +48,7 @@ set(LIB_SRC
     src/http/ws_server.cpp
     src/http/ws_connection.cpp
 
+    src/rock/rock_stream.cpp
     src/rock/rock_protocol.cpp
 
     src/basic/protocol.cpp
@@ -147,18 +148,18 @@ webserver_add_executable(test_ws_client "tests/test_ws_client.cpp" webserver "${
 webserver_add_executable(test_ws_server "tests/test_ws_server.cpp" webserver "${LIBS}")
 webserver_add_executable(test_application "tests/test_application.cpp" webserver "${LIBS}")
 
-add_library(test SHARED tests/test_module.cpp)
-endif()
-
-webserver_add_executable(bin_webserver "src/basic/main.cpp" webserver "${LIBS}")
-set_target_properties(bin_webserver PROPERTIES OUTPUT_NAME "webserver")
-
 webserver_add_executable(test_crypto "tests/test_crypto.cpp" webserver "${LIBS}")
 webserver_add_executable(test_http_connection "tests/test_http_connection.cpp" webserver "${LIBS}")
 webserver_add_executable(test_lru "tests/test_lru.cpp" webserver "${LIBS}")
 webserver_add_executable(test_timed_cache "tests/test_timed_cache.cpp" webserver "${LIBS}")
 webserver_add_executable(test_timed_lru_cache "tests/test_timed_lru_cache.cpp" webserver "${LIBS}")
 webserver_add_executable(test_zlib_stream "tests/test_zlib_stream.cpp" webserver "${LIBS}")
+
+add_library(test SHARED tests/test_module.cpp)
+endif()
+
+webserver_add_executable(bin_webserver "src/basic/main.cpp" webserver "${LIBS}")
+set_target_properties(bin_webserver PROPERTIES OUTPUT_NAME "webserver")
 
 SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 SET(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)

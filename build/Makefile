@@ -145,84 +145,6 @@ bin_webserver/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/bin_webserver.dir/build.make CMakeFiles/bin_webserver.dir/build
 .PHONY : bin_webserver/fast
 
-#=============================================================================
-# Target rules for targets named test_crypto
-
-# Build rule for target.
-test_crypto: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_crypto
-.PHONY : test_crypto
-
-# fast build rule for target.
-test_crypto/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_crypto.dir/build.make CMakeFiles/test_crypto.dir/build
-.PHONY : test_crypto/fast
-
-#=============================================================================
-# Target rules for targets named test_http_connection
-
-# Build rule for target.
-test_http_connection: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_http_connection
-.PHONY : test_http_connection
-
-# fast build rule for target.
-test_http_connection/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_http_connection.dir/build.make CMakeFiles/test_http_connection.dir/build
-.PHONY : test_http_connection/fast
-
-#=============================================================================
-# Target rules for targets named test_lru
-
-# Build rule for target.
-test_lru: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_lru
-.PHONY : test_lru
-
-# fast build rule for target.
-test_lru/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_lru.dir/build.make CMakeFiles/test_lru.dir/build
-.PHONY : test_lru/fast
-
-#=============================================================================
-# Target rules for targets named test_timed_cache
-
-# Build rule for target.
-test_timed_cache: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_timed_cache
-.PHONY : test_timed_cache
-
-# fast build rule for target.
-test_timed_cache/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_timed_cache.dir/build.make CMakeFiles/test_timed_cache.dir/build
-.PHONY : test_timed_cache/fast
-
-#=============================================================================
-# Target rules for targets named test_timed_lru_cache
-
-# Build rule for target.
-test_timed_lru_cache: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_timed_lru_cache
-.PHONY : test_timed_lru_cache
-
-# fast build rule for target.
-test_timed_lru_cache/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_timed_lru_cache.dir/build.make CMakeFiles/test_timed_lru_cache.dir/build
-.PHONY : test_timed_lru_cache/fast
-
-#=============================================================================
-# Target rules for targets named test_zlib_stream
-
-# Build rule for target.
-test_zlib_stream: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_zlib_stream
-.PHONY : test_zlib_stream
-
-# fast build rule for target.
-test_zlib_stream/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_zlib_stream.dir/build.make CMakeFiles/test_zlib_stream.dir/build
-.PHONY : test_zlib_stream/fast
-
 src/application/application.o: src/application/application.cpp.o
 .PHONY : src/application/application.o
 
@@ -1135,6 +1057,30 @@ src/rock/rock_protocol.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/rock/rock_protocol.cpp.s
 .PHONY : src/rock/rock_protocol.cpp.s
 
+src/rock/rock_stream.o: src/rock/rock_stream.cpp.o
+.PHONY : src/rock/rock_stream.o
+
+# target to build an object file
+src/rock/rock_stream.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/rock/rock_stream.cpp.o
+.PHONY : src/rock/rock_stream.cpp.o
+
+src/rock/rock_stream.i: src/rock/rock_stream.cpp.i
+.PHONY : src/rock/rock_stream.i
+
+# target to preprocess a source file
+src/rock/rock_stream.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/rock/rock_stream.cpp.i
+.PHONY : src/rock/rock_stream.cpp.i
+
+src/rock/rock_stream.s: src/rock/rock_stream.cpp.s
+.PHONY : src/rock/rock_stream.s
+
+# target to generate assembly for a file
+src/rock/rock_stream.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/rock/rock_stream.cpp.s
+.PHONY : src/rock/rock_stream.cpp.s
+
 src/streams/async_socket_stream.o: src/streams/async_socket_stream.cpp.o
 .PHONY : src/streams/async_socket_stream.o
 
@@ -1279,150 +1225,6 @@ src/util/json_util.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/util/json_util.cpp.s
 .PHONY : src/util/json_util.cpp.s
 
-tests/test_crypto.o: tests/test_crypto.cpp.o
-.PHONY : tests/test_crypto.o
-
-# target to build an object file
-tests/test_crypto.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_crypto.dir/build.make CMakeFiles/test_crypto.dir/tests/test_crypto.cpp.o
-.PHONY : tests/test_crypto.cpp.o
-
-tests/test_crypto.i: tests/test_crypto.cpp.i
-.PHONY : tests/test_crypto.i
-
-# target to preprocess a source file
-tests/test_crypto.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_crypto.dir/build.make CMakeFiles/test_crypto.dir/tests/test_crypto.cpp.i
-.PHONY : tests/test_crypto.cpp.i
-
-tests/test_crypto.s: tests/test_crypto.cpp.s
-.PHONY : tests/test_crypto.s
-
-# target to generate assembly for a file
-tests/test_crypto.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_crypto.dir/build.make CMakeFiles/test_crypto.dir/tests/test_crypto.cpp.s
-.PHONY : tests/test_crypto.cpp.s
-
-tests/test_http_connection.o: tests/test_http_connection.cpp.o
-.PHONY : tests/test_http_connection.o
-
-# target to build an object file
-tests/test_http_connection.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_http_connection.dir/build.make CMakeFiles/test_http_connection.dir/tests/test_http_connection.cpp.o
-.PHONY : tests/test_http_connection.cpp.o
-
-tests/test_http_connection.i: tests/test_http_connection.cpp.i
-.PHONY : tests/test_http_connection.i
-
-# target to preprocess a source file
-tests/test_http_connection.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_http_connection.dir/build.make CMakeFiles/test_http_connection.dir/tests/test_http_connection.cpp.i
-.PHONY : tests/test_http_connection.cpp.i
-
-tests/test_http_connection.s: tests/test_http_connection.cpp.s
-.PHONY : tests/test_http_connection.s
-
-# target to generate assembly for a file
-tests/test_http_connection.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_http_connection.dir/build.make CMakeFiles/test_http_connection.dir/tests/test_http_connection.cpp.s
-.PHONY : tests/test_http_connection.cpp.s
-
-tests/test_lru.o: tests/test_lru.cpp.o
-.PHONY : tests/test_lru.o
-
-# target to build an object file
-tests/test_lru.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_lru.dir/build.make CMakeFiles/test_lru.dir/tests/test_lru.cpp.o
-.PHONY : tests/test_lru.cpp.o
-
-tests/test_lru.i: tests/test_lru.cpp.i
-.PHONY : tests/test_lru.i
-
-# target to preprocess a source file
-tests/test_lru.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_lru.dir/build.make CMakeFiles/test_lru.dir/tests/test_lru.cpp.i
-.PHONY : tests/test_lru.cpp.i
-
-tests/test_lru.s: tests/test_lru.cpp.s
-.PHONY : tests/test_lru.s
-
-# target to generate assembly for a file
-tests/test_lru.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_lru.dir/build.make CMakeFiles/test_lru.dir/tests/test_lru.cpp.s
-.PHONY : tests/test_lru.cpp.s
-
-tests/test_timed_cache.o: tests/test_timed_cache.cpp.o
-.PHONY : tests/test_timed_cache.o
-
-# target to build an object file
-tests/test_timed_cache.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_timed_cache.dir/build.make CMakeFiles/test_timed_cache.dir/tests/test_timed_cache.cpp.o
-.PHONY : tests/test_timed_cache.cpp.o
-
-tests/test_timed_cache.i: tests/test_timed_cache.cpp.i
-.PHONY : tests/test_timed_cache.i
-
-# target to preprocess a source file
-tests/test_timed_cache.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_timed_cache.dir/build.make CMakeFiles/test_timed_cache.dir/tests/test_timed_cache.cpp.i
-.PHONY : tests/test_timed_cache.cpp.i
-
-tests/test_timed_cache.s: tests/test_timed_cache.cpp.s
-.PHONY : tests/test_timed_cache.s
-
-# target to generate assembly for a file
-tests/test_timed_cache.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_timed_cache.dir/build.make CMakeFiles/test_timed_cache.dir/tests/test_timed_cache.cpp.s
-.PHONY : tests/test_timed_cache.cpp.s
-
-tests/test_timed_lru_cache.o: tests/test_timed_lru_cache.cpp.o
-.PHONY : tests/test_timed_lru_cache.o
-
-# target to build an object file
-tests/test_timed_lru_cache.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_timed_lru_cache.dir/build.make CMakeFiles/test_timed_lru_cache.dir/tests/test_timed_lru_cache.cpp.o
-.PHONY : tests/test_timed_lru_cache.cpp.o
-
-tests/test_timed_lru_cache.i: tests/test_timed_lru_cache.cpp.i
-.PHONY : tests/test_timed_lru_cache.i
-
-# target to preprocess a source file
-tests/test_timed_lru_cache.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_timed_lru_cache.dir/build.make CMakeFiles/test_timed_lru_cache.dir/tests/test_timed_lru_cache.cpp.i
-.PHONY : tests/test_timed_lru_cache.cpp.i
-
-tests/test_timed_lru_cache.s: tests/test_timed_lru_cache.cpp.s
-.PHONY : tests/test_timed_lru_cache.s
-
-# target to generate assembly for a file
-tests/test_timed_lru_cache.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_timed_lru_cache.dir/build.make CMakeFiles/test_timed_lru_cache.dir/tests/test_timed_lru_cache.cpp.s
-.PHONY : tests/test_timed_lru_cache.cpp.s
-
-tests/test_zlib_stream.o: tests/test_zlib_stream.cpp.o
-.PHONY : tests/test_zlib_stream.o
-
-# target to build an object file
-tests/test_zlib_stream.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_zlib_stream.dir/build.make CMakeFiles/test_zlib_stream.dir/tests/test_zlib_stream.cpp.o
-.PHONY : tests/test_zlib_stream.cpp.o
-
-tests/test_zlib_stream.i: tests/test_zlib_stream.cpp.i
-.PHONY : tests/test_zlib_stream.i
-
-# target to preprocess a source file
-tests/test_zlib_stream.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_zlib_stream.dir/build.make CMakeFiles/test_zlib_stream.dir/tests/test_zlib_stream.cpp.i
-.PHONY : tests/test_zlib_stream.cpp.i
-
-tests/test_zlib_stream.s: tests/test_zlib_stream.cpp.s
-.PHONY : tests/test_zlib_stream.s
-
-# target to generate assembly for a file
-tests/test_zlib_stream.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_zlib_stream.dir/build.make CMakeFiles/test_zlib_stream.dir/tests/test_zlib_stream.cpp.s
-.PHONY : tests/test_zlib_stream.cpp.s
-
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -1432,12 +1234,6 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... bin_webserver"
-	@echo "... test_crypto"
-	@echo "... test_http_connection"
-	@echo "... test_lru"
-	@echo "... test_timed_cache"
-	@echo "... test_timed_lru_cache"
-	@echo "... test_zlib_stream"
 	@echo "... webserver"
 	@echo "... src/application/application.o"
 	@echo "... src/application/application.i"
@@ -1553,6 +1349,9 @@ help:
 	@echo "... src/rock/rock_protocol.o"
 	@echo "... src/rock/rock_protocol.i"
 	@echo "... src/rock/rock_protocol.s"
+	@echo "... src/rock/rock_stream.o"
+	@echo "... src/rock/rock_stream.i"
+	@echo "... src/rock/rock_stream.s"
 	@echo "... src/streams/async_socket_stream.o"
 	@echo "... src/streams/async_socket_stream.i"
 	@echo "... src/streams/async_socket_stream.s"
@@ -1571,24 +1370,6 @@ help:
 	@echo "... src/util/json_util.o"
 	@echo "... src/util/json_util.i"
 	@echo "... src/util/json_util.s"
-	@echo "... tests/test_crypto.o"
-	@echo "... tests/test_crypto.i"
-	@echo "... tests/test_crypto.s"
-	@echo "... tests/test_http_connection.o"
-	@echo "... tests/test_http_connection.i"
-	@echo "... tests/test_http_connection.s"
-	@echo "... tests/test_lru.o"
-	@echo "... tests/test_lru.i"
-	@echo "... tests/test_lru.s"
-	@echo "... tests/test_timed_cache.o"
-	@echo "... tests/test_timed_cache.i"
-	@echo "... tests/test_timed_cache.s"
-	@echo "... tests/test_timed_lru_cache.o"
-	@echo "... tests/test_timed_lru_cache.i"
-	@echo "... tests/test_timed_lru_cache.s"
-	@echo "... tests/test_zlib_stream.o"
-	@echo "... tests/test_zlib_stream.i"
-	@echo "... tests/test_zlib_stream.s"
 .PHONY : help
 
 
