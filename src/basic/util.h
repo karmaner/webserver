@@ -15,6 +15,7 @@
 #include <yaml-cpp/yaml.h>
 #include <iostream>
 #include <boost/lexical_cast.hpp>
+#include <google/protobuf/message.h>
 #include "src/util/hash_util.h"
 #include "src/util/json_util.h"
 #include "src/util/crypto_util.h"
@@ -233,6 +234,7 @@ const char* TypeToName() {
     return s_name;
 }
 
+std::string PBToJsonString(const google::protobuf::Message& message);
 
 }
 

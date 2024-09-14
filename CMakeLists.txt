@@ -107,11 +107,17 @@ set(LIB_SRC
 
     src/email/email.cpp
     src/email/smtp.cpp
+
+    src/ns/name_server_module.cpp
+    src/ns/ns_client.cpp
+    src/ns/ns_protocol.cpp
     )
 
 ragelmaker(src/http/http11_parser.rl LIB_SRC ${CMAKE_CURRENT_SOURCE_DIR}/src/http)
 ragelmaker(src/http/httpclient_parser.rl LIB_SRC ${CMAKE_CURRENT_SOURCE_DIR}/src/http)
 ragelmaker(src/basic/uri.rl LIB_SRC ${CMAKE_CURRENT_SOURCE_DIR}/src/basic)
+
+protobufmaker(src/ns/ns_protobuf.proto LIB_SRC ${CMAKE_CURRENT_SOURCE_DIR})
 
 add_library(webserver SHARED ${LIB_SRC})
 force_redefine_file_macro_for_sources(webserver)

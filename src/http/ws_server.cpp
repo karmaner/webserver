@@ -6,8 +6,8 @@ namespace http {
 
 static webserver::Logger::ptr g_logger = WEBSERVER_LOG_NAME("system");
 
-WSServer::WSServer(webserver::IOManager* worker, webserver::IOManager* accept_worker)
-    :TcpServer(worker, accept_worker) {
+WSServer::WSServer(webserver::IOManager* worker, webserver::IOManager* io_worker, webserver::IOManager* accept_worker)
+    :TcpServer(worker, io_worker, accept_worker) {
     m_dispatch.reset(new WSServletDispatch);
 }
 

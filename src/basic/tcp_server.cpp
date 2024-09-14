@@ -11,8 +11,10 @@ static webserver::ConfigVar<uint64_t>::ptr g_tcp_server_read_timeout =
 static webserver::Logger::ptr g_logger = WEBSERVER_LOG_NAME("system");
 
 TcpServer::TcpServer(webserver::IOManager* worker,
+                    webserver::IOManager* io_worker,
                     webserver::IOManager* accept_worker)
     :m_worker(worker)
+    ,m_ioWorker(io_worker)
     ,m_acceptWorker(accept_worker)
     ,m_recvTimeout(g_tcp_server_read_timeout->getValue())
     ,m_name("webserver/1.0.0")
@@ -79,7 +81,7 @@ void TcpServer::startAccept(Socket::ptr sock) {
         Socket::ptr client = sock->accept();
         if(client) {
             client->setRecvTimeout(m_recvTimeout);
-            m_worker->schedule(std::bind(&TcpServer::handleClient,
+            m_ioWorker->schedule(std::bind(&TcpServer::handleClient,
                         shared_from_this(), client));
         } else {
             WEBSERVER_LOG_ERROR(g_logger) << "accept errno=" << errno

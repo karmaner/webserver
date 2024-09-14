@@ -13,6 +13,7 @@ public:
     typedef std::shared_ptr<WSServer> ptr;
 
     WSServer(webserver::IOManager* worker = webserver::IOManager::GetThis()
+                , webserver::IOManager* io_worker = webserver::IOManager::GetThis()
                 , webserver::IOManager* accept_worker = webserver::IOManager::GetThis());
 
     WSServletDispatch::ptr getWSServletDispatch() const { return m_dispatch;}

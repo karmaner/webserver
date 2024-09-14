@@ -1,6 +1,7 @@
 #include "async_socket_stream.h"
 #include "src/basic/util.h"
 #include "src/basic/log.h"
+#include "src/basic/macro.h"
 
 namespace webserver {
 
@@ -38,12 +39,17 @@ AsyncSocketStream::AsyncSocketStream(Socket::ptr sock, bool owner)
     ,m_waitSem(2)
     ,m_sn(0)
     ,m_autoConnect(false)
-    ,m_iomanager(nullptr) {
+    ,m_iomanager(nullptr)
+    ,m_worker(nullptr) {
 }
 
 bool AsyncSocketStream::start() {
     if(!m_iomanager) {
         m_iomanager = webserver::IOManager::GetThis();
+    }
+
+    if(!m_worker) {
+        m_worker = webserver::IOManager::GetThis();
     }
 
     do {
@@ -64,7 +70,7 @@ bool AsyncSocketStream::start() {
         }
 
         if(m_connectCb) {
-            if(m_connectCb(shared_from_this())) {
+            if(!m_connectCb(shared_from_this())) {
                 innerClose();
                 m_waitSem.notify();
                 m_waitSem.notify();
@@ -179,6 +185,7 @@ bool AsyncSocketStream::addCtx(Ctx::ptr ctx) {
 }
 
 bool AsyncSocketStream::enqueue(SendCtx::ptr ctx) {
+    WEBSERVER_ASSERT(ctx);
     RWMutexType::WriteLock lock(m_mutex);
     bool empty = m_queue.empty();
     m_queue.push_back(ctx);
@@ -190,6 +197,7 @@ bool AsyncSocketStream::enqueue(SendCtx::ptr ctx) {
 }
 
 bool AsyncSocketStream::innerClose() {
+    WEBSERVER_ASSERT(m_iomanager == webserver::IOManager::GetThis());
     if(isConnected() && m_disconnectCb) {
         m_disconnectCb(shared_from_this());
     }

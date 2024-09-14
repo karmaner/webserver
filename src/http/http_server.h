@@ -12,6 +12,7 @@ public:
     typedef std::shared_ptr<HttpServer> ptr;
     HttpServer(bool keepalive = false
                 ,webserver::IOManager* worker = webserver::IOManager::GetThis()
+                ,webserver::IOManager* io_worker = webserver::IOManager::GetThis()
                 ,webserver::IOManager* accept_worker = webserver::IOManager::GetThis());
 
     ServletDispatch::ptr getServletDispatch() const { return m_dispatch;}

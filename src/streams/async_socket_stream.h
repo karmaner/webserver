@@ -18,7 +18,7 @@ public:
 
     AsyncSocketStream(Socket::ptr sock, bool owner = true);
 
-    bool start();
+    virtual bool start();
     virtual void close() override;
 public:
     enum Error {
@@ -55,6 +55,13 @@ protected:
     };
 
 public:
+    void setWorker(webserver::IOManager* v) { m_worker = v;}
+    webserver::IOManager* getWorker() const { return m_worker;}
+
+    void setIOManager(webserver::IOManager* v) { m_iomanager = v;}
+    webserver::IOManager* getIOManager() const { return m_iomanager;}
+
+
     bool isAutoConnect() const { return m_autoConnect;}
     void setAutoConnect(bool v) { m_autoConnect = v;}
 
@@ -120,6 +127,7 @@ protected:
     bool m_autoConnect;
     webserver::Timer::ptr m_timer;
     webserver::IOManager* m_iomanager;
+    webserver::IOManager* m_worker;
 
     connect_callback m_connectCb;
     disconnect_callback m_disconnectCb;

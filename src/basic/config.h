@@ -16,6 +16,7 @@
 
 #include "mutex.h"
 #include "log.h"
+#include "util.h"
 
 namespace webserver {
 
@@ -349,7 +350,7 @@ public:
             return ToStr()(m_val);
         } catch (std::exception& e) {
             WEBSERVER_LOG_ERROR(WEBSERVER_LOG_ROOT()) << "ConfigVar::toString exception"
-                << e.what() << " convert: " << typeid(m_val).name() << " to string"
+                << e.what() << " convert: " << TypeToName<T>() << " to string"
                 << " name=" << m_name;
         }
         return "";
@@ -365,7 +366,7 @@ public:
             setValue(FromStr()(val));
         } catch (std::exception& e) {
             WEBSERVER_LOG_ERROR(WEBSERVER_LOG_ROOT()) << "ConfigVar::toString exception"
-                << e.what() << " convert: string to " << typeid(m_val).name()
+                << e.what() << " convert: string to " << TypeToName<T>()
                 << " name=" << m_name
                 << " - " << val;
         }
@@ -401,7 +402,7 @@ public:
     /**
      * @brief 返回参数值的类型名称(typeinfo)
      */
-    std::string getTypeName() const override { return typeid(T).name();}
+    std::string getTypeName() const override { return TypeToName<T>(); }
 
     /**
      * @brief 添加变化回调函数
@@ -480,7 +481,7 @@ public:
                 return tmp;
             } else {
                 WEBSERVER_LOG_ERROR(WEBSERVER_LOG_ROOT()) << "Lookup name=" << name << " exists but type not "
-                        << typeid(T).name() << " real_type=" << it->second->getTypeName()
+                        << TypeToName<T>() << " real_type=" << it->second->getTypeName()
                         << " " << it->second->toString();
                 return nullptr;
             }

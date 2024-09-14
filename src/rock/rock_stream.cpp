@@ -8,13 +8,13 @@ static webserver::Logger::ptr g_logger = WEBSERVER_LOG_NAME("system");
 RockStream::RockStream(Socket::ptr sock)
     :AsyncSocketStream(sock, true)
     ,m_decoder(new RockMessageDecoder) {
-    WEBSERVER_LOG_INFO(g_logger) << "RockStream::RockStream "
+    WEBSERVER_LOG_DEBUG(g_logger) << "RockStream::RockStream "
         << this << " "
         << (sock ? sock->toString() : "");
 }
 
 RockStream::~RockStream() {
-    WEBSERVER_LOG_INFO(g_logger) << "RockStream::~RockStream "
+    WEBSERVER_LOG_DEBUG(g_logger) << "RockStream::~RockStream "
         << this << " "
         << (m_socket ? m_socket->toString() : "");
 }
@@ -60,7 +60,7 @@ bool RockStream::RockCtx::doSend(AsyncSocketStream::ptr stream) {
 }
 
 AsyncSocketStream::Ctx::ptr RockStream::doRecv() {
-    WEBSERVER_LOG_INFO(g_logger) << "doRecv " << this;
+    //WEBSERVER_LOG_INFO(g_logger) << "doRecv " << this;
     auto msg = m_decoder->parseFrom(shared_from_this());
     if(!msg) {
         innerClose();
@@ -77,7 +77,7 @@ AsyncSocketStream::Ctx::ptr RockStream::doRecv() {
         }
         RockCtx::ptr ctx = getAndDelCtxAs<RockCtx>(rsp->getSn());
         if(!ctx) {
-            WEBSERVER_LOG_INFO(g_logger) << "RockStream request timeout reponse="
+            WEBSERVER_LOG_WARN(g_logger) << "RockStream request timeout reponse="
                 << rsp->toString();
             return nullptr;
         }
@@ -92,9 +92,11 @@ AsyncSocketStream::Ctx::ptr RockStream::doRecv() {
             return nullptr;
         }
         if(m_requestHandler) {
-            m_iomanager->schedule(std::bind(&RockStream::handleRequest,
+            m_worker->schedule(std::bind(&RockStream::handleRequest,
                         std::dynamic_pointer_cast<RockStream>(shared_from_this()),
                         req));
+        } else {
+            WEBSERVER_LOG_WARN(g_logger) << "unhandle request " << req->toString();
         }
     } else if(type == Message::NOTIFY) {
         auto nty = std::dynamic_pointer_cast<RockNotify>(msg);
@@ -105,9 +107,11 @@ AsyncSocketStream::Ctx::ptr RockStream::doRecv() {
         }
 
         if(m_notifyHandler) {
-            m_iomanager->schedule(std::bind(&RockStream::handleNotify,
+            m_worker->schedule(std::bind(&RockStream::handleNotify,
                         std::dynamic_pointer_cast<RockStream>(shared_from_this()),
                         nty));
+        } else {
+            WEBSERVER_LOG_WARN(g_logger) << "unhandle notify " << nty->toString();
         }
     } else {
         WEBSERVER_LOG_WARN(g_logger) << "RockStream recv unknow type=" << type
@@ -121,7 +125,8 @@ void RockStream::handleRequest(webserver::RockRequest::ptr req) {
     if(!m_requestHandler(req, rsp
         ,std::dynamic_pointer_cast<RockStream>(shared_from_this()))) {
         sendMessage(rsp);
-        innerClose();
+        //innerClose();
+        close();
     } else {
         sendMessage(rsp);
     }
@@ -130,7 +135,8 @@ void RockStream::handleRequest(webserver::RockRequest::ptr req) {
 void RockStream::handleNotify(webserver::RockNotify::ptr nty) {
     if(!m_notifyHandler(nty
         ,std::dynamic_pointer_cast<RockStream>(shared_from_this()))) {
-        innerClose();
+        //innerClose();
+        close();
     }
 }
 

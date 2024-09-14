@@ -1751,6 +1751,102 @@ src/http/ws_session.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/http/ws_session.cpp.s
 .PHONY : src/http/ws_session.cpp.s
 
+src/ns/name_server_module.o: src/ns/name_server_module.cpp.o
+.PHONY : src/ns/name_server_module.o
+
+# target to build an object file
+src/ns/name_server_module.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/ns/name_server_module.cpp.o
+.PHONY : src/ns/name_server_module.cpp.o
+
+src/ns/name_server_module.i: src/ns/name_server_module.cpp.i
+.PHONY : src/ns/name_server_module.i
+
+# target to preprocess a source file
+src/ns/name_server_module.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/ns/name_server_module.cpp.i
+.PHONY : src/ns/name_server_module.cpp.i
+
+src/ns/name_server_module.s: src/ns/name_server_module.cpp.s
+.PHONY : src/ns/name_server_module.s
+
+# target to generate assembly for a file
+src/ns/name_server_module.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/ns/name_server_module.cpp.s
+.PHONY : src/ns/name_server_module.cpp.s
+
+src/ns/ns_client.o: src/ns/ns_client.cpp.o
+.PHONY : src/ns/ns_client.o
+
+# target to build an object file
+src/ns/ns_client.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/ns/ns_client.cpp.o
+.PHONY : src/ns/ns_client.cpp.o
+
+src/ns/ns_client.i: src/ns/ns_client.cpp.i
+.PHONY : src/ns/ns_client.i
+
+# target to preprocess a source file
+src/ns/ns_client.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/ns/ns_client.cpp.i
+.PHONY : src/ns/ns_client.cpp.i
+
+src/ns/ns_client.s: src/ns/ns_client.cpp.s
+.PHONY : src/ns/ns_client.s
+
+# target to generate assembly for a file
+src/ns/ns_client.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/ns/ns_client.cpp.s
+.PHONY : src/ns/ns_client.cpp.s
+
+src/ns/ns_protobuf.pb.o: src/ns/ns_protobuf.pb.cpp.o
+.PHONY : src/ns/ns_protobuf.pb.o
+
+# target to build an object file
+src/ns/ns_protobuf.pb.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/ns/ns_protobuf.pb.cpp.o
+.PHONY : src/ns/ns_protobuf.pb.cpp.o
+
+src/ns/ns_protobuf.pb.i: src/ns/ns_protobuf.pb.cpp.i
+.PHONY : src/ns/ns_protobuf.pb.i
+
+# target to preprocess a source file
+src/ns/ns_protobuf.pb.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/ns/ns_protobuf.pb.cpp.i
+.PHONY : src/ns/ns_protobuf.pb.cpp.i
+
+src/ns/ns_protobuf.pb.s: src/ns/ns_protobuf.pb.cpp.s
+.PHONY : src/ns/ns_protobuf.pb.s
+
+# target to generate assembly for a file
+src/ns/ns_protobuf.pb.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/ns/ns_protobuf.pb.cpp.s
+.PHONY : src/ns/ns_protobuf.pb.cpp.s
+
+src/ns/ns_protocol.o: src/ns/ns_protocol.cpp.o
+.PHONY : src/ns/ns_protocol.o
+
+# target to build an object file
+src/ns/ns_protocol.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/ns/ns_protocol.cpp.o
+.PHONY : src/ns/ns_protocol.cpp.o
+
+src/ns/ns_protocol.i: src/ns/ns_protocol.cpp.i
+.PHONY : src/ns/ns_protocol.i
+
+# target to preprocess a source file
+src/ns/ns_protocol.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/ns/ns_protocol.cpp.i
+.PHONY : src/ns/ns_protocol.cpp.i
+
+src/ns/ns_protocol.s: src/ns/ns_protocol.cpp.s
+.PHONY : src/ns/ns_protocol.s
+
+# target to generate assembly for a file
+src/ns/ns_protocol.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/ns/ns_protocol.cpp.s
+.PHONY : src/ns/ns_protocol.cpp.s
+
 src/orm/column.o: src/orm/column.cpp.o
 .PHONY : src/orm/column.o
 
@@ -3067,6 +3163,18 @@ help:
 	@echo "... src/http/ws_session.o"
 	@echo "... src/http/ws_session.i"
 	@echo "... src/http/ws_session.s"
+	@echo "... src/ns/name_server_module.o"
+	@echo "... src/ns/name_server_module.i"
+	@echo "... src/ns/name_server_module.s"
+	@echo "... src/ns/ns_client.o"
+	@echo "... src/ns/ns_client.i"
+	@echo "... src/ns/ns_client.s"
+	@echo "... src/ns/ns_protobuf.pb.o"
+	@echo "... src/ns/ns_protobuf.pb.i"
+	@echo "... src/ns/ns_protobuf.pb.s"
+	@echo "... src/ns/ns_protocol.o"
+	@echo "... src/ns/ns_protocol.i"
+	@echo "... src/ns/ns_protocol.s"
 	@echo "... src/orm/column.o"
 	@echo "... src/orm/column.i"
 	@echo "... src/orm/column.s"
