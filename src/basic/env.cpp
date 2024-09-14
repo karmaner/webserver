@@ -1,11 +1,11 @@
 #include "env.h"
-#include "src/basic/log.h"
+#include "log.h"
 #include <string.h>
 #include <iostream>
 #include <iomanip>
 #include <unistd.h>
 #include <stdlib.h>
-#include "src/basic/config.h"
+#include "config.h"
 
 namespace webserver {
 

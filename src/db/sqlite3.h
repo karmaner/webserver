@@ -4,8 +4,12 @@
 #include <sqlite3.h>
 #include <memory>
 #include <string>
+#include <list>
+#include <map>
 #include "src/basic/noncopyable.h"
 #include "db.h"
+#include "src/basic/mutex.h"
+#include "src/basic/singleton.h"
 
 namespace webserver {
 
@@ -18,8 +22,10 @@ struct SQLite3Binder {
 };
 }
 
+class SQLite3Manager;
 class SQLite3 : public IDB
                 , public std::enable_shared_from_this<SQLite3> {
+friend class SQLite3Manager;
 public:
     enum Flags {
         READONLY = SQLITE_OPEN_READONLY,
@@ -60,6 +66,7 @@ private:
     SQLite3(sqlite3* db);
 private:
     sqlite3* m_db;
+    uint64_t m_lastUsedTime = 0;
 };
 
 class SQLite3Stmt;
@@ -179,8 +186,8 @@ public:
         EXCLUSIVE = 2
     };
     SQLite3Transaction(SQLite3::ptr db
-                       ,bool auto_commit = false 
-                       ,Type type = DEFERRED);
+                        ,bool auto_commit = false 
+                        ,Type type = DEFERRED);
     ~SQLite3Transaction();
     bool begin() override;
     bool commit() override;
@@ -195,6 +202,40 @@ private:
     int8_t m_status;
     bool m_autoCommit;
 };
+
+class SQLite3Manager {
+public:
+    typedef webserver::Mutex MutexType;
+    SQLite3Manager();
+    ~SQLite3Manager();
+
+    SQLite3::ptr get(const std::string& name);
+    void registerSQLite3(const std::string& name, const std::map<std::string, std::string>& params);
+
+    void checkConnection(int sec = 30);
+
+    uint32_t getMaxConn() const { return m_maxConn;}
+    void setMaxConn(uint32_t v) { m_maxConn = v;}
+
+    int execute(const std::string& name, const char* format, ...);
+    int execute(const std::string& name, const char* format, va_list ap);
+    int execute(const std::string& name, const std::string& sql);
+
+    ISQLData::ptr query(const std::string& name, const char* format, ...);
+    ISQLData::ptr query(const std::string& name, const char* format, va_list ap); 
+    ISQLData::ptr query(const std::string& name, const std::string& sql);
+
+    SQLite3Transaction::ptr openTransaction(const std::string& name, bool auto_commit);
+private:
+    void freeSQLite3(const std::string& name, SQLite3* m);
+private:
+    uint32_t m_maxConn;
+    MutexType m_mutex;
+    std::map<std::string, std::list<SQLite3*> > m_conns;
+    std::map<std::string, std::map<std::string, std::string> > m_dbDefines;
+};
+
+typedef webserver::Singleton<SQLite3Manager> SQLite3Mgr;
 
 namespace {
 template<typename... Args>

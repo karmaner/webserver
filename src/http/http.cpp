@@ -215,7 +215,7 @@ void HttpRequest::initQueryParam() {
         return;
     }
 
-#define PARSE_PARAM(str, m, flag) \
+#define PARSE_PARAM(str, m, flag, trim) \
     size_t pos = 0; \
     do { \
         size_t last = pos; \
@@ -225,7 +225,7 @@ void HttpRequest::initQueryParam() {
         } \
         size_t key = pos; \
         pos = str.find(flag, pos); \
-        m.insert(std::make_pair(str.substr(last, key - last), \
+        m.insert(std::make_pair(trim(str.substr(last, key - last)), \
                     webserver::StringUtil::UrlDecode(str.substr(key + 1, pos - key - 1)))); \
         if(pos == std::string::npos) { \
             break; \
@@ -233,7 +233,7 @@ void HttpRequest::initQueryParam() {
         ++pos; \
     } while(true);
 
-    PARSE_PARAM(m_query, m_params, '&');
+    PARSE_PARAM(m_query, m_params, '&',);
     m_parserParamFlag |= 0x1;
 }
 
@@ -246,7 +246,7 @@ void HttpRequest::initBodyParam() {
         m_parserParamFlag |= 0x2;
         return;
     }
-    PARSE_PARAM(m_body, m_params, '&');
+    PARSE_PARAM(m_body, m_params, '&',);
     m_parserParamFlag |= 0x2;
 }
 
@@ -259,7 +259,7 @@ void HttpRequest::initCookies() {
         m_parserParamFlag |= 0x4;
         return;
     }
-    PARSE_PARAM(cookie, m_cookies, ';');
+    PARSE_PARAM(cookie, m_cookies, ';', webserver::StringUtil::Trim);
     m_parserParamFlag |= 0x4;
 }
 
@@ -284,6 +284,31 @@ void HttpResponse::delHeader(const std::string& key) {
     m_headers.erase(key);
 }
 
+void HttpResponse::setRedirect(const std::string& uri) {
+    m_status = HttpStatus::FOUND;
+    setHeader("Location", uri);
+}
+
+void HttpResponse::setCookie(const std::string& key, const std::string& val,
+                                time_t expired, const std::string& domain,
+                                const std::string& path, bool secure) {
+    std::stringstream ss;
+    ss << key << "=" << val;
+    if(expired > 0) {
+        ss << ";expires=" << webserver::Time2Str(expired, "%a, %d %b %Y %H:%M:%S") << " GMT";
+    }
+    if(!domain.empty()) {
+        ss << ";domain=" << domain;
+    }
+    if(!path.empty()) {
+        ss << ";path=" << path;
+    }
+    if(secure) {
+        ss << ";secure";
+    }
+    m_cookies.push_back(ss.str());
+}
+
 std::string HttpResponse::toString() const {
     std::stringstream ss;
     dump(ss);
@@ -306,6 +331,9 @@ std::ostream& HttpResponse::dump(std::ostream& os) const {
             continue;
         }
         os << i.first << ": " << i.second << "\r\n";
+    }
+    for(auto& i : m_cookies) {
+        os << "Set-Cookie: " << i << "\r\n";
     }
     if(!m_websocket) {
         os << "connection: " << (m_close ? "close" : "keep-alive") << "\r\n";

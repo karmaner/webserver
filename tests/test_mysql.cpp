@@ -28,15 +28,15 @@ void run() {
         MYSQL_TIME mt;
         webserver::time_t_to_mysql_time(time(0), mt);
 
-        int a = 0;
+        //int a = 0;
         //auto stmt = mysql->prepare("select * from webserver where status >= ?");
         //stmt->bind(0, a);
         //auto res = std::dynamic_pointer_cast<webserver::MySQLStmtRes>(stmt->query());
 
         auto res = std::dynamic_pointer_cast<webserver::MySQLStmtRes>
-            //(mysql->queryStmt("select * from webserver"));
-            (mysql->queryStmt("select *, 'hello' as xx from user where status >= ? and status <= ?"
-                                , a, a));
+            (mysql->queryStmt("select * from user"));
+            //(mysql->queryStmt("select *, 'hello' as xx from user where status >= ? and status <= ?"
+            //                  , a, a));
             //(mysql->queryStmt("select id,name, keyword, creator as aa, last_update_time from webserver "
             //                  " where last_update_time > ?", (time_t)0));
         //auto res = std::dynamic_pointer_cast<webserver::MySQLRes>

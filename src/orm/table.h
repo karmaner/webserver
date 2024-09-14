@@ -49,7 +49,9 @@ private:
     std::string m_desc;
     std::string m_subfix = "_info";
     DBType m_type = TYPE_SQLITE3;
-    std::string m_dbclass = "sylar::IDB";
+    std::string m_dbclass = "webserver::IDB";
+    std::string m_queryclass = "webserver::IDB";
+    std::string m_updateclass = "webserver::IDB";
     std::vector<Column::ptr> m_cols;
     std::vector<Index::ptr> m_idxs;
 };

@@ -477,6 +477,8 @@ public:
      */
     template<class T>
     bool checkGetParamAs(const std::string& key, T& val, const T& def = T()) {
+        initQueryParam();
+        initBodyParam();
         return checkGetAs(m_headers, key, val, def);
     }
 
@@ -489,6 +491,8 @@ public:
      */
     template<class T>
     T getParamAs(const std::string& key, const T& def = T()) {
+        initQueryParam();
+        initBodyParam();
         return getAs(m_headers, key, def);
     }
 
@@ -502,6 +506,7 @@ public:
      */
     template<class T>
     bool checkGetCookieAs(const std::string& key, T& val, const T& def = T()) {
+        initCookies();
         return checkGetAs(m_headers, key, val, def);
     }
 
@@ -514,7 +519,8 @@ public:
      */
     template<class T>
     T getCookieAs(const std::string& key, const T& def = T()) {
-        return getAs(m_headers, key, def);
+        initCookies();
+        return getAs(m_cookies, key, def);
     }
 
     /**
@@ -530,7 +536,7 @@ public:
      */
     std::string toString() const;
 
-
+    
     void init();
     void initParam();
     void initQueryParam();
@@ -715,6 +721,12 @@ public:
      * @brief 转成字符串
      */
     std::string toString() const;
+
+    
+    void setRedirect(const std::string& uri);
+    void setCookie(const std::string& key, const std::string& val,
+                    time_t expired = 0, const std::string& domain = "",
+                    const std::string& path = "", bool secure = false);
 private:
     /// 响应状态
     HttpStatus m_status;
@@ -730,6 +742,7 @@ private:
     std::string m_reason;
     /// 响应头部MAP
     MapType m_headers;
+    std::vector<std::string> m_cookies;
 };
 
 /**
