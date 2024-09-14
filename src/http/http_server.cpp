@@ -1,5 +1,7 @@
 #include "http_server.h"
 #include "src/basic/log.h"
+#include "servlets/config_servlet.h"
+#include "servlets/status_servlet.h"
 
 namespace webserver {
 namespace http {
@@ -12,6 +14,10 @@ HttpServer::HttpServer(bool keepalive
     :TcpServer(worker, accept_worker)
     ,m_isKeepalive(keepalive) {
     m_dispatch.reset(new ServletDispatch);
+
+    m_type = "http";
+    m_dispatch->addServlet("/_/status", Servlet::ptr(new StatusServlet));
+    m_dispatch->addServlet("/_/config", Servlet::ptr(new ConfigServlet));
 }
 
 void HttpServer::setName(const std::string& v) {

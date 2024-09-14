@@ -1607,6 +1607,54 @@ src/http/servlet.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/http/servlet.cpp.s
 .PHONY : src/http/servlet.cpp.s
 
+src/http/servlets/config_servlet.o: src/http/servlets/config_servlet.cpp.o
+.PHONY : src/http/servlets/config_servlet.o
+
+# target to build an object file
+src/http/servlets/config_servlet.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/http/servlets/config_servlet.cpp.o
+.PHONY : src/http/servlets/config_servlet.cpp.o
+
+src/http/servlets/config_servlet.i: src/http/servlets/config_servlet.cpp.i
+.PHONY : src/http/servlets/config_servlet.i
+
+# target to preprocess a source file
+src/http/servlets/config_servlet.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/http/servlets/config_servlet.cpp.i
+.PHONY : src/http/servlets/config_servlet.cpp.i
+
+src/http/servlets/config_servlet.s: src/http/servlets/config_servlet.cpp.s
+.PHONY : src/http/servlets/config_servlet.s
+
+# target to generate assembly for a file
+src/http/servlets/config_servlet.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/http/servlets/config_servlet.cpp.s
+.PHONY : src/http/servlets/config_servlet.cpp.s
+
+src/http/servlets/status_servlet.o: src/http/servlets/status_servlet.cpp.o
+.PHONY : src/http/servlets/status_servlet.o
+
+# target to build an object file
+src/http/servlets/status_servlet.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/http/servlets/status_servlet.cpp.o
+.PHONY : src/http/servlets/status_servlet.cpp.o
+
+src/http/servlets/status_servlet.i: src/http/servlets/status_servlet.cpp.i
+.PHONY : src/http/servlets/status_servlet.i
+
+# target to preprocess a source file
+src/http/servlets/status_servlet.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/http/servlets/status_servlet.cpp.i
+.PHONY : src/http/servlets/status_servlet.cpp.i
+
+src/http/servlets/status_servlet.s: src/http/servlets/status_servlet.cpp.s
+.PHONY : src/http/servlets/status_servlet.s
+
+# target to generate assembly for a file
+src/http/servlets/status_servlet.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/http/servlets/status_servlet.cpp.s
+.PHONY : src/http/servlets/status_servlet.cpp.s
+
 src/http/ws_connection.o: src/http/ws_connection.cpp.o
 .PHONY : src/http/ws_connection.o
 
@@ -3001,6 +3049,12 @@ help:
 	@echo "... src/http/servlet.o"
 	@echo "... src/http/servlet.i"
 	@echo "... src/http/servlet.s"
+	@echo "... src/http/servlets/config_servlet.o"
+	@echo "... src/http/servlets/config_servlet.i"
+	@echo "... src/http/servlets/config_servlet.s"
+	@echo "... src/http/servlets/status_servlet.o"
+	@echo "... src/http/servlets/status_servlet.i"
+	@echo "... src/http/servlets/status_servlet.s"
 	@echo "... src/http/ws_connection.o"
 	@echo "... src/http/ws_connection.i"
 	@echo "... src/http/ws_connection.s"

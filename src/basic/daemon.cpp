@@ -25,6 +25,8 @@ std::string ProcessInfo::toString() const {
 
 static int real_start(int argc, char** argv,
                         std::function<int(int argc, char** argv)> main_cb) {
+    ProcessInfoMgr::GetInstance()->main_id = getpid();
+    ProcessInfoMgr::GetInstance()->main_start_time = time(0);
     return main_cb(argc, argv);
 }
 
@@ -50,8 +52,13 @@ static int real_daemon(int argc, char** argv,
             int status = 0;
             waitpid(pid, &status, 0);
             if(status) {
-                WEBSERVER_LOG_ERROR(g_logger) << "child crash pid=" << pid
-                    << " status=" << status;
+                if(status == 9) {
+                    WEBSERVER_LOG_INFO(g_logger) << "killed";
+                    break;
+                } else {
+                    WEBSERVER_LOG_ERROR(g_logger) << "child crash pid=" << pid
+                        << " status=" << status;
+                }
             } else {
                 WEBSERVER_LOG_INFO(g_logger) << "child finished pid=" << pid;
                 break;

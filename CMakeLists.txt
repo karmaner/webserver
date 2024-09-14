@@ -59,6 +59,9 @@ set(LIB_SRC
     src/http/ws_server.cpp
     src/http/ws_connection.cpp
 
+    src/http/servlets/config_servlet.cpp
+    src/http/servlets/status_servlet.cpp
+
     src/rock/rock_server.cpp
     src/rock/rock_stream.cpp
     src/rock/rock_protocol.cpp
