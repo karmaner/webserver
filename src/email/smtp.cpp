@@ -62,7 +62,10 @@ SmtpResult::ptr SmtpClient::doCmd(const std::string& cmd, bool debug) {
 
     int code = webserver::TypeUtil::Atoi(buf);
     if(code >= 400) {
-        return std::make_shared<SmtpResult>(code, buf.substr(buf.find(' ') + 1));
+        return std::make_shared<SmtpResult>(code,
+                webserver::replace(
+                    buf.substr(buf.find(' ') + 1)
+                    , "\r\n", ""));
     }
     return nullptr;
 }
