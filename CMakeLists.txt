@@ -100,6 +100,7 @@ set(LIB_SRC
     src/streams/async_socket_stream.cpp
 
     src/db/sqlite3.cpp
+    src/db/mysql.cpp
 
     src/email/email.cpp
     src/email/smtp.cpp
@@ -192,6 +193,7 @@ set(ORM_SRCS
     )
 webserver_add_executable(orm "${ORM_SRCS}" webserver "${LIBS}")
 
+webserver_add_executable(test_mysql  "tests/test_mysql.cpp" webserver "${LIBS}")
 webserver_add_executable(bin_webserver "src/basic/main.cpp" webserver "${LIBS}")
 set_target_properties(bin_webserver PROPERTIES OUTPUT_NAME "webserver")
 

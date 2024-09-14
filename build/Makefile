@@ -598,6 +598,19 @@ orm/fast:
 .PHONY : orm/fast
 
 #=============================================================================
+# Target rules for targets named test_mysql
+
+# Build rule for target.
+test_mysql: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_mysql
+.PHONY : test_mysql
+
+# fast build rule for target.
+test_mysql/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_mysql.dir/build.make CMakeFiles/test_mysql.dir/build
+.PHONY : test_mysql/fast
+
+#=============================================================================
 # Target rules for targets named bin_webserver
 
 # Build rule for target.
@@ -1281,6 +1294,30 @@ src/basic/worker.s: src/basic/worker.cpp.s
 src/basic/worker.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/basic/worker.cpp.s
 .PHONY : src/basic/worker.cpp.s
+
+src/db/mysql.o: src/db/mysql.cpp.o
+.PHONY : src/db/mysql.o
+
+# target to build an object file
+src/db/mysql.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/db/mysql.cpp.o
+.PHONY : src/db/mysql.cpp.o
+
+src/db/mysql.i: src/db/mysql.cpp.i
+.PHONY : src/db/mysql.i
+
+# target to preprocess a source file
+src/db/mysql.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/db/mysql.cpp.i
+.PHONY : src/db/mysql.cpp.i
+
+src/db/mysql.s: src/db/mysql.cpp.s
+.PHONY : src/db/mysql.s
+
+# target to generate assembly for a file
+src/db/mysql.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/db/mysql.cpp.s
+.PHONY : src/db/mysql.cpp.s
 
 src/db/sqlite3.o: src/db/sqlite3.cpp.o
 .PHONY : src/db/sqlite3.o
@@ -2458,6 +2495,30 @@ tests/test_module.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/tests/test_module.cpp.s
 .PHONY : tests/test_module.cpp.s
 
+tests/test_mysql.o: tests/test_mysql.cpp.o
+.PHONY : tests/test_mysql.o
+
+# target to build an object file
+tests/test_mysql.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_mysql.dir/build.make CMakeFiles/test_mysql.dir/tests/test_mysql.cpp.o
+.PHONY : tests/test_mysql.cpp.o
+
+tests/test_mysql.i: tests/test_mysql.cpp.i
+.PHONY : tests/test_mysql.i
+
+# target to preprocess a source file
+tests/test_mysql.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_mysql.dir/build.make CMakeFiles/test_mysql.dir/tests/test_mysql.cpp.i
+.PHONY : tests/test_mysql.cpp.i
+
+tests/test_mysql.s: tests/test_mysql.cpp.s
+.PHONY : tests/test_mysql.s
+
+# target to generate assembly for a file
+tests/test_mysql.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_mysql.dir/build.make CMakeFiles/test_mysql.dir/tests/test_mysql.cpp.s
+.PHONY : tests/test_mysql.cpp.s
+
 tests/test_rock.o: tests/test_rock.cpp.o
 .PHONY : tests/test_rock.o
 
@@ -2802,6 +2863,7 @@ help:
 	@echo "... test_iomanager"
 	@echo "... test_log"
 	@echo "... test_lru"
+	@echo "... test_mysql"
 	@echo "... test_rock"
 	@echo "... test_scheduler"
 	@echo "... test_socket"
@@ -2900,6 +2962,9 @@ help:
 	@echo "... src/basic/worker.o"
 	@echo "... src/basic/worker.i"
 	@echo "... src/basic/worker.s"
+	@echo "... src/db/mysql.o"
+	@echo "... src/db/mysql.i"
+	@echo "... src/db/mysql.s"
 	@echo "... src/db/sqlite3.o"
 	@echo "... src/db/sqlite3.i"
 	@echo "... src/db/sqlite3.s"
@@ -3047,6 +3112,9 @@ help:
 	@echo "... tests/test_module.o"
 	@echo "... tests/test_module.i"
 	@echo "... tests/test_module.s"
+	@echo "... tests/test_mysql.o"
+	@echo "... tests/test_mysql.i"
+	@echo "... tests/test_mysql.s"
 	@echo "... tests/test_rock.o"
 	@echo "... tests/test_rock.i"
 	@echo "... tests/test_rock.s"
