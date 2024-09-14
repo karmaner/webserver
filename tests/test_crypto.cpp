@@ -2,6 +2,7 @@
 #include <iostream>
 #include <assert.h>
 #include <openssl/err.h>
+#include "src/webserver.h"
 
 void test_aes256ecb() {
     for(int i = 0; i < 4097; ++i) {
@@ -167,5 +168,14 @@ int main(int argc, char** argv) {
     //test_aes256cbc();
     //test_one();
     test_rsa();
+
+    // for(int i = 0; i < 10000; ++i) {
+    //     auto v = webserver::random_string(128, "0123456789");
+    //     std::cout << "[" << v << "]" << std::endl;
+    //     for(auto& n : v) {
+    //         WEBSERVER_ASSERT(n);
+    //     }
+    // }
+    // std::cout << "===" << std::endl;
     return 0;
 }

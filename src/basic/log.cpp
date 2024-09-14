@@ -612,7 +612,7 @@ public:
         LogDefine ld;
         if(!n["name"].IsDefined()) {
             std::cout << "log config error: name is null, " << n
-                      << std::endl;
+                        << std::endl;
             throw std::logic_error("log config name is null");
         }
         ld.name = n["name"].as<std::string>();
@@ -627,7 +627,7 @@ public:
                 auto a = n["appenders"][x];
                 if(!a["type"].IsDefined()) {
                     std::cout << "log config error: appender type is null, " << a
-                              << std::endl;
+                                << std::endl;
                     continue;
                 }
                 std::string type = a["type"].as<std::string>();
@@ -636,7 +636,7 @@ public:
                     lad.type = 1;
                     if(!a["file"].IsDefined()) {
                         std::cout << "log config error: fileappender file is null, " << a
-                              << std::endl;
+                                << std::endl;
                         continue;
                     }
                     lad.file = a["file"].as<std::string>();
@@ -645,9 +645,12 @@ public:
                     }
                 } else if(type == "StdoutLogAppender") {
                     lad.type = 2;
+                    if(a["formatter"].IsDefined()) {
+                        lad.formatter = a["formatter"].as<std::string>();
+                    }
                 } else {
                     std::cout << "log config error: appender type is invalid, " << a
-                              << std::endl;
+                                << std::endl;
                     continue;
                 }
 
@@ -713,6 +716,8 @@ struct LogIniter {
                     if(!(i == *it)) {
                         //修改的logger
                         logger = WEBSERVER_LOG_NAME(i.name);
+                    } else {
+                        continue;
                     }
                 }
                 logger->setLevel(i.level);

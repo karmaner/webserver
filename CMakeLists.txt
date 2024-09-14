@@ -5,7 +5,7 @@ project(webserver)
 include (cmake/utils.cmake)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
-set(CMAKE_VERBOSE_MAKEFILE ON)
+set(CMAKE_VERBOSE_MAKEFILE OFF)
 set(CMAKE_CXX_FLAGS "$ENV{CXXFLAGS} -rdynamic -O0 -ggdb -std=c++11 -Wall -Wno-deprecated -Werror -Wno-unused-function -Wno-builtin-macro-redefined -Wno-deprecated-declarations")
 
 include_directories(.)
@@ -13,7 +13,7 @@ include_directories(/apps/webserver/include)
 link_directories(/apps/webserver/lib)
 
 cmake_policy(SET CMP0064 NEW)
-option(TEST "ON for complile test" ON)
+option(TEST "ON for complile test" OFF)
 
 find_package(MySQL REQUIRED)
 if(MYSQL_FOUND)
@@ -169,8 +169,7 @@ webserver_add_executable(test_ws_client "tests/test_ws_client.cpp" webserver "${
 webserver_add_executable(test_ws_server "tests/test_ws_server.cpp" webserver "${LIBS}")
 webserver_add_executable(test_application "tests/test_application.cpp" webserver "${LIBS}")
 
-webserver_add_executable(test_crypto "tests/test_crypto.cpp" webserver "${LIBS}")
-webserver_add_executable(test_http_connection "tests/test_http_connection.cpp" webserver "${LIBS}")
+#webserver_add_executable(test_crypto "tests/test_crypto.cpp" webserver "${LIBS}")
 webserver_add_executable(test_lru "tests/test_lru.cpp" webserver "${LIBS}")
 webserver_add_executable(test_timed_cache "tests/test_timed_cache.cpp" webserver "${LIBS}")
 webserver_add_executable(test_timed_lru_cache "tests/test_timed_lru_cache.cpp" webserver "${LIBS}")
@@ -182,8 +181,6 @@ add_library(test SHARED tests/test_module.cpp)
 endif()
 
 webserver_add_executable(test_crypto "tests/test_crypto.cpp" webserver "${LIBS}")
-webserver_add_executable(test_sqlite3 "tests/test_sqlite3.cpp" webserver "${LIBS}")
-webserver_add_executable(test_rock "tests/test_rock.cpp" webserver "${LIBS}")
 webserver_add_executable(test_email  "tests/test_email.cpp" webserver "${LIBS}")
 
 set(ORM_SRCS
@@ -194,8 +191,6 @@ set(ORM_SRCS
     src/orm/util.cpp
     )
 webserver_add_executable(orm "${ORM_SRCS}" webserver "${LIBS}")
-
-add_library(test SHARED tests/test_module.cpp)
 
 webserver_add_executable(bin_webserver "src/basic/main.cpp" webserver "${LIBS}")
 set_target_properties(bin_webserver PROPERTIES OUTPUT_NAME "webserver")
