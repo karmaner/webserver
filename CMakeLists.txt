@@ -81,7 +81,6 @@ set(LIB_SRC
     src/basic/log.cpp
     src/basic/scheduler.cpp
     src/basic/socket.cpp
-
     src/basic/stream.cpp
     src/basic/tcp_server.cpp
     src/basic/timer.cpp
@@ -90,6 +89,7 @@ set(LIB_SRC
     src/basic/env.cpp
     src/basic/scheduler.cpp
     src/basic/mutex.cpp
+    src/basic/zk_client.cpp
 
     src/util/crypto_util.cpp
     src/util/json_util.cpp
@@ -111,6 +111,8 @@ set(LIB_SRC
     src/ns/name_server_module.cpp
     src/ns/ns_client.cpp
     src/ns/ns_protocol.cpp
+
+    src/ds/bitmap.cpp
     )
 
 ragelmaker(src/http/http11_parser.rl LIB_SRC ${CMAKE_CURRENT_SOURCE_DIR}/src/http)
@@ -127,6 +129,9 @@ find_library(YAMLCPP yaml-cpp)
 find_library(PTHREAD pthread)
 find_library(JSONCPP jsoncpp)
 
+find_library(ZOOKEEPER_LIBRARY NAMES zookeeper_mt)
+find_path(ZOOKEEPER_INCLUDE_DIR zookeeper.h)
+
 #set(LIBS ${LIBS} webserver)
 #set(LIBS ${LIBS} dl)
 #set(LIBS ${LIBS} ${YAMLCPP})
@@ -139,6 +144,7 @@ set(LIBS
         yaml-cpp
         jsoncpp
         tinyxml2
+        ${ZOOKEEPER_LIBRARY}
         ${SQLite3_LIBRARIES}
         ${OPENSSL_LIBRARIES}
         ${ZLIB_LIBRARIES}
@@ -202,7 +208,12 @@ set(ORM_SRCS
     )
 webserver_add_executable(orm "${ORM_SRCS}" webserver "${LIBS}")
 
+
 webserver_add_executable(test_mysql  "tests/test_mysql.cpp" webserver "${LIBS}")
+webserver_add_executable(test_bitmap "tests/test_bitmap.cpp" webserver "${LIBS}")
+webserver_add_executable(test_zookeeper  "tests/test_zookeeper.cpp" webserver "${LIBS}")
+
+
 webserver_add_executable(bin_webserver "src/basic/main.cpp" webserver "${LIBS}")
 set_target_properties(bin_webserver PROPERTIES OUTPUT_NAME "webserver")
 

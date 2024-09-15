@@ -1,11 +1,11 @@
 .PHONY: xx
 
-xx:
+"":
 	if [ -d "build" ]; then 	\
-		cd build && make; 		\
+		cd build && make -j4;   \
 	else 						\
 		mkdir build; 			\
-		cd build && cmake ..; 	\
+		cd build && cdmake ..; 	\
 	fi
 
 %:
@@ -13,5 +13,5 @@ xx:
 		cd build && make $@; 	\
 	else 						\
 		mkdir build; 			\
-		cd build && cmake $@ ..; 	\
+		cd build && cmake $@ ..;\
 	fi

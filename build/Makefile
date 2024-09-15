@@ -611,6 +611,32 @@ test_mysql/fast:
 .PHONY : test_mysql/fast
 
 #=============================================================================
+# Target rules for targets named test_bitmap
+
+# Build rule for target.
+test_bitmap: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_bitmap
+.PHONY : test_bitmap
+
+# fast build rule for target.
+test_bitmap/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_bitmap.dir/build.make CMakeFiles/test_bitmap.dir/build
+.PHONY : test_bitmap/fast
+
+#=============================================================================
+# Target rules for targets named test_zookeeper
+
+# Build rule for target.
+test_zookeeper: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_zookeeper
+.PHONY : test_zookeeper
+
+# fast build rule for target.
+test_zookeeper/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_zookeeper.dir/build.make CMakeFiles/test_zookeeper.dir/build
+.PHONY : test_zookeeper/fast
+
+#=============================================================================
 # Target rules for targets named bin_webserver
 
 # Build rule for target.
@@ -1295,6 +1321,30 @@ src/basic/worker.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/basic/worker.cpp.s
 .PHONY : src/basic/worker.cpp.s
 
+src/basic/zk_client.o: src/basic/zk_client.cpp.o
+.PHONY : src/basic/zk_client.o
+
+# target to build an object file
+src/basic/zk_client.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/basic/zk_client.cpp.o
+.PHONY : src/basic/zk_client.cpp.o
+
+src/basic/zk_client.i: src/basic/zk_client.cpp.i
+.PHONY : src/basic/zk_client.i
+
+# target to preprocess a source file
+src/basic/zk_client.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/basic/zk_client.cpp.i
+.PHONY : src/basic/zk_client.cpp.i
+
+src/basic/zk_client.s: src/basic/zk_client.cpp.s
+.PHONY : src/basic/zk_client.s
+
+# target to generate assembly for a file
+src/basic/zk_client.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/basic/zk_client.cpp.s
+.PHONY : src/basic/zk_client.cpp.s
+
 src/db/mysql.o: src/db/mysql.cpp.o
 .PHONY : src/db/mysql.o
 
@@ -1342,6 +1392,30 @@ src/db/sqlite3.s: src/db/sqlite3.cpp.s
 src/db/sqlite3.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/db/sqlite3.cpp.s
 .PHONY : src/db/sqlite3.cpp.s
+
+src/ds/bitmap.o: src/ds/bitmap.cpp.o
+.PHONY : src/ds/bitmap.o
+
+# target to build an object file
+src/ds/bitmap.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/ds/bitmap.cpp.o
+.PHONY : src/ds/bitmap.cpp.o
+
+src/ds/bitmap.i: src/ds/bitmap.cpp.i
+.PHONY : src/ds/bitmap.i
+
+# target to preprocess a source file
+src/ds/bitmap.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/ds/bitmap.cpp.i
+.PHONY : src/ds/bitmap.cpp.i
+
+src/ds/bitmap.s: src/ds/bitmap.cpp.s
+.PHONY : src/ds/bitmap.s
+
+# target to generate assembly for a file
+src/ds/bitmap.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/ds/bitmap.cpp.s
+.PHONY : src/ds/bitmap.cpp.s
 
 src/email/email.o: src/email/email.cpp.o
 .PHONY : src/email/email.o
@@ -2255,6 +2329,30 @@ tests/test_application.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_application.dir/build.make CMakeFiles/test_application.dir/tests/test_application.cpp.s
 .PHONY : tests/test_application.cpp.s
 
+tests/test_bitmap.o: tests/test_bitmap.cpp.o
+.PHONY : tests/test_bitmap.o
+
+# target to build an object file
+tests/test_bitmap.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_bitmap.dir/build.make CMakeFiles/test_bitmap.dir/tests/test_bitmap.cpp.o
+.PHONY : tests/test_bitmap.cpp.o
+
+tests/test_bitmap.i: tests/test_bitmap.cpp.i
+.PHONY : tests/test_bitmap.i
+
+# target to preprocess a source file
+tests/test_bitmap.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_bitmap.dir/build.make CMakeFiles/test_bitmap.dir/tests/test_bitmap.cpp.i
+.PHONY : tests/test_bitmap.cpp.i
+
+tests/test_bitmap.s: tests/test_bitmap.cpp.s
+.PHONY : tests/test_bitmap.s
+
+# target to generate assembly for a file
+tests/test_bitmap.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_bitmap.dir/build.make CMakeFiles/test_bitmap.dir/tests/test_bitmap.cpp.s
+.PHONY : tests/test_bitmap.cpp.s
+
 tests/test_bytearray.o: tests/test_bytearray.cpp.o
 .PHONY : tests/test_bytearray.o
 
@@ -2975,6 +3073,30 @@ tests/test_zlib_stream.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_zlib_stream.dir/build.make CMakeFiles/test_zlib_stream.dir/tests/test_zlib_stream.cpp.s
 .PHONY : tests/test_zlib_stream.cpp.s
 
+tests/test_zookeeper.o: tests/test_zookeeper.cpp.o
+.PHONY : tests/test_zookeeper.o
+
+# target to build an object file
+tests/test_zookeeper.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_zookeeper.dir/build.make CMakeFiles/test_zookeeper.dir/tests/test_zookeeper.cpp.o
+.PHONY : tests/test_zookeeper.cpp.o
+
+tests/test_zookeeper.i: tests/test_zookeeper.cpp.i
+.PHONY : tests/test_zookeeper.i
+
+# target to preprocess a source file
+tests/test_zookeeper.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_zookeeper.dir/build.make CMakeFiles/test_zookeeper.dir/tests/test_zookeeper.cpp.i
+.PHONY : tests/test_zookeeper.cpp.i
+
+tests/test_zookeeper.s: tests/test_zookeeper.cpp.s
+.PHONY : tests/test_zookeeper.s
+
+# target to generate assembly for a file
+tests/test_zookeeper.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_zookeeper.dir/build.make CMakeFiles/test_zookeeper.dir/tests/test_zookeeper.cpp.s
+.PHONY : tests/test_zookeeper.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -2992,6 +3114,7 @@ help:
 	@echo "... test"
 	@echo "... test_address"
 	@echo "... test_application"
+	@echo "... test_bitmap"
 	@echo "... test_bytearray"
 	@echo "... test_config"
 	@echo "... test_crypto"
@@ -3021,6 +3144,7 @@ help:
 	@echo "... test_ws_client"
 	@echo "... test_ws_server"
 	@echo "... test_zlib_stream"
+	@echo "... test_zookeeper"
 	@echo "... webserver"
 	@echo "... samples/echo_server_udp.o"
 	@echo "... samples/echo_server_udp.i"
@@ -3106,12 +3230,18 @@ help:
 	@echo "... src/basic/worker.o"
 	@echo "... src/basic/worker.i"
 	@echo "... src/basic/worker.s"
+	@echo "... src/basic/zk_client.o"
+	@echo "... src/basic/zk_client.i"
+	@echo "... src/basic/zk_client.s"
 	@echo "... src/db/mysql.o"
 	@echo "... src/db/mysql.i"
 	@echo "... src/db/mysql.s"
 	@echo "... src/db/sqlite3.o"
 	@echo "... src/db/sqlite3.i"
 	@echo "... src/db/sqlite3.s"
+	@echo "... src/ds/bitmap.o"
+	@echo "... src/ds/bitmap.i"
+	@echo "... src/ds/bitmap.s"
 	@echo "... src/email/email.o"
 	@echo "... src/email/email.i"
 	@echo "... src/email/email.s"
@@ -3226,6 +3356,9 @@ help:
 	@echo "... tests/test_application.o"
 	@echo "... tests/test_application.i"
 	@echo "... tests/test_application.s"
+	@echo "... tests/test_bitmap.o"
+	@echo "... tests/test_bitmap.i"
+	@echo "... tests/test_bitmap.s"
 	@echo "... tests/test_bytearray.o"
 	@echo "... tests/test_bytearray.i"
 	@echo "... tests/test_bytearray.s"
@@ -3316,6 +3449,9 @@ help:
 	@echo "... tests/test_zlib_stream.o"
 	@echo "... tests/test_zlib_stream.i"
 	@echo "... tests/test_zlib_stream.s"
+	@echo "... tests/test_zookeeper.o"
+	@echo "... tests/test_zookeeper.i"
+	@echo "... tests/test_zookeeper.s"
 .PHONY : help
 
 
