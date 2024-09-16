@@ -31,10 +31,10 @@ ServiceItemInfo::ptr ServiceItemInfo::Create(const std::string& ip_and_port, con
 std::string ServiceItemInfo::toString() const {
     std::stringstream ss;
     ss << "[ServiceItemInfo id=" << m_id
-        << " ip=" << m_ip
-        << " port=" << m_port
-        << " data=" << m_data
-        << "]";
+       << " ip=" << m_ip
+       << " port=" << m_port
+       << " data=" << m_data
+       << "]";
     return ss.str();
 }
 
@@ -44,7 +44,7 @@ void IServiceDiscovery::setQueryServer(const std::unordered_map<std::string, std
 }
 
 void IServiceDiscovery::registerServer(const std::string& domain, const std::string& service,
-                                        const std::string& ip_and_port, const std::string& data) {
+                                       const std::string& ip_and_port, const std::string& data) {
     webserver::RWMutex::WriteLock lock(m_mutex);
     m_registerInfos[domain][service][ip_and_port] = data;
 }
@@ -55,13 +55,13 @@ void IServiceDiscovery::queryServer(const std::string& domain, const std::string
 }
 
 void IServiceDiscovery::listServer(std::unordered_map<std::string, std::unordered_map<std::string
-                                    ,std::unordered_map<uint64_t, ServiceItemInfo::ptr> > >& infos) {
+                                   ,std::unordered_map<uint64_t, ServiceItemInfo::ptr> > >& infos) {
     webserver::RWMutex::ReadLock lock(m_mutex);
     infos = m_datas;
 }
 
 void IServiceDiscovery::listRegisterServer(std::unordered_map<std::string, std::unordered_map<std::string
-                                            ,std::unordered_map<std::string, std::string> > >& infos) {
+                                           ,std::unordered_map<std::string, std::string> > >& infos) {
     webserver::RWMutex::ReadLock lock(m_mutex);
     infos = m_registerInfos;
 }
@@ -201,7 +201,7 @@ bool ParseDomainService(const std::string& path, std::string& domain, std::strin
 }
 
 bool ZKServiceDiscovery::registerInfo(const std::string& domain, const std::string& service, 
-                                        const std::string& ip_and_port, const std::string& data) {
+                                      const std::string& ip_and_port, const std::string& data) {
     std::string path = GetProvidersPath(domain, service);
     bool v = existsOrCreate(path);
     if(!v) {
@@ -211,7 +211,7 @@ bool ZKServiceDiscovery::registerInfo(const std::string& domain, const std::stri
 
     std::string new_val(1024, 0);
     int32_t rt = m_client->create(path + "/" + ip_and_port, data, new_val
-                                    ,&ZOO_OPEN_ACL_UNSAFE, ZKClient::FlagsType::EPHEMERAL);
+                                  ,&ZOO_OPEN_ACL_UNSAFE, ZKClient::FlagsType::EPHEMERAL);
     if(rt == ZOK) {
         return true;
     }
@@ -238,7 +238,7 @@ bool ZKServiceDiscovery::queryInfo(const std::string& domain, const std::string&
 
         std::string new_val(1024, 0);
         int32_t rt = m_client->create(path + "/" + m_selfInfo, m_selfData, new_val
-                                        ,&ZOO_OPEN_ACL_UNSAFE, ZKClient::FlagsType::EPHEMERAL);
+                                      ,&ZOO_OPEN_ACL_UNSAFE, ZKClient::FlagsType::EPHEMERAL);
         if(rt == ZOK) {
             return true;
         }

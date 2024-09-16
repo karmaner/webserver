@@ -61,7 +61,6 @@ public:
     void setIOManager(webserver::IOManager* v) { m_iomanager = v;}
     webserver::IOManager* getIOManager() const { return m_iomanager;}
 
-
     bool isAutoConnect() const { return m_autoConnect;}
     void setAutoConnect(bool v) { m_autoConnect = v;}
 
@@ -173,4 +172,3 @@ private:
 }
 
 #endif
-

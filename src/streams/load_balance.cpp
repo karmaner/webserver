@@ -55,12 +55,12 @@ bool LoadBalanceItem::isValid() {
 std::string LoadBalanceItem::toString() {
     std::stringstream ss;
     ss << "[Item id=" << m_id
-        << " weight=" << getWeight();
+       << " weight=" << getWeight();
     if(!m_stream) {
         ss << " stream=null";
     } else {
         ss << " stream=[" << m_stream->getRemoteAddressString()
-            << " is_connected=" << m_stream->isConnected() << "]";
+           << " is_connected=" << m_stream->isConnected() << "]";
     }
     ss << m_stats.getTotal().toString() << "]";
     //float w = 0;
@@ -412,7 +412,7 @@ void SDLoadBalance::onServiceChange(const std::string& domain, const std::string
                             ,const std::unordered_map<uint64_t, ServiceItemInfo::ptr>& old_value
                             ,const std::unordered_map<uint64_t, ServiceItemInfo::ptr>& new_value) {
     WEBSERVER_LOG_INFO(g_logger) << "onServiceChange domain=" << domain
-                                << " service=" << service;
+                             << " service=" << service;
     auto type = getType(domain, service);
     auto lb = get(domain, service, true);
     std::unordered_map<uint64_t, ServiceItemInfo::ptr> add_values;

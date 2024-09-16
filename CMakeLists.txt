@@ -105,6 +105,8 @@ set(LIB_SRC
 
     src/db/sqlite3.cpp
     src/db/mysql.cpp
+    src/db/redis.cpp
+    src/db/fox_thread.cpp
 
     src/email/email.cpp
     src/email/smtp.cpp
@@ -130,21 +132,19 @@ find_library(YAMLCPP yaml-cpp)
 find_library(PTHREAD pthread)
 find_library(JSONCPP jsoncpp)
 
-find_library(ZOOKEEPER_LIBRARY NAMES zookeeper_mt)
-find_path(ZOOKEEPER_INCLUDE_DIR zookeeper.h)
+find_library(ZOOKEEPER_LIBRARY zookeeper_mt)
+find_library(HIREDIS_VIP_LIB hiredis_vip)
+find_library(LIBEVENT_LIB event)
 
-#set(LIBS ${LIBS} webserver)
-#set(LIBS ${LIBS} dl)
-#set(LIBS ${LIBS} ${YAMLCPP})
-#set(LIBS ${LIBS} ${PTHREAD})
 
 set(LIBS
         webserver
-        dl
         pthread
         yaml-cpp
         jsoncpp
         tinyxml2
+        event
+        hiredis_vip
         ${ZOOKEEPER_LIBRARY}
         ${SQLite3_LIBRARIES}
         ${OPENSSL_LIBRARIES}
@@ -170,14 +170,16 @@ webserver_add_executable(test_bytearray "tests/test_bytearray.cpp" webserver "${
 webserver_add_executable(test_http "tests/test_http.cpp" webserver "${LIBS}")
 webserver_add_executable(test_http_parser "tests/test_http_parser.cpp" webserver "${LIBS}")
 webserver_add_executable(test_tcp_server "tests/test_tcp_server.cpp" webserver "${LIBS}")
-webserver_add_executable(echo_server "src/examples/echo_server.cpp" webserver "${LIBS}")
+
 webserver_add_executable(test_http_server "tests/test_http_server.cpp" webserver "${LIBS}")
 webserver_add_executable(test_http_connection "tests/test_http_connection.cpp" webserver "${LIBS}")
 webserver_add_executable(test_uri "tests/test_uri.cpp" webserver "${LIBS}")
 
 webserver_add_executable(my_http_server "samples/my_http_server.cpp" webserver "${LIBS}")
-webserver_add_executable(echo_udp_client "samples/echo_udp_client.cpp" webserver "${LIBS}")
-webserver_add_executable(echo_server_upd "samples/echo_server_udp.cpp" webserver "${LIBS}")
+
+webserver_add_executable(echo_server "examples/echo_server.cpp" webserver "${LIBS}")
+webserver_add_executable(echo_udp_client "examples/echo_udp_client.cpp" webserver "${LIBS}")
+webserver_add_executable(echo_server_upd "examples/echo_server_udp.cpp" webserver "${LIBS}")
 
 webserver_add_executable(test_daemon "tests/test_daemon.cpp" webserver "${LIBS}")
 webserver_add_executable(test_env "tests/test_env.cpp" webserver "${LIBS}")
@@ -186,19 +188,23 @@ webserver_add_executable(test_ws_client "tests/test_ws_client.cpp" webserver "${
 webserver_add_executable(test_ws_server "tests/test_ws_server.cpp" webserver "${LIBS}")
 webserver_add_executable(test_application "tests/test_application.cpp" webserver "${LIBS}")
 
-#webserver_add_executable(test_crypto "tests/test_crypto.cpp" webserver "${LIBS}")
 webserver_add_executable(test_lru "tests/test_lru.cpp" webserver "${LIBS}")
 webserver_add_executable(test_timed_cache "tests/test_timed_cache.cpp" webserver "${LIBS}")
 webserver_add_executable(test_timed_lru_cache "tests/test_timed_lru_cache.cpp" webserver "${LIBS}")
 webserver_add_executable(test_zlib_stream "tests/test_zlib_stream.cpp" webserver "${LIBS}")
 webserver_add_executable(test_sqlite3 "tests/test_sqlite3.cpp" webserver "${LIBS}")
 webserver_add_executable(test_rock "tests/test_rock.cpp" webserver "${LIBS}")
-
-add_library(test SHARED tests/test_module.cpp)
-endif()
-
 webserver_add_executable(test_crypto "tests/test_crypto.cpp" webserver "${LIBS}")
 webserver_add_executable(test_email  "tests/test_email.cpp" webserver "${LIBS}")
+
+webserver_add_executable(test_mysql  "tests/test_mysql.cpp" webserver "${LIBS}")
+webserver_add_executable(test_bitmap "tests/test_bitmap.cpp" webserver "${LIBS}")
+webserver_add_executable(test_zookeeper  "tests/test_zookeeper.cpp" webserver "${LIBS}")
+webserver_add_executable(test_service_discovery "tests/test_service_discovery.cpp" webserver "${LIBS}")
+
+endif()
+
+
 
 set(ORM_SRCS
     src/orm/table.cpp
@@ -209,15 +215,10 @@ set(ORM_SRCS
     )
 webserver_add_executable(orm "${ORM_SRCS}" webserver "${LIBS}")
 
-
-webserver_add_executable(test_mysql  "tests/test_mysql.cpp" webserver "${LIBS}")
-webserver_add_executable(test_bitmap "tests/test_bitmap.cpp" webserver "${LIBS}")
-webserver_add_executable(test_zookeeper  "tests/test_zookeeper.cpp" webserver "${LIBS}")
-webserver_add_executable(test_service_discovery "tests/test_service_discovery.cpp" webserver "${LIBS}")
-
 webserver_add_executable(bin_webserver "src/basic/main.cpp" webserver "${LIBS}")
 set_target_properties(bin_webserver PROPERTIES OUTPUT_NAME "webserver")
 
+add_library(test SHARED tests/test_module.cpp)
 
 # add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/orm_out)
 # set(OLIBS ${LIBS})

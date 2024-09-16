@@ -65,7 +65,7 @@ public:
     webserver::ByteArray::ptr getByteArray();
 private:
     int init(Type type = DEFLATE, int level = DEFAULT_COMPRESSION
-                ,int window_bits = 15, int memlevel = 8, Strategy strategy = DEFAULT);
+             ,int window_bits = 15, int memlevel = 8, Strategy strategy = DEFAULT);
 
     int encode(const iovec* v, const uint64_t& size, bool finish);
     int decode(const iovec* v, const uint64_t& size, bool finish);

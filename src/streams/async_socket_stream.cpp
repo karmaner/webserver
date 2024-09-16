@@ -47,7 +47,6 @@ bool AsyncSocketStream::start() {
     if(!m_iomanager) {
         m_iomanager = webserver::IOManager::GetThis();
     }
-
     if(!m_worker) {
         m_worker = webserver::IOManager::GetThis();
     }
@@ -107,7 +106,7 @@ void AsyncSocketStream::doRead() {
         //TODO log
     }
 
-    WEBSERVER_LOG_DEBUG(g_logger) << "doRead out" << this;
+    WEBSERVER_LOG_DEBUG(g_logger) << "doRead out " << this;
     innerClose();
     m_waitSem.notify();
 
@@ -136,7 +135,7 @@ void AsyncSocketStream::doWrite() {
     } catch (...) {
         //TODO log
     }
-    WEBSERVER_LOG_DEBUG(g_logger) << "doWrite out" << this;
+    WEBSERVER_LOG_DEBUG(g_logger) << "doWrite out " << this;
     {
         RWMutexType::WriteLock lock(m_queueMutex);
         m_queue.clear();
@@ -186,7 +185,7 @@ bool AsyncSocketStream::addCtx(Ctx::ptr ctx) {
 
 bool AsyncSocketStream::enqueue(SendCtx::ptr ctx) {
     WEBSERVER_ASSERT(ctx);
-    RWMutexType::WriteLock lock(m_mutex);
+    RWMutexType::WriteLock lock(m_queueMutex);
     bool empty = m_queue.empty();
     m_queue.push_back(ctx);
     lock.unlock();

@@ -2,6 +2,7 @@
 #include "http_parser.h"
 #include "src/basic/log.h"
 #include "src/basic/uri.h"
+#include "src/streams/zlib_stream.h"
 
 namespace webserver {
 namespace http {

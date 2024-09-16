@@ -130,32 +130,6 @@ webserver/fast:
 .PHONY : webserver/fast
 
 #=============================================================================
-# Target rules for targets named test_crypto
-
-# Build rule for target.
-test_crypto: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_crypto
-.PHONY : test_crypto
-
-# fast build rule for target.
-test_crypto/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_crypto.dir/build.make CMakeFiles/test_crypto.dir/build
-.PHONY : test_crypto/fast
-
-#=============================================================================
-# Target rules for targets named test_email
-
-# Build rule for target.
-test_email: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_email
-.PHONY : test_email
-
-# fast build rule for target.
-test_email/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_email.dir/build.make CMakeFiles/test_email.dir/build
-.PHONY : test_email/fast
-
-#=============================================================================
 # Target rules for targets named orm
 
 # Build rule for target.
@@ -169,58 +143,6 @@ orm/fast:
 .PHONY : orm/fast
 
 #=============================================================================
-# Target rules for targets named test_mysql
-
-# Build rule for target.
-test_mysql: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_mysql
-.PHONY : test_mysql
-
-# fast build rule for target.
-test_mysql/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_mysql.dir/build.make CMakeFiles/test_mysql.dir/build
-.PHONY : test_mysql/fast
-
-#=============================================================================
-# Target rules for targets named test_bitmap
-
-# Build rule for target.
-test_bitmap: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_bitmap
-.PHONY : test_bitmap
-
-# fast build rule for target.
-test_bitmap/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_bitmap.dir/build.make CMakeFiles/test_bitmap.dir/build
-.PHONY : test_bitmap/fast
-
-#=============================================================================
-# Target rules for targets named test_zookeeper
-
-# Build rule for target.
-test_zookeeper: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_zookeeper
-.PHONY : test_zookeeper
-
-# fast build rule for target.
-test_zookeeper/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_zookeeper.dir/build.make CMakeFiles/test_zookeeper.dir/build
-.PHONY : test_zookeeper/fast
-
-#=============================================================================
-# Target rules for targets named test_service_discovery
-
-# Build rule for target.
-test_service_discovery: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_service_discovery
-.PHONY : test_service_discovery
-
-# fast build rule for target.
-test_service_discovery/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_service_discovery.dir/build.make CMakeFiles/test_service_discovery.dir/build
-.PHONY : test_service_discovery/fast
-
-#=============================================================================
 # Target rules for targets named bin_webserver
 
 # Build rule for target.
@@ -232,6 +154,19 @@ bin_webserver: cmake_check_build_system
 bin_webserver/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/bin_webserver.dir/build.make CMakeFiles/bin_webserver.dir/build
 .PHONY : bin_webserver/fast
+
+#=============================================================================
+# Target rules for targets named test
+
+# Build rule for target.
+test: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test
+.PHONY : test
+
+# fast build rule for target.
+test/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/build
+.PHONY : test/fast
 
 src/application/application.o: src/application/application.cpp.o
 .PHONY : src/application/application.o
@@ -857,6 +792,30 @@ src/basic/zk_client.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/basic/zk_client.cpp.s
 .PHONY : src/basic/zk_client.cpp.s
 
+src/db/fox_thread.o: src/db/fox_thread.cpp.o
+.PHONY : src/db/fox_thread.o
+
+# target to build an object file
+src/db/fox_thread.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/db/fox_thread.cpp.o
+.PHONY : src/db/fox_thread.cpp.o
+
+src/db/fox_thread.i: src/db/fox_thread.cpp.i
+.PHONY : src/db/fox_thread.i
+
+# target to preprocess a source file
+src/db/fox_thread.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/db/fox_thread.cpp.i
+.PHONY : src/db/fox_thread.cpp.i
+
+src/db/fox_thread.s: src/db/fox_thread.cpp.s
+.PHONY : src/db/fox_thread.s
+
+# target to generate assembly for a file
+src/db/fox_thread.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/db/fox_thread.cpp.s
+.PHONY : src/db/fox_thread.cpp.s
+
 src/db/mysql.o: src/db/mysql.cpp.o
 .PHONY : src/db/mysql.o
 
@@ -880,6 +839,30 @@ src/db/mysql.s: src/db/mysql.cpp.s
 src/db/mysql.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/db/mysql.cpp.s
 .PHONY : src/db/mysql.cpp.s
+
+src/db/redis.o: src/db/redis.cpp.o
+.PHONY : src/db/redis.o
+
+# target to build an object file
+src/db/redis.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/db/redis.cpp.o
+.PHONY : src/db/redis.cpp.o
+
+src/db/redis.i: src/db/redis.cpp.i
+.PHONY : src/db/redis.i
+
+# target to preprocess a source file
+src/db/redis.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/db/redis.cpp.i
+.PHONY : src/db/redis.cpp.i
+
+src/db/redis.s: src/db/redis.cpp.s
+.PHONY : src/db/redis.s
+
+# target to generate assembly for a file
+src/db/redis.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/db/redis.cpp.s
+.PHONY : src/db/redis.cpp.s
 
 src/db/sqlite3.o: src/db/sqlite3.cpp.o
 .PHONY : src/db/sqlite3.o
@@ -1793,149 +1776,29 @@ src/util/json_util.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/util/json_util.cpp.s
 .PHONY : src/util/json_util.cpp.s
 
-tests/test_bitmap.o: tests/test_bitmap.cpp.o
-.PHONY : tests/test_bitmap.o
+tests/test_module.o: tests/test_module.cpp.o
+.PHONY : tests/test_module.o
 
 # target to build an object file
-tests/test_bitmap.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_bitmap.dir/build.make CMakeFiles/test_bitmap.dir/tests/test_bitmap.cpp.o
-.PHONY : tests/test_bitmap.cpp.o
+tests/test_module.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/tests/test_module.cpp.o
+.PHONY : tests/test_module.cpp.o
 
-tests/test_bitmap.i: tests/test_bitmap.cpp.i
-.PHONY : tests/test_bitmap.i
-
-# target to preprocess a source file
-tests/test_bitmap.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_bitmap.dir/build.make CMakeFiles/test_bitmap.dir/tests/test_bitmap.cpp.i
-.PHONY : tests/test_bitmap.cpp.i
-
-tests/test_bitmap.s: tests/test_bitmap.cpp.s
-.PHONY : tests/test_bitmap.s
-
-# target to generate assembly for a file
-tests/test_bitmap.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_bitmap.dir/build.make CMakeFiles/test_bitmap.dir/tests/test_bitmap.cpp.s
-.PHONY : tests/test_bitmap.cpp.s
-
-tests/test_crypto.o: tests/test_crypto.cpp.o
-.PHONY : tests/test_crypto.o
-
-# target to build an object file
-tests/test_crypto.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_crypto.dir/build.make CMakeFiles/test_crypto.dir/tests/test_crypto.cpp.o
-.PHONY : tests/test_crypto.cpp.o
-
-tests/test_crypto.i: tests/test_crypto.cpp.i
-.PHONY : tests/test_crypto.i
+tests/test_module.i: tests/test_module.cpp.i
+.PHONY : tests/test_module.i
 
 # target to preprocess a source file
-tests/test_crypto.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_crypto.dir/build.make CMakeFiles/test_crypto.dir/tests/test_crypto.cpp.i
-.PHONY : tests/test_crypto.cpp.i
+tests/test_module.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/tests/test_module.cpp.i
+.PHONY : tests/test_module.cpp.i
 
-tests/test_crypto.s: tests/test_crypto.cpp.s
-.PHONY : tests/test_crypto.s
-
-# target to generate assembly for a file
-tests/test_crypto.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_crypto.dir/build.make CMakeFiles/test_crypto.dir/tests/test_crypto.cpp.s
-.PHONY : tests/test_crypto.cpp.s
-
-tests/test_email.o: tests/test_email.cpp.o
-.PHONY : tests/test_email.o
-
-# target to build an object file
-tests/test_email.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_email.dir/build.make CMakeFiles/test_email.dir/tests/test_email.cpp.o
-.PHONY : tests/test_email.cpp.o
-
-tests/test_email.i: tests/test_email.cpp.i
-.PHONY : tests/test_email.i
-
-# target to preprocess a source file
-tests/test_email.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_email.dir/build.make CMakeFiles/test_email.dir/tests/test_email.cpp.i
-.PHONY : tests/test_email.cpp.i
-
-tests/test_email.s: tests/test_email.cpp.s
-.PHONY : tests/test_email.s
+tests/test_module.s: tests/test_module.cpp.s
+.PHONY : tests/test_module.s
 
 # target to generate assembly for a file
-tests/test_email.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_email.dir/build.make CMakeFiles/test_email.dir/tests/test_email.cpp.s
-.PHONY : tests/test_email.cpp.s
-
-tests/test_mysql.o: tests/test_mysql.cpp.o
-.PHONY : tests/test_mysql.o
-
-# target to build an object file
-tests/test_mysql.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_mysql.dir/build.make CMakeFiles/test_mysql.dir/tests/test_mysql.cpp.o
-.PHONY : tests/test_mysql.cpp.o
-
-tests/test_mysql.i: tests/test_mysql.cpp.i
-.PHONY : tests/test_mysql.i
-
-# target to preprocess a source file
-tests/test_mysql.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_mysql.dir/build.make CMakeFiles/test_mysql.dir/tests/test_mysql.cpp.i
-.PHONY : tests/test_mysql.cpp.i
-
-tests/test_mysql.s: tests/test_mysql.cpp.s
-.PHONY : tests/test_mysql.s
-
-# target to generate assembly for a file
-tests/test_mysql.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_mysql.dir/build.make CMakeFiles/test_mysql.dir/tests/test_mysql.cpp.s
-.PHONY : tests/test_mysql.cpp.s
-
-tests/test_service_discovery.o: tests/test_service_discovery.cpp.o
-.PHONY : tests/test_service_discovery.o
-
-# target to build an object file
-tests/test_service_discovery.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_service_discovery.dir/build.make CMakeFiles/test_service_discovery.dir/tests/test_service_discovery.cpp.o
-.PHONY : tests/test_service_discovery.cpp.o
-
-tests/test_service_discovery.i: tests/test_service_discovery.cpp.i
-.PHONY : tests/test_service_discovery.i
-
-# target to preprocess a source file
-tests/test_service_discovery.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_service_discovery.dir/build.make CMakeFiles/test_service_discovery.dir/tests/test_service_discovery.cpp.i
-.PHONY : tests/test_service_discovery.cpp.i
-
-tests/test_service_discovery.s: tests/test_service_discovery.cpp.s
-.PHONY : tests/test_service_discovery.s
-
-# target to generate assembly for a file
-tests/test_service_discovery.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_service_discovery.dir/build.make CMakeFiles/test_service_discovery.dir/tests/test_service_discovery.cpp.s
-.PHONY : tests/test_service_discovery.cpp.s
-
-tests/test_zookeeper.o: tests/test_zookeeper.cpp.o
-.PHONY : tests/test_zookeeper.o
-
-# target to build an object file
-tests/test_zookeeper.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_zookeeper.dir/build.make CMakeFiles/test_zookeeper.dir/tests/test_zookeeper.cpp.o
-.PHONY : tests/test_zookeeper.cpp.o
-
-tests/test_zookeeper.i: tests/test_zookeeper.cpp.i
-.PHONY : tests/test_zookeeper.i
-
-# target to preprocess a source file
-tests/test_zookeeper.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_zookeeper.dir/build.make CMakeFiles/test_zookeeper.dir/tests/test_zookeeper.cpp.i
-.PHONY : tests/test_zookeeper.cpp.i
-
-tests/test_zookeeper.s: tests/test_zookeeper.cpp.s
-.PHONY : tests/test_zookeeper.s
-
-# target to generate assembly for a file
-tests/test_zookeeper.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_zookeeper.dir/build.make CMakeFiles/test_zookeeper.dir/tests/test_zookeeper.cpp.s
-.PHONY : tests/test_zookeeper.cpp.s
+tests/test_module.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/tests/test_module.cpp.s
+.PHONY : tests/test_module.cpp.s
 
 # Help Target
 help:
@@ -1947,12 +1810,7 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... bin_webserver"
 	@echo "... orm"
-	@echo "... test_bitmap"
-	@echo "... test_crypto"
-	@echo "... test_email"
-	@echo "... test_mysql"
-	@echo "... test_service_discovery"
-	@echo "... test_zookeeper"
+	@echo "... test"
 	@echo "... webserver"
 	@echo "... src/application/application.o"
 	@echo "... src/application/application.i"
@@ -2032,9 +1890,15 @@ help:
 	@echo "... src/basic/zk_client.o"
 	@echo "... src/basic/zk_client.i"
 	@echo "... src/basic/zk_client.s"
+	@echo "... src/db/fox_thread.o"
+	@echo "... src/db/fox_thread.i"
+	@echo "... src/db/fox_thread.s"
 	@echo "... src/db/mysql.o"
 	@echo "... src/db/mysql.i"
 	@echo "... src/db/mysql.s"
+	@echo "... src/db/redis.o"
+	@echo "... src/db/redis.i"
+	@echo "... src/db/redis.s"
 	@echo "... src/db/sqlite3.o"
 	@echo "... src/db/sqlite3.i"
 	@echo "... src/db/sqlite3.s"
@@ -2149,24 +2013,9 @@ help:
 	@echo "... src/util/json_util.o"
 	@echo "... src/util/json_util.i"
 	@echo "... src/util/json_util.s"
-	@echo "... tests/test_bitmap.o"
-	@echo "... tests/test_bitmap.i"
-	@echo "... tests/test_bitmap.s"
-	@echo "... tests/test_crypto.o"
-	@echo "... tests/test_crypto.i"
-	@echo "... tests/test_crypto.s"
-	@echo "... tests/test_email.o"
-	@echo "... tests/test_email.i"
-	@echo "... tests/test_email.s"
-	@echo "... tests/test_mysql.o"
-	@echo "... tests/test_mysql.i"
-	@echo "... tests/test_mysql.s"
-	@echo "... tests/test_service_discovery.o"
-	@echo "... tests/test_service_discovery.i"
-	@echo "... tests/test_service_discovery.s"
-	@echo "... tests/test_zookeeper.o"
-	@echo "... tests/test_zookeeper.i"
-	@echo "... tests/test_zookeeper.s"
+	@echo "... tests/test_module.o"
+	@echo "... tests/test_module.i"
+	@echo "... tests/test_module.s"
 .PHONY : help
 
 
