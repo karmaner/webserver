@@ -4,7 +4,6 @@
 #include "log.h"
 #include "macro.h"
 #include "hook.h"
-
 #include <limits.h>
 
 namespace webserver {
@@ -410,10 +409,10 @@ int Socket::getError() {
 
 std::ostream& Socket::dump(std::ostream& os) const {
     os << "[Socket sock=" << m_sock
-        << " is_connected=" << m_isConnected
-        << " family=" << m_family
-        << " type=" << m_type
-        << " protocol=" << m_protocol;
+       << " is_connected=" << m_isConnected
+       << " family=" << m_family
+       << " type=" << m_type
+       << " protocol=" << m_protocol;
     if(m_localAddress) {
         os << " local_address=" << m_localAddress->toString();
     }
@@ -638,10 +637,10 @@ SSLSocket::ptr SSLSocket::CreateTCPSocket6() {
 
 std::ostream& SSLSocket::dump(std::ostream& os) const {
     os << "[SSLSocket sock=" << m_sock
-        << " is_connected=" << m_isConnected
-        << " family=" << m_family
-        << " type=" << m_type
-        << " protocol=" << m_protocol;
+       << " is_connected=" << m_isConnected
+       << " family=" << m_family
+       << " type=" << m_type
+       << " protocol=" << m_protocol;
     if(m_localAddress) {
         os << " local_address=" << m_localAddress->toString();
     }

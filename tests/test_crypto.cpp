@@ -161,7 +161,7 @@ void test_rsa() {
 
 }
 
-int main(int argc, char** argv) {
+int main(int argc, char* argv[]) {
     OpenSSL_add_all_ciphers();
     srand(time(0));
     //test_aes256ecb();

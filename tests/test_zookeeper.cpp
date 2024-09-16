@@ -77,7 +77,7 @@ void on_watcher(int type, int stat, const std::string& path, webserver::ZKClient
     }
 }
 
-int main(int argc, char** argv) {
+int main(int argc, char* argv[]) {
     g_argc = argc;
     webserver::IOManager iom(1);
     webserver::ZKClient::ptr client(new webserver::ZKClient);

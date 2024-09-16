@@ -3,8 +3,6 @@
 #include "macro.h"
 #include "log.h"
 #include "scheduler.h"
-#include "mutex.h"
-
 #include <atomic>
 
 namespace webserver {
@@ -94,11 +92,11 @@ Fiber::~Fiber() {
         }
     }
     WEBSERVER_LOG_DEBUG(g_logger) << "Fiber::~Fiber id=" << m_id
-                                << " total=" << s_fiber_count;
+                              << " total=" << s_fiber_count;
 }
 
 //重置协程函数，并重置状态
-//INIT，TERM
+//INIT，TERM, EXCEPT
 void Fiber::reset(std::function<void()> cb) {
     WEBSERVER_ASSERT(m_stack);
     WEBSERVER_ASSERT(m_state == TERM
@@ -120,7 +118,6 @@ void Fiber::reset(std::function<void()> cb) {
 void Fiber::call() {
     SetThis(this);
     m_state = EXEC;
-    WEBSERVER_LOG_ERROR(g_logger) << getId();
     if(swapcontext(&t_threadFiber->m_ctx, &m_ctx)) {
         WEBSERVER_ASSERT2(false, "swapcontext");
     }
@@ -191,23 +188,23 @@ uint64_t Fiber::TotalFibers() {
 void Fiber::MainFunc() {
     Fiber::ptr cur = GetThis();
     WEBSERVER_ASSERT(cur);
-    //try {
+    try {
         cur->m_cb();
         cur->m_cb = nullptr;
         cur->m_state = TERM;
-    //} catch (std::exception& ex) {
-    //    cur->m_state = EXCEPT;
-    //    WEBSERVER_LOG_ERROR(g_logger) << "Fiber Except: " << ex.what()
-    //        << " fiber_id=" << cur->getId()
-    //        << std::endl
-    //        << webserver::BacktraceToString();
-    //} catch (...) {
-    //    cur->m_state = EXCEPT;
-    //    WEBSERVER_LOG_ERROR(g_logger) << "Fiber Except"
-    //        << " fiber_id=" << cur->getId()
-    //        << std::endl
-    //        << webserver::BacktraceToString();
-    //}
+    } catch (std::exception& ex) {
+        cur->m_state = EXCEPT;
+        WEBSERVER_LOG_ERROR(g_logger) << "Fiber Except: " << ex.what()
+            << " fiber_id=" << cur->getId()
+            << std::endl
+            << webserver::BacktraceToString();
+    } catch (...) {
+        cur->m_state = EXCEPT;
+        WEBSERVER_LOG_ERROR(g_logger) << "Fiber Except"
+            << " fiber_id=" << cur->getId()
+            << std::endl
+            << webserver::BacktraceToString();
+    }
 
     auto raw_ptr = cur.get();
     cur.reset();
@@ -245,4 +242,3 @@ void Fiber::CallerMainFunc() {
 }
 
 }
-

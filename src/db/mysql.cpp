@@ -52,7 +52,7 @@ namespace {
 }
 
 static MYSQL* mysql_init(std::map<std::string, std::string>& params,
-                            const int& timeout) {
+                         const int& timeout) {
 
     static thread_local MySQLThreadIniter s_thread_initer;
 
@@ -76,10 +76,10 @@ static MYSQL* mysql_init(std::map<std::string, std::string>& params,
     std::string dbname = webserver::GetParamValue<std::string>(params, "dbname");
 
     if(mysql_real_connect(mysql, host.c_str(), user.c_str(), passwd.c_str()
-                            ,dbname.c_str(), port, NULL, 0) == nullptr) {
+                          ,dbname.c_str(), port, NULL, 0) == nullptr) {
         WEBSERVER_LOG_ERROR(g_logger) << "mysql_real_connect(" << host
-                                    << ", " << port << ", " << dbname
-                                    << ") error: " << mysql_error(mysql);
+                                  << ", " << port << ", " << dbname
+                                  << ") error: " << mysql_error(mysql);
         mysql_close(mysql);
         return nullptr;
     }
@@ -474,13 +474,14 @@ int MySQLStmt::bindBlob(int idx, const std::string& value) {
 //}
 
 int MySQLStmt::bindTime(int idx, const time_t& value) {
-    idx -= 1;
-    m_binds[idx].buffer_type = MYSQL_TYPE_TIMESTAMP;
-    MYSQL_TIME* mt = (MYSQL_TIME*)malloc(sizeof(MYSQL_TIME));
-    time_t_to_mysql_time(value, *mt);
-    m_binds[idx].buffer = mt;
-    m_binds[idx].buffer_length = sizeof(MYSQL_TIME);
-    return 0;
+    //idx -= 1;
+    //m_binds[idx].buffer_type = MYSQL_TYPE_TIMESTAMP;
+    //MYSQL_TIME* mt = (MYSQL_TIME*)malloc(sizeof(MYSQL_TIME));
+    //time_t_to_mysql_time(value, *mt);
+    //m_binds[idx].buffer = mt;
+    //m_binds[idx].buffer_length = sizeof(MYSQL_TIME);
+    //return 0;
+    return bindString(idx, webserver::Time2Str(value));
 }
 
 int MySQLStmt::execute() {
@@ -967,7 +968,9 @@ std::shared_ptr<MySQL> MySQLTransaction::getMySQL() {
 
 MySQLTransaction::MySQLTransaction(MySQL::ptr mysql, bool auto_commit)
     :m_mysql(mysql)
-    ,m_autoCommit(auto_commit) {
+    ,m_autoCommit(auto_commit)
+    ,m_isFinished(false)
+    ,m_hasError(false) {
 }
 
 MySQLManager::MySQLManager()

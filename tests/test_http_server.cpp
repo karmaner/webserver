@@ -50,7 +50,7 @@ void run() {
     server->start();
 }
 
-int main(int argc, char** argv) {
+int main(int argc, char* argv[]) {
     //webserver::IOManager iom(4);
     webserver::IOManager iom(1, true, "main");
     woker.reset(new webserver::IOManager(3, false, "worker"));

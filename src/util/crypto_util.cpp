@@ -79,16 +79,17 @@ int32_t CryptoUtil::Crypto(const EVP_CIPHER* cipher, bool enc
         }
         *out_len += tmp_len;
     } while(0);
-    EVP_CIPHER_CTX_free(ctx);
+    EVP_CIPHER_CTX_cleanup(ctx);
     if(has_error) {
         return -1;
     }
+    EVP_CIPHER_CTX_free(ctx);
     return *out_len;
 }
 
 int32_t RSACipher::GenerateKey(const std::string& pubkey_file
-                                ,const std::string& prikey_file
-                                ,uint32_t length) {
+                               ,const std::string& prikey_file
+                               ,uint32_t length) {
     int rt = 0;
     FILE* fp = nullptr;
     RSA* rsa = nullptr;
@@ -128,7 +129,7 @@ int32_t RSACipher::GenerateKey(const std::string& pubkey_file
 }
 
 RSACipher::ptr RSACipher::Create(const std::string& pubkey_file
-                        ,const std::string& prikey_file) {
+                      ,const std::string& prikey_file) {
     FILE* fp = nullptr;
     do {
         RSACipher::ptr rt(new RSACipher);
@@ -201,31 +202,31 @@ RSACipher::~RSACipher() {
 }
 
 int32_t RSACipher::privateEncrypt(const void* from, int flen,
-                        void* to, int padding) {
+                       void* to, int padding) {
     return RSA_private_encrypt(flen, (const uint8_t*)from
                                 ,(uint8_t*)to, m_prikey, padding);
 }
 
 int32_t RSACipher::publicEncrypt(const void* from, int flen,
-                        void* to, int padding) {
+                       void* to, int padding) {
     return RSA_public_encrypt(flen, (const uint8_t*)from
                                 ,(uint8_t*)to, m_pubkey, padding);
 }
 
 int32_t RSACipher::privateDecrypt(const void* from, int flen,
-                        void* to, int padding) {
+                       void* to, int padding) {
     return RSA_private_decrypt(flen, (const uint8_t*)from
                                 ,(uint8_t*)to, m_prikey, padding);
 }
 
 int32_t RSACipher::publicDecrypt(const void* from, int flen,
-                        void* to, int padding) {
+                       void* to, int padding) {
     return RSA_public_decrypt(flen, (const uint8_t*)from
                                 ,(uint8_t*)to, m_pubkey, padding);
 }
 
 int32_t RSACipher::privateEncrypt(const void* from, int flen,
-                        std::string& to, int padding) {
+                       std::string& to, int padding) {
     //TODO resize
     int32_t len = privateEncrypt(from, flen, &to[0], padding);
     if(len >= 0) {
@@ -235,7 +236,7 @@ int32_t RSACipher::privateEncrypt(const void* from, int flen,
 }
 
 int32_t RSACipher::publicEncrypt(const void* from, int flen,
-                        std::string& to, int padding) {
+                       std::string& to, int padding) {
     //TODO resize
     int32_t len = publicEncrypt(from, flen, &to[0], padding);
     if(len >= 0) {
@@ -245,7 +246,7 @@ int32_t RSACipher::publicEncrypt(const void* from, int flen,
 }
 
 int32_t RSACipher::privateDecrypt(const void* from, int flen,
-                        std::string& to, int padding) {
+                       std::string& to, int padding) {
     //TODO resize
     int32_t len = privateDecrypt(from, flen, &to[0], padding);
     if(len >= 0) {
@@ -255,7 +256,7 @@ int32_t RSACipher::privateDecrypt(const void* from, int flen,
 }
 
 int32_t RSACipher::publicDecrypt(const void* from, int flen,
-                        std::string& to, int padding) {
+                       std::string& to, int padding) {
     //TODO resize
     int32_t len = publicDecrypt(from, flen, &to[0], padding);
     if(len >= 0) {

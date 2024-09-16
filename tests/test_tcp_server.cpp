@@ -19,7 +19,7 @@ void run() {
     tcp_server->start();
 
 }
-int main(int argc, char** argv) {
+int main(int argc, char* argv[]) {
     webserver::IOManager iom(2);
     iom.schedule(run);
     return 0;

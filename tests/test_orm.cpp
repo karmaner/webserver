@@ -2,7 +2,7 @@
 #include "src/db/sqlite3.h"
 #include "src/db/mysql.h"
 
-int main(int argc, char** argv) {
+int main(int argc, char* argv[]) {
     webserver::IDB::ptr db;
     if(argc == 1) {
         db = webserver::SQLite3::Create("abc.db");

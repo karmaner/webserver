@@ -1,4 +1,3 @@
-#pragma once
 #ifndef __SRC_BASIC_SOCKET_H__
 #define __SRC_BASIC_SOCKET_H__
 
@@ -8,10 +7,8 @@
 #include <sys/socket.h>
 #include <openssl/err.h>
 #include <openssl/ssl.h>
-
 #include "address.h"
 #include "noncopyable.h"
-#include "log.h"
 
 namespace webserver {
 

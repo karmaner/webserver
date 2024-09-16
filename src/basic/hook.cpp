@@ -141,11 +141,10 @@ retry:
                 errno = tinfo->cancelled;
                 return -1;
             }
-            WEBSERVER_ASSERT(webserver::Fiber::GetThis()->getState() == webserver::Fiber::EXEC);
             goto retry;
         }
     }
-
+    
     return n;
 }
 

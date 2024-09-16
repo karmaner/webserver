@@ -68,7 +68,7 @@ void test_timer() {
     }, true);
 }
 
-int main(int argc, char** argv) {
+int main(int argc, char* argv[]) {
     // test1();
     test_timer();
     return 0;

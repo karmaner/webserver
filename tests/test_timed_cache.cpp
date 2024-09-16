@@ -48,7 +48,7 @@ void test_hash_timed_cache() {
     std::cout << cache.toStatusString() << std::endl;
 }
 
-int main(int argc, char** argv) {
+int main(int argc, char* argv[]) {
     test_timed_cache();
     test_hash_timed_cache();
     return 0;

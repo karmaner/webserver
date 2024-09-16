@@ -34,7 +34,7 @@ void test_hash_lru() {
     std::cout << cache.toStatusString() << std::endl;
 }
 
-int main(int argc, char** argv) {
+int main(int argc, char* argv[]) {
     test_lru();
     test_hash_lru();
     return 0;

@@ -24,10 +24,10 @@ Module::Module(const std::string& name
     ,m_type(type) {
 }
 
-void Module::onBeforeArgsParse(int argc, char** argv) {
+void Module::onBeforeArgsParse(int argc, char* argv[]) {
 }
 
-void Module::onAfterArgsParse(int argc, char** argv) {
+void Module::onAfterArgsParse(int argc, char* argv[]) {
 }
 
 bool Module::handleRequest(webserver::Message::ptr req

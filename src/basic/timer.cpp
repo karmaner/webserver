@@ -25,7 +25,7 @@ bool Timer::Comparator::operator()(const Timer::ptr& lhs
 
 
 Timer::Timer(uint64_t ms, std::function<void()> cb,
-                bool recurring, TimerManager* manager)
+             bool recurring, TimerManager* manager)
     :m_recurring(recurring)
     ,m_ms(ms)
     ,m_cb(cb)
@@ -97,7 +97,7 @@ TimerManager::~TimerManager() {
 }
 
 Timer::ptr TimerManager::addTimer(uint64_t ms, std::function<void()> cb
-                                    ,bool recurring) {
+                                  ,bool recurring) {
     Timer::ptr timer(new Timer(ms, cb, recurring, this));
     RWMutexType::WriteLock lock(m_mutex);
     addTimer(timer, lock);
@@ -143,7 +143,6 @@ void TimerManager::listExpiredCb(std::vector<std::function<void()> >& cbs) {
         }
     }
     RWMutexType::WriteLock lock(m_mutex);
-
     if(m_timers.empty()) {
         return;
     }

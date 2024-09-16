@@ -59,7 +59,6 @@ static std::ostream& operator<< (std::ostream& os, EPOLL_EVENTS events) {
     return os;
 }
 
-
 IOManager::FdContext::EventContext& IOManager::FdContext::getContext(IOManager::Event event) {
     switch(event) {
         case IOManager::READ:
@@ -69,6 +68,7 @@ IOManager::FdContext::EventContext& IOManager::FdContext::getContext(IOManager::
         default:
             WEBSERVER_ASSERT2(false, "getContext");
     }
+    throw std::invalid_argument("getContext invalid event");
 }
 
 void IOManager::FdContext::resetContext(EventContext& ctx) {
@@ -192,7 +192,7 @@ int IOManager::addEvent(int fd, Event event, std::function<void()> cb) {
     } else {
         event_ctx.fiber = Fiber::GetThis();
         WEBSERVER_ASSERT2(event_ctx.fiber->getState() == Fiber::EXEC
-                      ,"state=" << event_ctx.fiber->getState());
+                        ,"state=" << event_ctx.fiber->getState());
     }
     return 0;
 }
@@ -339,7 +339,7 @@ void IOManager::idle() {
         uint64_t next_timeout = 0;
         if(WEBSERVER_UNLIKELY(stopping(next_timeout))) {
             WEBSERVER_LOG_INFO(g_logger) << "name=" << getName()
-                                     << " idle stopping exit";
+                                        << " idle stopping exit";
             break;
         }
 

@@ -14,7 +14,7 @@
 #include <unordered_set>
 #include <functional>
 
-#include "mutex.h"
+#include "thread.h"
 #include "log.h"
 #include "util.h"
 
@@ -116,7 +116,7 @@ template<class T>
 class LexicalCast<std::vector<T>, std::string> {
 public:
     std::string operator()(const std::vector<T>& v) {
-        YAML::Node node;
+        YAML::Node node(YAML::NodeType::Sequence);
         for(auto& i : v) {
             node.push_back(YAML::Load(LexicalCast<T, std::string>()(i)));
         }
@@ -152,7 +152,7 @@ template<class T>
 class LexicalCast<std::list<T>, std::string> {
 public:
     std::string operator()(const std::list<T>& v) {
-        YAML::Node node;
+        YAML::Node node(YAML::NodeType::Sequence);
         for(auto& i : v) {
             node.push_back(YAML::Load(LexicalCast<T, std::string>()(i)));
         }
@@ -188,7 +188,7 @@ template<class T>
 class LexicalCast<std::set<T>, std::string> {
 public:
     std::string operator()(const std::set<T>& v) {
-        YAML::Node node;
+        YAML::Node node(YAML::NodeType::Sequence);
         for(auto& i : v) {
             node.push_back(YAML::Load(LexicalCast<T, std::string>()(i)));
         }
@@ -224,7 +224,7 @@ template<class T>
 class LexicalCast<std::unordered_set<T>, std::string> {
 public:
     std::string operator()(const std::unordered_set<T>& v) {
-        YAML::Node node;
+        YAML::Node node(YAML::NodeType::Sequence);
         for(auto& i : v) {
             node.push_back(YAML::Load(LexicalCast<T, std::string>()(i)));
         }
@@ -262,7 +262,7 @@ template<class T>
 class LexicalCast<std::map<std::string, T>, std::string> {
 public:
     std::string operator()(const std::map<std::string, T>& v) {
-        YAML::Node node;
+        YAML::Node node(YAML::NodeType::Map);
         for(auto& i : v) {
             node[i.first] = YAML::Load(LexicalCast<T, std::string>()(i.second));
         }
@@ -300,7 +300,7 @@ template<class T>
 class LexicalCast<std::unordered_map<std::string, T>, std::string> {
 public:
     std::string operator()(const std::unordered_map<std::string, T>& v) {
-        YAML::Node node;
+        YAML::Node node(YAML::NodeType::Map);
         for(auto& i : v) {
             node[i.first] = YAML::Load(LexicalCast<T, std::string>()(i.second));
         }
@@ -349,7 +349,7 @@ public:
             RWMutexType::ReadLock lock(m_mutex);
             return ToStr()(m_val);
         } catch (std::exception& e) {
-            WEBSERVER_LOG_ERROR(WEBSERVER_LOG_ROOT()) << "ConfigVar::toString exception"
+            WEBSERVER_LOG_ERROR(WEBSERVER_LOG_ROOT()) << "ConfigVar::toString exception "
                 << e.what() << " convert: " << TypeToName<T>() << " to string"
                 << " name=" << m_name;
         }
@@ -362,10 +362,9 @@ public:
      */
     bool fromString(const std::string& val) override {
         try {
-            //m_val = boost::lexical_cast<T>(val);
             setValue(FromStr()(val));
         } catch (std::exception& e) {
-            WEBSERVER_LOG_ERROR(WEBSERVER_LOG_ROOT()) << "ConfigVar::toString exception"
+            WEBSERVER_LOG_ERROR(WEBSERVER_LOG_ROOT()) << "ConfigVar::fromString exception "
                 << e.what() << " convert: string to " << TypeToName<T>()
                 << " name=" << m_name
                 << " - " << val;
@@ -402,7 +401,7 @@ public:
     /**
      * @brief 返回参数值的类型名称(typeinfo)
      */
-    std::string getTypeName() const override { return TypeToName<T>(); }
+    std::string getTypeName() const override { return TypeToName<T>();}
 
     /**
      * @brief 添加变化回调函数

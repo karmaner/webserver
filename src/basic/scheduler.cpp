@@ -134,7 +134,7 @@ void Scheduler::setThis() {
 }
 
 void Scheduler::run() {
-    WEBSERVER_LOG_INFO(g_logger) << "run";
+    WEBSERVER_LOG_DEBUG(g_logger) << m_name << " run";
     set_hook_enable(true);
     setThis();
     if(webserver::GetThreadId() != m_rootThread) {

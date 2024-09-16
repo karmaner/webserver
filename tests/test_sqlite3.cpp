@@ -24,7 +24,7 @@ void test_batch(webserver::SQLite3::ptr db) {
     WEBSERVER_LOG_INFO(g_logger) << "used: " << (ts2 - ts) / 1000.0 << "s batch insert n=" << n;
 }
 
-int main(int argc, char** argv) {
+int main(int argc, char* argv[]) {
     const std::string dbname = "test.db";
     auto db = webserver::SQLite3::Create(dbname, webserver::SQLite3::READWRITE);
     if(!db) {

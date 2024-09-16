@@ -1,6 +1,5 @@
-#pragma once
 #ifndef __SRC_BASIC_URI_H__
-#define __SRC_SASIC_URI_H__
+#define __SRC_BASIC_URI_H__
 
 #include <memory>
 #include <string>
@@ -10,10 +9,10 @@
 namespace webserver {
 
 /*
-     foo://user@sylar.com:8042/over/there?name=ferret#nose
-       \_/   \______________/\_________/ \_________/ \__/
+    foo://user@webserver.com:8042/over/there?name=ferret#nose
+    \_/   \______________/\_________/ \_________/ \__/
         |           |            |            |        |
-     scheme     authority       path        query   fragment
+    scheme     authority       path        query   fragment
 */
 
 /**

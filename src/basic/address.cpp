@@ -3,6 +3,7 @@
 #include <sstream>
 #include <netdb.h>
 #include <ifaddrs.h>
+#include <stddef.h>
 
 #include "endian.h"
 
@@ -37,9 +38,9 @@ IPAddress::ptr Address::LookupAnyIPAddress(const std::string& host,
                                 int family, int type, int protocol) {
     std::vector<Address::ptr> result;
     if(Lookup(result, host, family, type, protocol)) {
-        // for(auto& i : result) {
-        //     std::cout << i->toString() << std::endl;
-        // }
+        //for(auto& i : result) {
+        //    std::cout << i->toString() << std::endl;
+        //}
         for(auto& i : result) {
             IPAddress::ptr v = std::dynamic_pointer_cast<IPAddress>(i);
             if(v) {
@@ -70,6 +71,7 @@ bool Address::Lookup(std::vector<Address::ptr>& result, const std::string& host,
     if(!host.empty() && host[0] == '[') {
         const char* endipv6 = (const char*)memchr(host.c_str() + 1, ']', host.size() - 1);
         if(endipv6) {
+            //TODO check out of range
             if(*(endipv6 + 1) == ':') {
                 service = endipv6 + 2;
             }
@@ -176,7 +178,7 @@ bool Address::GetInterfaceAddresses(std::vector<std::pair<Address::ptr, uint32_t
     }
 
     std::multimap<std::string
-            ,std::pair<Address::ptr, uint32_t> > results;
+          ,std::pair<Address::ptr, uint32_t> > results;
 
     if(!GetInterfaceAddresses(results, family)) {
         return false;
@@ -309,9 +311,9 @@ socklen_t IPv4Address::getAddrLen() const {
 std::ostream& IPv4Address::insert(std::ostream& os) const {
     uint32_t addr = byteswapOnLittleEndian(m_addr.sin_addr.s_addr);
     os << ((addr >> 24) & 0xff) << "."
-        << ((addr >> 16) & 0xff) << "."
-        << ((addr >> 8) & 0xff) << "."
-        << (addr & 0xff);
+       << ((addr >> 16) & 0xff) << "."
+       << ((addr >> 8) & 0xff) << "."
+       << (addr & 0xff);
     os << ":" << byteswapOnLittleEndian(m_addr.sin_port);
     return os;
 }
@@ -359,7 +361,7 @@ IPv6Address::ptr IPv6Address::Create(const char* address, uint16_t port) {
     rt->m_addr.sin6_port = byteswapOnLittleEndian(port);
     int result = inet_pton(AF_INET6, address, &rt->m_addr.sin6_addr);
     if(result <= 0) {
-        WEBSERVER_LOG_ERROR(g_logger) << "IPv6Address::Create(" << address << ", "
+        WEBSERVER_LOG_DEBUG(g_logger) << "IPv6Address::Create(" << address << ", "
                 << port << ") rt=" << result << " errno=" << errno
                 << " errstr=" << strerror(errno);
         return nullptr;

@@ -64,7 +64,7 @@ void test_sock() {
     WEBSERVER_LOG_INFO(g_logger) << buff;
 }
 
-int main(int argc, char** argv) {
+int main(int argc, char* argv[]) {
     //test_sleep();
     webserver::IOManager iom;
     iom.schedule(test_sock);

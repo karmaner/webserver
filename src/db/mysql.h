@@ -8,6 +8,7 @@
 #include <vector>
 #include "src/basic/mutex.h"
 #include "db.h"
+#include "src/basic/singleton.h"
 
 namespace webserver {
 
@@ -133,7 +134,7 @@ private:
 
 class MySQLManager;
 class MySQL : public IDB
-              ,public std::enable_shared_from_this<MySQL> {
+                ,public std::enable_shared_from_this<MySQL> {
 friend class MySQLManager;
 public:
     typedef std::shared_ptr<MySQL> ptr;
@@ -304,6 +305,8 @@ private:
     std::map<std::string, std::map<std::string, std::string> > m_dbDefines;
 };
 
+typedef webserver::Singleton<MySQLManager> MySQLMgr;
+
 namespace {
 
 template<size_t N, typename... Args>
@@ -355,18 +358,18 @@ struct MySQLBinder<N, Head, Tail...> {
     }
 };
 
-#define XX(type, type2) \
-template<size_t N, typename... Tail> \
-struct MySQLBinder<N, type, Tail...> { \
-    static int Bind(MySQLStmt::ptr stmt \
-                    , type2 value \
-                    , Tail&... tail) { \
-        int rt = stmt->bind(N, value); \
-        if(rt != 0) { \
-            return rt; \
-        } \
-        return MySQLBinder<N + 1, Tail...>::Bind(stmt, tail...); \
-    } \
+#define XX(type, type2)                                         \
+template<size_t N, typename... Tail>                            \
+struct MySQLBinder<N, type, Tail...> {                          \
+    static int Bind(MySQLStmt::ptr stmt                         \
+                    , type2 value                               \
+                    , Tail&... tail) {                          \
+        int rt = stmt->bind(N, value);                          \
+        if(rt != 0) {                                           \
+            return rt;                                          \
+        }                                                       \
+        return MySQLBinder<N + 1, Tail...>::Bind(stmt, tail...);\
+    }                                                           \
 };
 
 //template<size_t N, typename... Tail>

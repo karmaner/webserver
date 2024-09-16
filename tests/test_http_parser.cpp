@@ -54,7 +54,7 @@ void test_response() {
     WEBSERVER_LOG_INFO(g_logger) << tmp;
 }
 
-int main(int argc, char** argv) {
+int main(int argc, char* argv[]) {
     test_request();
     WEBSERVER_LOG_INFO(g_logger) << "--------------";
     test_response();

@@ -20,7 +20,7 @@ struct A {
 
 A a;
 
-int main(int argc, char** argv) {
+int main(int argc, char* argv[]) {
     std::cout << "argc=" << argc << std::endl;
     webserver::EnvMgr::GetInstance()->addHelp("s", "start with the terminal");
     webserver::EnvMgr::GetInstance()->addHelp("d", "run as daemon");

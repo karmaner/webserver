@@ -1,5 +1,4 @@
 #include "src/application/application.h"
-
 #include <stdlib.h>
 #include <time.h>
 

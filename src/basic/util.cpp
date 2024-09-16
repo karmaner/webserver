@@ -6,9 +6,9 @@
 #include <string.h>
 #include <sys/stat.h>
 #include <sys/types.h>
-#include <signal.h>
 #include <arpa/inet.h>
 #include <ifaddrs.h>
+#include <signal.h>
 
 #include "log.h"
 #include "fiber.h"
@@ -794,6 +794,5 @@ std::string PBToJsonString(const google::protobuf::Message& message) {
     serialize_message(message, jnode);
     return webserver::JsonUtil::ToString(jnode);
 }
-
 
 }

@@ -1,5 +1,5 @@
-#ifndef __SRC_BASIC_SOCKET_STREAM_H__
-#define __SRC_BASIC_SOCKET_STREAM_H__
+#ifndef __SRC_SOCKET_STREAM_H__
+#define __SRC_SOCKET_STREAM_H__
 
 #include "src/basic/stream.h"
 #include "src/basic/socket.h"
@@ -11,6 +11,7 @@ namespace webserver {
 class SocketStream : public Stream {
 public:
     typedef std::shared_ptr<SocketStream> ptr;
+
     SocketStream(Socket::ptr sock, bool owner = true);
     ~SocketStream();
 

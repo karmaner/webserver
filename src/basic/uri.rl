@@ -53,14 +53,14 @@ namespace webserver {
     h16 = xdigit{1,4};
     ls32 = (h16 ":" h16) | IPv4address;
     IPv6address = (                         (h16 ":"){6} ls32) |
-                  (                    "::" (h16 ":"){5} ls32) |
-                  ((             h16)? "::" (h16 ":"){4} ls32) |
-                  (((h16 ":"){1} h16)? "::" (h16 ":"){3} ls32) |
-                  (((h16 ":"){2} h16)? "::" (h16 ":"){2} ls32) |
-                  (((h16 ":"){3} h16)? "::" (h16 ":"){1} ls32) |
-                  (((h16 ":"){4} h16)? "::"              ls32) |
-                  (((h16 ":"){5} h16)? "::"              h16 ) |
-                  (((h16 ":"){6} h16)? "::"                  );
+                    (                    "::" (h16 ":"){5} ls32) |
+                    ((             h16)? "::" (h16 ":"){4} ls32) |
+                    (((h16 ":"){1} h16)? "::" (h16 ":"){3} ls32) |
+                    (((h16 ":"){2} h16)? "::" (h16 ":"){2} ls32) |
+                    (((h16 ":"){3} h16)? "::" (h16 ":"){1} ls32) |
+                    (((h16 ":"){4} h16)? "::"              ls32) |
+                    (((h16 ":"){5} h16)? "::"              h16 ) |
+                    (((h16 ":"){6} h16)? "::"                  );
     IPvFuture = "v" xdigit+ "." (unreserved | sub_delims | ":")+;
     IP_literal = "[" (IPv6address | IPvFuture) "]";
     reg_name = (unreserved | pct_encoded | sub_delims)*;
@@ -176,7 +176,7 @@ int32_t Uri::getPort() const {
         return m_port;
     }
     if(m_scheme == "http"
-            || m_scheme == "ws") {
+        || m_scheme == "ws") {
         return 80;
     } else if(m_scheme == "https"
             || m_scheme == "wss") {
@@ -187,15 +187,15 @@ int32_t Uri::getPort() const {
 
 std::ostream& Uri::dump(std::ostream& os) const {
     os << m_scheme << "://"
-       << m_userinfo
-       << (m_userinfo.empty() ? "" : "@")
-       << m_host
-       << (isDefaultPort() ? "" : ":" + std::to_string(m_port))
-       << getPath()
-       << (m_query.empty() ? "" : "?")
-       << m_query
-       << (m_fragment.empty() ? "" : "#")
-       << m_fragment;
+        << m_userinfo
+        << (m_userinfo.empty() ? "" : "@")
+        << m_host
+        << (isDefaultPort() ? "" : ":" + std::to_string(m_port))
+        << getPath()
+        << (m_query.empty() ? "" : "?")
+        << m_query
+        << (m_fragment.empty() ? "" : "#")
+        << m_fragment;
     return os;
 }
 

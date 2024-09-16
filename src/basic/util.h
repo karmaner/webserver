@@ -16,6 +16,7 @@
 #include <iostream>
 #include <boost/lexical_cast.hpp>
 #include <google/protobuf/message.h>
+
 #include "src/util/hash_util.h"
 #include "src/util/json_util.h"
 #include "src/util/crypto_util.h"
@@ -220,6 +221,7 @@ public:
 
     static std::string WStringToString(const std::wstring& ws);
     static std::wstring StringToWString(const std::string& s);
+
 };
 
 std::string GetHostName();
@@ -247,7 +249,6 @@ std::string Join(Iter begin, Iter end, const std::string& tag) {
     }
     return ss.str();
 }
-
 
 }
 

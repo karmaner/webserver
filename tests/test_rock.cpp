@@ -28,7 +28,7 @@ void run() {
     }, true);
 }
 
-int main(int argc, char** argv) {
+int main(int argc, char* argv[]) {
     webserver::IOManager iom(1);
     iom.schedule(run);
     return 0;

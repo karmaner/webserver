@@ -6,12 +6,17 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <stdint.h>
-#include <stdint.h>
 #include <time.h>
 #include <unistd.h>
 
 namespace webserver {
+    /**
+     * @brief 当前线程是否hook
+     */
     bool is_hook_enable();
+    /**
+     * @brief 设置当前线程的hook状态
+     */
     void set_hook_enable(bool flag);
 }
 

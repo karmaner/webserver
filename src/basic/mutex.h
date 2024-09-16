@@ -9,7 +9,6 @@
 #include <stdint.h>
 #include <atomic>
 #include <list>
-#include <string>
 
 #include "noncopyable.h"
 #include "fiber.h"
@@ -264,7 +263,7 @@ public:
 /**
  * @brief 读写互斥量
  */
-class RWMutex : Noncopyable {
+class RWMutex : Noncopyable{
 public:
 
     /// 局部读锁
@@ -436,7 +435,6 @@ public:
     bool tryWait();
     void wait();
     void notify();
-    void notifyAll();
 
     size_t getConcurrency() const { return m_concurrency;}
     void reset() { m_concurrency = 0;}
@@ -448,6 +446,6 @@ private:
 
 
 
-} // end of namespace
+}
 
 #endif

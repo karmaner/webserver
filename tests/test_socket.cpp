@@ -97,7 +97,7 @@ void test2() {
 }
 
 
-int main(int argc, char** argv) {
+int main(int argc, char* argv[]) {
     webserver::IOManager iom;
     // iom.schedule(&test_socket);
     iom.schedule(&test2);

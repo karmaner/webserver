@@ -32,7 +32,7 @@ void fun3() {
     }
 }
 
-int main(int argc, char** argv) {
+int main(int argc, char* argv[]) {
     WEBSERVER_LOG_INFO(g_logger) << "thread test begin";
     YAML::Node root = YAML::LoadFile("/home/karmaner/myRepo/webserver/bin/conf/log2.yml");
     webserver::Config::LoadFromYaml(root);

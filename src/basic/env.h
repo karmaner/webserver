@@ -2,10 +2,9 @@
 #define __SRC_BASIC_ENV_H__
 
 #include "singleton.h"
-#include "thread.h"
+#include "mutex.h"
 #include <map>
 #include <vector>
-#include <string>
 
 namespace webserver {
 
@@ -32,8 +31,6 @@ public:
     std::string getAbsolutePath(const std::string& path) const;
     std::string getAbsoluteWorkPath(const std::string& path) const;
     std::string getConfigPath();
-
-
 private:
     RWMutexType m_mutex;
     std::map<std::string, std::string> m_args;

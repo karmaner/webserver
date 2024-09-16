@@ -1,5 +1,5 @@
-#ifndef __SRC_MODULE_H__
-#define __SRC_MODULE_H__
+#ifndef __SRC_BASIC_MODULE_H__
+#define __SRC_BASIC_MODULE_H__
 
 #include "src/basic/stream.h"
 #include "src/basic/singleton.h"
