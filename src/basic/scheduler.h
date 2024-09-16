@@ -10,52 +10,20 @@
 
 namespace webserver {
 
-/**
- * @brief 协程调度器
- * @details 封装的是N-M的协程调度器
- *          内部有一个线程池,支持协程在线程池里面切换
- */
 class Scheduler {
 public:
     typedef std::shared_ptr<Scheduler> ptr;
     typedef Mutex MutexType;
 
-    /**
-     * @brief 构造函数
-     * @param[in] threads 线程数量
-     * @param[in] use_caller 是否使用当前调用线程
-     * @param[in] name 协程调度器名称
-     */
     Scheduler(size_t threads = 1, bool use_caller = true, const std::string& name = "");
 
-    /**
-     * @brief 析构函数
-     */
     virtual ~Scheduler();
 
-    /**
-     * @brief 返回协程调度器名称
-     */
     const std::string& getName() const { return m_name;}
-
-    /**
-     * @brief 返回当前协程调度器
-     */
     static Scheduler* GetThis();
-
-    /**
-     * @brief 返回当前协程调度器的调度协程
-     */
     static Fiber* GetMainFiber();
-
-    /**
-     * @brief 启动协程调度器
-     */
+    
     void start();
-
-    /**
-     * @brief 停止协程调度器
-     */
     void stop();
 
     /**

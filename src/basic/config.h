@@ -14,7 +14,7 @@
 #include <unordered_set>
 #include <functional>
 
-#include "thread.h"
+#include "mutex.h"
 #include "log.h"
 #include "util.h"
 

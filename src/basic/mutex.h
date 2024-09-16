@@ -1,7 +1,6 @@
 #ifndef __SRC_BASIC_MUTEX_H__
 #define __SRC_BASIC_MUTEX_H__
 
-#include <thread>
 #include <functional>
 #include <memory>
 #include <pthread.h>

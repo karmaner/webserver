@@ -3,6 +3,7 @@
 
 #include "singleton.h"
 #include "mutex.h"
+#include <string>
 #include <map>
 #include <vector>
 
