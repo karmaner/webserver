@@ -10,9 +10,12 @@
 #include "src/basic/log.h"
 #include "src/basic/module.h"
 #include "src/basic/worker.h"
+#include "src/rock/rock_stream.h"
 #include "src/http/ws_server.h"
 #include "src/rock/rock_server.h"
 #include "src/ns/name_server_module.h"
+#include "src/db/fox_thread.h"
+#include "src/db/redis.h"
 
 namespace webserver {
 

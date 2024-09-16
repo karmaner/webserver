@@ -133,7 +133,7 @@ private:
 
 class MySQLManager;
 class MySQL : public IDB
-                ,public std::enable_shared_from_this<MySQL> {
+              ,public std::enable_shared_from_this<MySQL> {
 friend class MySQLManager;
 public:
     typedef std::shared_ptr<MySQL> ptr;

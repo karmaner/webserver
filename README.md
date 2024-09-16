@@ -55,8 +55,27 @@ cmake
 >5. 提供 LoadFromYaml(const YAML::Node& root) 函数给外界使用YAML::Node初始化配置模块。
 >6. 提供 LoadFromConfDir(const std::string& path, bool force = false) 给外界加载path文件夹里面的配置文件。
 >7. 值得注意的是 Config 所有函数和变量均为静态的
-> 
->
+
+Config --> Yaml
+
+yamp-cpp: github 搜
+mkdir build && cd build && cmake .. && make install
+
+```cpp
+YAML::Node node = YAML::LoadFile(filename);
+node.IsMap()
+for(auto it = node.begin();
+    it != node.end(); ++it) {
+        it->first, it->second
+}
+
+node.IsSequence()
+for(size_t i = 0; i < node.size(); ++i) {
+    
+}
+
+node.IsScalar();
+```
 
 ## 线程库
 线程库

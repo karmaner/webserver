@@ -21,10 +21,9 @@ struct SQLite3Binder {
     static int Bind(std::shared_ptr<SQLite3Stmt> stmt) { return SQLITE_OK; }
 };
 }
-
 class SQLite3Manager;
 class SQLite3 : public IDB
-                , public std::enable_shared_from_this<SQLite3> {
+                ,public std::enable_shared_from_this<SQLite3> {
 friend class SQLite3Manager;
 public:
     enum Flags {

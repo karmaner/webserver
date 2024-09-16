@@ -5,9 +5,9 @@ namespace webserver {
 namespace http {
 
 HttpMethod StringToHttpMethod(const std::string& m) {
-#define XX(num, name, string) \
-    if(strcmp(#string, m.c_str()) == 0) { \
-        return HttpMethod::name; \
+#define XX(num, name, string)                               \
+    if(strcmp(#string, m.c_str()) == 0) {                   \
+        return HttpMethod::name;                            \
     }
     HTTP_METHOD_MAP(XX);
 #undef XX
@@ -15,9 +15,9 @@ HttpMethod StringToHttpMethod(const std::string& m) {
 }
 
 HttpMethod CharsToHttpMethod(const char* m) {
-#define XX(num, name, string) \
-    if(strncmp(#string, m, strlen(#string)) == 0) { \
-        return HttpMethod::name; \
+#define XX(num, name, string)                               \
+    if(strncmp(#string, m, strlen(#string)) == 0) {         \
+        return HttpMethod::name;                            \
     }
     HTTP_METHOD_MAP(XX);
 #undef XX
@@ -40,8 +40,8 @@ const char* HttpMethodToString(const HttpMethod& m) {
 
 const char* HttpStatusToString(const HttpStatus& s) {
     switch(s) {
-#define XX(code, name, msg) \
-        case HttpStatus::name: \
+#define XX(code, name, msg)                             \
+        case HttpStatus::name:                          \
             return #msg;
         HTTP_STATUS_MAP(XX);
 #undef XX
@@ -159,7 +159,7 @@ std::string HttpRequest::toString() const {
 
 std::ostream& HttpRequest::dump(std::ostream& os) const {
     //GET /uri HTTP/1.1
-    //Host: wwww.bilibili.com
+    //Host: wwww.webserver.top
     //
     //
     os << HttpMethodToString(m_method) << " "
@@ -192,7 +192,6 @@ std::ostream& HttpRequest::dump(std::ostream& os) const {
     return os;
 }
 
-
 void HttpRequest::init() {
     std::string conn = getHeader("connection");
     if(!conn.empty()) {
@@ -215,22 +214,22 @@ void HttpRequest::initQueryParam() {
         return;
     }
 
-#define PARSE_PARAM(str, m, flag, trim) \
-    size_t pos = 0; \
-    do { \
-        size_t last = pos; \
-        pos = str.find('=', pos); \
-        if(pos == std::string::npos) { \
-            break; \
-        } \
-        size_t key = pos; \
-        pos = str.find(flag, pos); \
-        m.insert(std::make_pair(trim(str.substr(last, key - last)), \
+#define PARSE_PARAM(str, m, flag, trim)             \
+    size_t pos = 0;                                 \
+    do {                                            \
+        size_t last = pos;                          \
+        pos = str.find('=', pos);                   \
+        if(pos == std::string::npos) {              \
+            break;                                  \
+        }                                           \
+        size_t key = pos;                           \
+        pos = str.find(flag, pos);                  \
+        m.insert(std::make_pair(trim(str.substr(last, key - last)),                         \
                     webserver::StringUtil::UrlDecode(str.substr(key + 1, pos - key - 1)))); \
-        if(pos == std::string::npos) { \
-            break; \
-        } \
-        ++pos; \
+        if(pos == std::string::npos) {                                                      \
+            break;                                                                          \
+        }                                                                                   \
+        ++pos;                                                                              \
     } while(true);
 
     PARSE_PARAM(m_query, m_params, '&',);
@@ -309,6 +308,7 @@ void HttpResponse::setCookie(const std::string& key, const std::string& val,
     m_cookies.push_back(ss.str());
 }
 
+
 std::string HttpResponse::toString() const {
     std::stringstream ss;
     dump(ss);
@@ -338,7 +338,6 @@ std::ostream& HttpResponse::dump(std::ostream& os) const {
     if(!m_websocket) {
         os << "connection: " << (m_close ? "close" : "keep-alive") << "\r\n";
     }
-
     if(!m_body.empty()) {
         os << "content-length: " << m_body.size() << "\r\n\r\n"
             << m_body;

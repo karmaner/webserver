@@ -3,8 +3,8 @@
 
 #include <memory>
 #include <string>
-#include <vector>
 #include <map>
+#include <vector>
 #include <iostream>
 #include <sstream>
 #include <boost/lexical_cast.hpp>
@@ -537,7 +537,6 @@ public:
      */
     std::string toString() const;
 
-    
     void init();
     void initParam();
     void initQueryParam();
@@ -723,7 +722,6 @@ public:
      */
     std::string toString() const;
 
-    
     void setRedirect(const std::string& uri);
     void setCookie(const std::string& key, const std::string& val,
                     time_t expired = 0, const std::string& path = "",
@@ -743,6 +741,7 @@ private:
     std::string m_reason;
     /// 响应头部MAP
     MapType m_headers;
+
     std::vector<std::string> m_cookies;
 };
 

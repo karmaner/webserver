@@ -52,7 +52,7 @@ namespace {
 }
 
 static MYSQL* mysql_init(std::map<std::string, std::string>& params,
-                         const int& timeout) {
+                            const int& timeout) {
 
     static thread_local MySQLThreadIniter s_thread_initer;
 
@@ -76,10 +76,10 @@ static MYSQL* mysql_init(std::map<std::string, std::string>& params,
     std::string dbname = webserver::GetParamValue<std::string>(params, "dbname");
 
     if(mysql_real_connect(mysql, host.c_str(), user.c_str(), passwd.c_str()
-                          ,dbname.c_str(), port, NULL, 0) == nullptr) {
+                            ,dbname.c_str(), port, NULL, 0) == nullptr) {
         WEBSERVER_LOG_ERROR(g_logger) << "mysql_real_connect(" << host
-                                  << ", " << port << ", " << dbname
-                                  << ") error: " << mysql_error(mysql);
+                                    << ", " << port << ", " << dbname
+                                    << ") error: " << mysql_error(mysql);
         mysql_close(mysql);
         return nullptr;
     }

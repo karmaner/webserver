@@ -266,9 +266,9 @@ Bitmap Bitmap::operator| (const Bitmap& b) {
 std::string Bitmap::toString() const {
     std::stringstream ss;
     ss << "[Bitmap compress=" << m_compress
-        << " size=" << m_size
-        << " data_size=" << m_dataSize
-        << " data=";
+       << " size=" << m_size
+       << " data_size=" << m_dataSize
+       << " data=";
     for(size_t i = 0; i < m_dataSize; ++i) {
         if(i) {
             ss << ",";

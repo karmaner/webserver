@@ -35,7 +35,7 @@ public:
     typedef std::function<void(const K&, const V&)> prune_callback;
 
     TimedCache(size_t max_size = 0, size_t elasticity = 0
-                ,CacheStatus* status = nullptr)
+                , CacheStatus* status = nullptr)
         :m_maxSize(max_size)
         ,m_elasticity(elasticity)
         ,m_status(status) {

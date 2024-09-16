@@ -40,10 +40,10 @@ std::string EMailEntity::toString() const {
 }
 
 EMail::ptr EMail::Create(const std::string& from_address, const std::string& from_passwd
-                            ,const std::string& title, const std::string& body
-                            ,const std::vector<std::string>& to_address
-                            ,const std::vector<std::string>& cc_address
-                            ,const std::vector<std::string>& bcc_address) {
+                         ,const std::string& title, const std::string& body
+                         ,const std::vector<std::string>& to_address
+                         ,const std::vector<std::string>& cc_address
+                         ,const std::vector<std::string>& bcc_address) {
     EMail::ptr email(new EMail);
     email->setFromEMailAddress(from_address);
     email->setFromEMailPasswd(from_passwd);

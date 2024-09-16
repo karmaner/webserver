@@ -49,7 +49,7 @@ public:
     typedef std::set<value_type, ItemTimeOp> set_type;
 
     TimedLruCache(size_t max_size = 0, size_t elasticity = 0
-                    ,CacheStatus* status = nullptr)
+                  ,CacheStatus* status = nullptr)
         :m_maxSize(max_size)
         ,m_elasticity(elasticity)
         ,m_status(status) {
@@ -166,7 +166,7 @@ public:
     std::string toStatusString() {
         std::stringstream ss;
         ss << (m_status ? m_status->toString() : "(no status)")
-            << " total=" << size();
+           << " total=" << size();
         return ss.str();
     }
 

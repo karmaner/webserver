@@ -28,7 +28,7 @@ HttpRequest::ptr WSSession::handleShake() {
             WEBSERVER_LOG_INFO(g_logger) << "http header Upgrade != websocket";
             break;
         }
-        if(strcasecmp(req->getHeader("Connection").c_str(),"Upgrade")) {
+        if(strcasecmp(req->getHeader("Connection").c_str(), "Upgrade")) {
             WEBSERVER_LOG_INFO(g_logger) << "http header Connection != Upgrade";
             break;
         }
@@ -44,6 +44,7 @@ HttpRequest::ptr WSSession::handleShake() {
 
         std::string v = key + "258EAFA5-E914-47DA-95CA-C5AB0DC85B11";
         v = webserver::base64encode(webserver::sha1sum(v));
+        req->setWebsocket(true);
 
         auto rsp = req->createResponse();
         rsp->setStatus(HttpStatus::SWITCHING_PROTOCOLS);
@@ -72,13 +73,13 @@ WSFrameMessage::WSFrameMessage(int opcode, const std::string& data)
 std::string WSFrameHead::toString() const {
     std::stringstream ss;
     ss << "[WSFrameHead fin=" << fin
-       << " rsv1=" << rsv1
-       << " rsv2=" << rsv2
-       << " rsv3=" << rsv3
-       << " opcode=" << opcode
-       << " mask=" << mask
-       << " payload=" << payload
-       << "]";
+        << " rsv1=" << rsv1
+        << " rsv2=" << rsv2
+        << " rsv3=" << rsv3
+        << " opcode=" << opcode
+        << " mask=" << mask
+        << " payload=" << payload
+        << "]";
     return ss.str();
 }
 
@@ -194,7 +195,7 @@ int32_t WSSendMessage(Stream* stream, WSFrameMessage::ptr msg, bool client, bool
         } else {
             ws_head.payload = 127;
         }
-
+        
         if(stream->writeFixSize(&ws_head, sizeof(ws_head)) <= 0) {
             break;
         }

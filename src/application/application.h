@@ -1,5 +1,5 @@
-#ifndef __SRC_APPLICATION_H__
-#define __SRC_APPLICATION_H__
+#ifndef __SRC_APPLICATION_APPLICATION_H__
+#define __SRC_APPLICATION_APPLICATION_H__
 
 #include "src/http/http_server.h"
 #include "src/streams/service_discovery.h"
@@ -39,4 +39,3 @@ private:
 }
 
 #endif
-

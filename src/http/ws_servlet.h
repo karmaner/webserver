@@ -1,8 +1,8 @@
-#ifndef __HTTP_WS_SERVLET_H__
-#define __HTTP_WS_SERVLET_H__
+#ifndef __SRC_HTTP_WS_SERVLET_H__
+#define __SRC_HTTP_WS_SERVLET_H__
 
 #include "ws_session.h"
-#include "src/basic/mutex.h"
+#include "src/basic/thread.h"
 #include "servlet.h"
 
 namespace webserver {
@@ -17,7 +17,7 @@ public:
     virtual ~WSServlet() {}
 
     virtual int32_t handle(webserver::http::HttpRequest::ptr request
-                    , webserver::http::HttpResponse::ptr response
+                       , webserver::http::HttpResponse::ptr response
                     , webserver::http::HttpSession::ptr session) override {
         return 0;
     }

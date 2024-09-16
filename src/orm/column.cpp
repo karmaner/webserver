@@ -8,11 +8,11 @@ namespace orm {
 static webserver::Logger::ptr g_logger = WEBSERVER_LOG_NAME("orm");
 
 Column::Type Column::ParseType(const std::string& v) {
-#define XX(a, b, c) \
-    if(#b == v) { \
-        return a; \
-    } else if(#c == v) { \
-        return a; \
+#define XX(a, b, c)         \
+    if(#b == v) {           \
+        return a;           \
+    } else if(#c == v) {    \
+        return a;           \
     }
 
     XX(TYPE_INT8, int8_t, int8);
@@ -34,9 +34,9 @@ Column::Type Column::ParseType(const std::string& v) {
 }
 
 std::string Column::TypeToString(Type type) {
-#define XX(a, b) \
-    if(a == type) { \
-        return #b; \
+#define XX(a, b)            \
+    if(a == type) {         \
+        return #b;          \
     }
 
     XX(TYPE_INT8, int8_t);
@@ -57,9 +57,9 @@ std::string Column::TypeToString(Type type) {
 }
 
 std::string Column::getSQLite3TypeString() {
-#define XX(a, b) \
-    if(a == m_dtype) {\
-        return #b; \
+#define XX(a, b)        \
+    if(a == m_dtype) {  \
+        return #b;      \
     }
 
     XX(TYPE_INT8, INTEGER);
@@ -80,9 +80,9 @@ std::string Column::getSQLite3TypeString() {
 }
 
 std::string Column::getMySQLTypeString() {
-#define XX(a, b) \
-    if(a == m_dtype) {\
-        return #b; \
+#define XX(a, b)        \
+    if(a == m_dtype) {  \
+        return #b;      \
     }
 
     XX(TYPE_INT8, tinyint);
@@ -105,9 +105,9 @@ std::string Column::getMySQLTypeString() {
 }
 
 std::string Column::getBindString() {
-#define XX(a, b) \
-    if(a == m_dtype) { \
-        return "bind" #b; \
+#define XX(a, b)            \
+    if(a == m_dtype) {      \
+        return "bind" #b;   \
     }
     XX(TYPE_INT8, Int8);
     XX(TYPE_UINT8, Uint8);
@@ -127,9 +127,9 @@ std::string Column::getBindString() {
 }
 
 std::string Column::getGetString() {
-#define XX(a, b) \
-    if(a == m_dtype) { \
-        return "get" #b; \
+#define XX(a, b)            \
+    if(a == m_dtype) {      \
+        return "get" #b;    \
     }
     XX(TYPE_INT8, Int8);
     XX(TYPE_UINT8, Uint8);
@@ -152,7 +152,7 @@ std::string Column::getDefaultValueString() {
     if(m_default.empty()) {
         return "";
     }
-    if(m_dtype <= TYPE_DOUBLE) {
+    if(m_dtype <= TYPE_UINT64) {
         return m_default;
     }
     if(m_dtype <= TYPE_BLOB) {

@@ -21,7 +21,7 @@ int32_t FunctionWSServlet::onConnect(webserver::http::HttpRequest::ptr header
 }
 
 int32_t FunctionWSServlet::onClose(webserver::http::HttpRequest::ptr header
-                                        ,webserver::http::WSSession::ptr session) {
+                                    ,webserver::http::WSSession::ptr session) {
     if(m_onClose) {
         return m_onClose(header, session);
     }
