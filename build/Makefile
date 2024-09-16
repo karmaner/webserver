@@ -912,6 +912,54 @@ src/ds/bitmap.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/ds/bitmap.cpp.s
 .PHONY : src/ds/bitmap.cpp.s
 
+src/ds/roaring.o: src/ds/roaring.c.o
+.PHONY : src/ds/roaring.o
+
+# target to build an object file
+src/ds/roaring.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/ds/roaring.c.o
+.PHONY : src/ds/roaring.c.o
+
+src/ds/roaring.i: src/ds/roaring.c.i
+.PHONY : src/ds/roaring.i
+
+# target to preprocess a source file
+src/ds/roaring.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/ds/roaring.c.i
+.PHONY : src/ds/roaring.c.i
+
+src/ds/roaring.s: src/ds/roaring.c.s
+.PHONY : src/ds/roaring.s
+
+# target to generate assembly for a file
+src/ds/roaring.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/ds/roaring.c.s
+.PHONY : src/ds/roaring.c.s
+
+src/ds/roaring_bitmap.o: src/ds/roaring_bitmap.cpp.o
+.PHONY : src/ds/roaring_bitmap.o
+
+# target to build an object file
+src/ds/roaring_bitmap.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/ds/roaring_bitmap.cpp.o
+.PHONY : src/ds/roaring_bitmap.cpp.o
+
+src/ds/roaring_bitmap.i: src/ds/roaring_bitmap.cpp.i
+.PHONY : src/ds/roaring_bitmap.i
+
+# target to preprocess a source file
+src/ds/roaring_bitmap.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/ds/roaring_bitmap.cpp.i
+.PHONY : src/ds/roaring_bitmap.cpp.i
+
+src/ds/roaring_bitmap.s: src/ds/roaring_bitmap.cpp.s
+.PHONY : src/ds/roaring_bitmap.s
+
+# target to generate assembly for a file
+src/ds/roaring_bitmap.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/ds/roaring_bitmap.cpp.s
+.PHONY : src/ds/roaring_bitmap.cpp.s
+
 src/email/email.o: src/email/email.cpp.o
 .PHONY : src/email/email.o
 
@@ -1905,6 +1953,12 @@ help:
 	@echo "... src/ds/bitmap.o"
 	@echo "... src/ds/bitmap.i"
 	@echo "... src/ds/bitmap.s"
+	@echo "... src/ds/roaring.o"
+	@echo "... src/ds/roaring.i"
+	@echo "... src/ds/roaring.s"
+	@echo "... src/ds/roaring_bitmap.o"
+	@echo "... src/ds/roaring_bitmap.i"
+	@echo "... src/ds/roaring_bitmap.s"
 	@echo "... src/email/email.o"
 	@echo "... src/email/email.i"
 	@echo "... src/email/email.s"
