@@ -19,7 +19,7 @@ struct TcpServerConf {
     int timeout = 1000 * 2 * 60;
     int ssl = 0;
     std::string id;
-    /// 服务器类型，http, ws
+    /// 服务器类型，http, ws, rock
     std::string type = "http";
     std::string name;
     std::string cert_file;
@@ -92,6 +92,7 @@ public:
         node["cert_file"] = conf.cert_file;
         node["key_file"] = conf.key_file;
         node["accept_worker"] = conf.accept_worker;
+        node["io_worker"] = conf.io_worker;
         node["process_worker"] = conf.process_worker;
         node["args"] = YAML::Load(LexicalCast<std::map<std::string, std::string>
             , std::string>()(conf.args));
@@ -113,8 +114,8 @@ public:
     typedef std::shared_ptr<TcpServer> ptr;
     /**
      * @brief 构造函数
-     * @param[in] woker socket客户端工作的协程调度器
-     * @param[in] accept_woker 服务器socket执行接收socket连接的协程调度器
+     * @param[in] worker socket客户端工作的协程调度器
+     * @param[in] accept_worker 服务器socket执行接收socket连接的协程调度器
      */
     TcpServer(webserver::IOManager* worker = webserver::IOManager::GetThis()
                 ,webserver::IOManager* io_woker = webserver::IOManager::GetThis()
@@ -185,6 +186,8 @@ public:
     void setConf(const TcpServerConf& v);
 
     virtual std::string toString(const std::string& prefix = "");
+
+    std::vector<Socket::ptr> getSocks() const { return m_socks;}
 protected:
 
     /**

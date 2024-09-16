@@ -1,5 +1,5 @@
-#ifndef __SRC_BASIC_MODULE_H__
-#define __SRC_BASIC_MODULE_H__
+#ifndef __SRC_MODULE_H__
+#define __SRC_MODULE_H__
 
 #include "src/basic/stream.h"
 #include "src/basic/singleton.h"
@@ -9,7 +9,16 @@
 #include <unordered_map>
 
 namespace webserver {
-
+/**
+ * extern "C" {
+ * Module* CreateModule() {
+ *  return XX;
+ * }
+ * void DestoryModule(Module* ptr) {
+ *  delete ptr;
+ * }
+ * }
+ */
 class Module {
 public:
     enum Type {
@@ -51,6 +60,9 @@ public:
     void setFilename(const std::string& v) { m_filename = v;}
 
     uint32_t getType() const { return m_type;}
+
+    void registerService(const std::string& server_type,
+            const std::string& domain, const std::string& service);
 protected:
     std::string m_name;
     std::string m_version;
@@ -69,7 +81,7 @@ public:
     virtual bool handleRockRequest(webserver::RockRequest::ptr request
                         ,webserver::RockResponse::ptr response
                         ,webserver::RockStream::ptr stream) = 0;
-    virtual bool handleRockNotify(webserver::RockNotify::ptr request
+    virtual bool handleRockNotify(webserver::RockNotify::ptr notify
                         ,webserver::RockStream::ptr stream) = 0;
 
     virtual bool handleRequest(webserver::Message::ptr req
@@ -77,6 +89,7 @@ public:
                                 ,webserver::Stream::ptr stream);
     virtual bool handleNotify(webserver::Message::ptr notify
                                 ,webserver::Stream::ptr stream);
+
 };
 
 class ModuleManager {

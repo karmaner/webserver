@@ -36,6 +36,11 @@ public:
         return true;
     }
 
+    bool onServerReady() {
+        registerService("rock", "sylar.top", "blog");
+        return true;
+    }
+
     bool handleRockRequest(webserver::RockRequest::ptr request
                         ,webserver::RockResponse::ptr response
                         ,webserver::RockStream::ptr stream) {

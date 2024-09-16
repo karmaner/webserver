@@ -101,6 +101,7 @@ set(LIB_SRC
     src/streams/socket_stream.cpp
     src/streams/zlib_stream.cpp
     src/streams/async_socket_stream.cpp
+    src/streams/service_discovery.cpp
 
     src/db/sqlite3.cpp
     src/db/mysql.cpp
@@ -212,7 +213,7 @@ webserver_add_executable(orm "${ORM_SRCS}" webserver "${LIBS}")
 webserver_add_executable(test_mysql  "tests/test_mysql.cpp" webserver "${LIBS}")
 webserver_add_executable(test_bitmap "tests/test_bitmap.cpp" webserver "${LIBS}")
 webserver_add_executable(test_zookeeper  "tests/test_zookeeper.cpp" webserver "${LIBS}")
-
+webserver_add_executable(test_service_discovery "tests/test_service_discovery.cpp" webserver "${LIBS}")
 
 webserver_add_executable(bin_webserver "src/basic/main.cpp" webserver "${LIBS}")
 set_target_properties(bin_webserver PROPERTIES OUTPUT_NAME "webserver")

@@ -12,7 +12,7 @@ void gen_cmake(const std::string& path, const std::map<std::string, webserver::o
     ofs << "set(LIB_SRC" << std::endl;
     for(auto& i : tbs) {
         ofs << "    " << webserver::replace(i.second->getNamespace(), ".", "/")
-            << "/" << webserver::ToLower(i.second->getFilename()) << ".cc" << std::endl;
+            << "/" << webserver::ToLower(i.second->getFilename()) << ".cpp" << std::endl;
     }
     ofs << ")" << std::endl;
     ofs << "add_library(orm_data ${LIB_SRC})" << std::endl;

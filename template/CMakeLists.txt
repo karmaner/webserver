@@ -10,11 +10,6 @@ set(CMAKE_CXX_FLAGS "$ENV{CXXFLAGS} -rdynamic -O0 -ggdb -std=c++11 -Wall -Wno-de
 
 include_directories(.)
 include_directories(/apps/webserver/include)
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/webserver)
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/webserver/thirdpart)
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/webserver/thirdpart)
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/webserver/thirdpart/yaml-cpp/include)
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/webserver/thirdpart/jsoncpp-1.8.4/include)
 link_directories(/apps/webserver/lib)
 
 find_package(Boost REQUIRED)
@@ -32,7 +27,7 @@ if(OPENSSL_FOUND)
 endif()
 
 set(LIB_SRC
-        template/my_module.cc
+        template/my_module.cpp
     )
 
 #PROTOBUF_GENERATE_CPP(PB_SRCS PB_HDRS webserver/test.proto)

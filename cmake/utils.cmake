@@ -47,7 +47,7 @@ function(protobufmaker src_proto outputlist outputdir)
     get_filename_component(src_file ${src_proto} NAME_WE)
     get_filename_component(src_path ${src_proto} PATH)
 
-    set(protobuf_out ${outputdir}/${src_path}/${src_file}.pb.cpp)
+    set(protobuf_out ${outputdir}/${src_path}/${src_file}.pb.cc)
 
     #adding to the list inside a function takes special care, we cannot use list(APPEND...)
     #because the results are local scope only

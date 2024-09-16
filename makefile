@@ -5,7 +5,7 @@
 		cd build && make -j4;   \
 	else 						\
 		mkdir build; 			\
-		cd build && cdmake ..; 	\
+		cd build && cmake ..; 	\
 	fi
 
 %:

@@ -10,7 +10,7 @@ void test() {
         email->addEntity(entity);
     }
 
-    entity = webserver::EMailEntity::CreateAttach("webserver/address.cc");
+    entity = webserver::EMailEntity::CreateAttach("src/basic/address.cpp");
     if(entity) {
         email->addEntity(entity);
     }

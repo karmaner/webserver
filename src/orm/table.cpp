@@ -225,7 +225,7 @@ std::string Table::genToStringSrc(const std::string& class_name) {
 
 void Table::gen_src(const std::string& path) {
     std::string class_name = m_name + m_subfix;
-    std::string filename = path + "/" + class_name + ".cc";
+    std::string filename = path + "/" + class_name + ".cpp";
     std::ofstream ofs(filename);
 
     ofs << "#include \"" << class_name + ".h\"" << std::endl;

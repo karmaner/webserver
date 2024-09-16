@@ -28,6 +28,12 @@ static webserver::ConfigVar<std::string>::ptr g_server_pid_file =
             ,std::string("webserver.pid")
             , "server pid file");
 
+static webserver::ConfigVar<std::string>::ptr g_service_discovery_zk =
+    webserver::Config::Lookup("service_discovery.zk"
+            ,std::string("")
+            , "service discovery zookeeper");
+
+
 static webserver::ConfigVar<std::vector<TcpServerConf> >::ptr g_servers_conf
     = webserver::Config::Lookup("servers", std::vector<TcpServerConf>(), "http server config");
 
@@ -152,8 +158,14 @@ int Application::run_fiber() {
     if(has_error) {
         _exit(0);
     }
+
     webserver::WorkerMgr::GetInstance()->init();
+    FoxThreadMgr::GetInstance()->init();
+    FoxThreadMgr::GetInstance()->start();
+    RedisMgr::GetInstance();
+
     auto http_confs = g_servers_conf->getValue();
+    std::vector<TcpServer::ptr> svrs;
     for(auto& i : http_confs) {
         WEBSERVER_LOG_DEBUG(g_logger) << std::endl << LexicalCast<TcpServerConf, std::string>()(i);
 
@@ -234,7 +246,7 @@ int Application::run_fiber() {
         } else if(i.type == "nameserver") {
             server.reset(new webserver::RockServer("nameserver",
                             process_worker, io_worker, accept_worker));
-            ModuleMgr::GetInstance()->add(std::make_shared<webserver::ns::NameServerModule>()); 
+            ModuleMgr::GetInstance()->add(std::make_shared<webserver::ns::NameServerModule>());
         } else {
             WEBSERVER_LOG_ERROR(g_logger) << "invalid server type=" << i.type
                 << LexicalCast<TcpServerConf, std::string>()(i);
@@ -258,13 +270,70 @@ int Application::run_fiber() {
             }
         }
         server->setConf(i);
-        server->start();
+        //server->start();
         m_servers[i.type].push_back(server);
+        svrs.push_back(server);
+    }
+
+    if(!g_service_discovery_zk->getValue().empty()) {
+        m_serviceDiscovery.reset(new ZKServiceDiscovery(g_service_discovery_zk->getValue()));
+        m_rockSDLoadBalance.reset(new RockSDLoadBalance(m_serviceDiscovery));
+
+        std::vector<TcpServer::ptr> svrs;
+        if(!getServer("http", svrs)) {
+            m_serviceDiscovery->setSelfInfo(webserver::GetIPv4() + ":0:" + webserver::GetHostName());
+        } else {
+            std::string ip_and_port;
+            for(auto& i : svrs) {
+                auto socks = i->getSocks();
+                for(auto& s : socks) {
+                    auto addr = std::dynamic_pointer_cast<IPv4Address>(s->getLocalAddress());
+                    if(!addr) {
+                        continue;
+                    }
+                    auto str = addr->toString();
+                    if(str.find("127.0.0.1") == 0) {
+                        continue;
+                    }
+                    if(str.find("0.0.0.0") == 0) {
+                        ip_and_port = webserver::GetIPv4() + ":" + std::to_string(addr->getPort());
+                        break;
+                    } else {
+                        ip_and_port = addr->toString();
+                    }
+                }
+                if(!ip_and_port.empty()) {
+                    break;
+                }
+            }
+            m_serviceDiscovery->setSelfInfo(ip_and_port + ":" + webserver::GetHostName());
+        }
     }
 
     for(auto& i : modules) {
         i->onServerReady();
     }
+
+    for(auto& i : svrs) {
+        i->start();
+    }
+
+    if(m_rockSDLoadBalance) {
+        m_rockSDLoadBalance->start();
+    }
+
+    for(auto& i : modules) {
+        i->onServerUp();
+    }
+    //ZKServiceDiscovery::ptr m_serviceDiscovery;
+    //RockSDLoadBalance::ptr m_rockSDLoadBalance;
+    //webserver::ZKServiceDiscovery::ptr zksd(new webserver::ZKServiceDiscovery("127.0.0.1:21811"));
+    //zksd->registerServer("blog", "chat", webserver::GetIPv4() + ":8090", "xxx");
+    //zksd->queryServer("blog", "chat");
+    //zksd->setSelfInfo(webserver::GetIPv4() + ":8090");
+    //zksd->setSelfData("vvv");
+    //static RockSDLoadBalance::ptr rsdlb(new RockSDLoadBalance(zksd));
+    //rsdlb->start();
     return 0;
 }
 
