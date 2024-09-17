@@ -143,6 +143,19 @@ orm/fast:
 .PHONY : orm/fast
 
 #=============================================================================
+# Target rules for targets named test_bitmap
+
+# Build rule for target.
+test_bitmap: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_bitmap
+.PHONY : test_bitmap
+
+# fast build rule for target.
+test_bitmap/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_bitmap.dir/build.make CMakeFiles/test_bitmap.dir/build
+.PHONY : test_bitmap/fast
+
+#=============================================================================
 # Target rules for targets named bin_webserver
 
 # Build rule for target.
@@ -1824,6 +1837,30 @@ src/util/json_util.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/webserver.dir/build.make CMakeFiles/webserver.dir/src/util/json_util.cpp.s
 .PHONY : src/util/json_util.cpp.s
 
+tests/test_bitmap.o: tests/test_bitmap.cpp.o
+.PHONY : tests/test_bitmap.o
+
+# target to build an object file
+tests/test_bitmap.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_bitmap.dir/build.make CMakeFiles/test_bitmap.dir/tests/test_bitmap.cpp.o
+.PHONY : tests/test_bitmap.cpp.o
+
+tests/test_bitmap.i: tests/test_bitmap.cpp.i
+.PHONY : tests/test_bitmap.i
+
+# target to preprocess a source file
+tests/test_bitmap.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_bitmap.dir/build.make CMakeFiles/test_bitmap.dir/tests/test_bitmap.cpp.i
+.PHONY : tests/test_bitmap.cpp.i
+
+tests/test_bitmap.s: tests/test_bitmap.cpp.s
+.PHONY : tests/test_bitmap.s
+
+# target to generate assembly for a file
+tests/test_bitmap.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_bitmap.dir/build.make CMakeFiles/test_bitmap.dir/tests/test_bitmap.cpp.s
+.PHONY : tests/test_bitmap.cpp.s
+
 tests/test_module.o: tests/test_module.cpp.o
 .PHONY : tests/test_module.o
 
@@ -1859,6 +1896,7 @@ help:
 	@echo "... bin_webserver"
 	@echo "... orm"
 	@echo "... test"
+	@echo "... test_bitmap"
 	@echo "... webserver"
 	@echo "... src/application/application.o"
 	@echo "... src/application/application.i"
@@ -2067,6 +2105,9 @@ help:
 	@echo "... src/util/json_util.o"
 	@echo "... src/util/json_util.i"
 	@echo "... src/util/json_util.s"
+	@echo "... tests/test_bitmap.o"
+	@echo "... tests/test_bitmap.i"
+	@echo "... tests/test_bitmap.s"
 	@echo "... tests/test_module.o"
 	@echo "... tests/test_module.i"
 	@echo "... tests/test_module.s"

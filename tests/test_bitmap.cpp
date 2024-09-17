@@ -258,7 +258,7 @@ std::vector<webserver::ds::Bitmap::ptr> vs2;
 std::vector<webserver::ds::RoaringBitmap::ptr> vs3;
 
 int N = 1;
-int M = 250000000;
+int M = 2500;
 
 void init() {
     vs.resize(N);
