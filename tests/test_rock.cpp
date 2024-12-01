@@ -1,14 +1,14 @@
 #include "src/webserver.h"
 #include "src/rock/rock_stream.h"
 
-static webserver::Logger::ptr g_logger = WEBSERVER_LOG_ROOT();
+static webserver::Logger::ptr g_logger = LOG_ROOT();
 
 webserver::RockConnection::ptr conn(new webserver::RockConnection);
 void run() {
     conn->setAutoConnect(true);
     webserver::Address::ptr addr = webserver::Address::LookupAny("127.0.0.1:8061");
     if(!conn->connect(addr)) {
-        WEBSERVER_LOG_INFO(g_logger) << "connect " << *addr << " false";
+        LOG_INFO(g_logger) << "connect " << *addr << " false";
     }
     conn->start();
 
@@ -21,9 +21,9 @@ void run() {
 
         auto rsp = conn->request(req, 300);
         if(rsp->response) {
-            WEBSERVER_LOG_INFO(g_logger) << rsp->response->toString();
+            LOG_INFO(g_logger) << rsp->response->toString();
         } else {
-            WEBSERVER_LOG_INFO(g_logger) << "error result=" << rsp->result;
+            LOG_INFO(g_logger) << "error result=" << rsp->result;
         }
     }, true);
 }

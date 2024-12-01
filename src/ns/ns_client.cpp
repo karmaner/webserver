@@ -5,14 +5,14 @@
 namespace webserver {
 namespace ns {
 
-static webserver::Logger::ptr g_logger = WEBSERVER_LOG_NAME("system");
+static webserver::Logger::ptr g_logger = LOG_NAME("system");
 
 NSClient::NSClient() {
     m_domains.reset(new webserver::ns::NSDomainSet);
 }
 
 NSClient::~NSClient() {
-    WEBSERVER_LOG_DEBUG(g_logger) << "NSClient::~NSClient";
+    LOG_DEBUG(g_logger) << "NSClient::~NSClient";
 }
 
 const std::set<std::string>& NSClient::getQueryDomains() {
@@ -65,12 +65,12 @@ RockResult::ptr NSClient::query() {
     auto rt = request(req, 1000);
     do {
         if(!rt->response) {
-            WEBSERVER_LOG_ERROR(g_logger) << "query error result=" << rt->result;
+            LOG_ERROR(g_logger) << "query error result=" << rt->result;
             break;
         }
         auto rsp = rt->response->getAsPB<webserver::ns::QueryResponse>();
         if(!rsp) {
-            WEBSERVER_LOG_ERROR(g_logger) << "invalid data not QueryResponse";
+            LOG_ERROR(g_logger) << "invalid data not QueryResponse";
             break;
         }
 
@@ -85,7 +85,7 @@ RockResult::ptr NSClient::query() {
             for(auto& n : i.nodes()) {
                 NSNode::ptr node(new NSNode(n.ip(), n.port(), n.weight()));
                 if(!(node->getId() >> 32)) {
-                    WEBSERVER_LOG_ERROR(g_logger) << "invalid node: "
+                    LOG_ERROR(g_logger) << "invalid node: "
                         << node->toString();
                     continue;
                 }
@@ -137,7 +137,7 @@ void NSClient::onTimer() {
     req->setCmd((uint32_t)NSCommand::TICK);
     auto rt = request(req, 1000);
     if(!rt->response) {
-        WEBSERVER_LOG_ERROR(g_logger) << "tick error result=" << rt->result;
+        LOG_ERROR(g_logger) << "tick error result=" << rt->result;
     }
     sleep(1000);
     query();
@@ -151,7 +151,7 @@ bool NSClient::onNotify(webserver::RockNotify::ptr nty,webserver::RockStream::pt
         if(nty->getNotify() == (uint32_t)NSNotify::NODE_CHANGE) {
             auto nm = nty->getAsPB<webserver::ns::NotifyMessage>();
             if(!nm) {
-                WEBSERVER_LOG_ERROR(g_logger) << "invalid node_change data";
+                LOG_ERROR(g_logger) << "invalid node_change data";
                 break;
             }
 
@@ -181,7 +181,7 @@ bool NSClient::onNotify(webserver::RockNotify::ptr nty,webserver::RockStream::pt
                     if(node->getId() >> 32) {
                         domain->add(cmd, node);
                     } else {
-                        WEBSERVER_LOG_ERROR(g_logger) << "invalid node: " << node->toString();
+                        LOG_ERROR(g_logger) << "invalid node: " << node->toString();
                     }
                 }
             }

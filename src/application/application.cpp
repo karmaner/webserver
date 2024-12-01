@@ -19,7 +19,7 @@
 
 namespace webserver {
 
-static webserver::Logger::ptr g_logger = WEBSERVER_LOG_NAME("system");
+static webserver::Logger::ptr g_logger = LOG_NAME("system");
 
 static webserver::ConfigVar<std::string>::ptr g_server_work_path =
     webserver::Config::Lookup("server.work_path"
@@ -65,7 +65,7 @@ bool Application::init(int argc, char** argv) {
     }
 
     std::string conf_path = webserver::EnvMgr::GetInstance()->getConfigPath();
-    WEBSERVER_LOG_INFO(g_logger) << "load conf path:" << conf_path;
+    LOG_INFO(g_logger) << "load conf path:" << conf_path;
     webserver::Config::LoadFromConfDir(conf_path);
 
     ModuleMgr::GetInstance()->init();
@@ -102,12 +102,12 @@ bool Application::init(int argc, char** argv) {
     std::string pidfile = g_server_work_path->getValue()
                                 + "/" + g_server_pid_file->getValue();
     if(webserver::FSUtil::IsRunningPidfile(pidfile)) {
-        WEBSERVER_LOG_ERROR(g_logger) << "server is running:" << pidfile;
+        LOG_ERROR(g_logger) << "server is running:" << pidfile;
         return false;
     }
 
     if(!webserver::FSUtil::Mkdir(g_server_work_path->getValue())) {
-        WEBSERVER_LOG_FATAL(g_logger) << "create work path [" << g_server_work_path->getValue()
+        LOG_FATAL(g_logger) << "create work path [" << g_server_work_path->getValue()
             << " errno=" << errno << " errstr=" << strerror(errno);
         return false;
     }
@@ -123,7 +123,7 @@ bool Application::run() {
 
 int Application::main(int argc, char** argv) {
     signal(SIGPIPE, SIG_IGN);
-    WEBSERVER_LOG_INFO(g_logger) << "main";
+    LOG_INFO(g_logger) << "main";
     std::string conf_path = webserver::EnvMgr::GetInstance()->getConfigPath();
     webserver::Config::LoadFromConfDir(conf_path, true);
     {
@@ -131,7 +131,7 @@ int Application::main(int argc, char** argv) {
                                     + "/" + g_server_pid_file->getValue();
         std::ofstream ofs(pidfile);
         if(!ofs) {
-            WEBSERVER_LOG_ERROR(g_logger) << "open pidfile " << pidfile << " failed";
+            LOG_ERROR(g_logger) << "open pidfile " << pidfile << " failed";
             return false;
         }
         ofs << getpid();
@@ -140,7 +140,7 @@ int Application::main(int argc, char** argv) {
     m_mainIOManager.reset(new webserver::IOManager(1, true, "main"));
     m_mainIOManager->schedule(std::bind(&Application::run_fiber, this));
     m_mainIOManager->addTimer(2000, [](){
-            //WEBSERVER_LOG_INFO(g_logger) << "hello";
+            //LOG_INFO(g_logger) << "hello";
     }, true);
     m_mainIOManager->stop();
     return 0;
@@ -152,7 +152,7 @@ int Application::run_fiber() {
     bool has_error = false;
     for(auto& i : modules) {
         if(!i->onLoad()) {
-            WEBSERVER_LOG_ERROR(g_logger) << "module name="
+            LOG_ERROR(g_logger) << "module name="
                 << i->getName() << " version=" << i->getVersion()
                 << " filename=" << i->getFilename();
             has_error = true;
@@ -170,13 +170,13 @@ int Application::run_fiber() {
     auto http_confs = g_servers_conf->getValue();
     std::vector<TcpServer::ptr> svrs;
     for(auto& i : http_confs) {
-        WEBSERVER_LOG_DEBUG(g_logger) << std::endl << LexicalCast<TcpServerConf, std::string>()(i);
+        LOG_DEBUG(g_logger) << std::endl << LexicalCast<TcpServerConf, std::string>()(i);
 
         std::vector<Address::ptr> address;
         for(auto& a : i.address) {
             size_t pos = a.find(":");
             if(pos == std::string::npos) {
-                //WEBSERVER_LOG_ERROR(g_logger) << "invalid address: " << a;
+                //LOG_ERROR(g_logger) << "invalid address: " << a;
                 address.push_back(UnixAddress::ptr(new UnixAddress(a)));
                 continue;
             }
@@ -205,7 +205,7 @@ int Application::run_fiber() {
                 address.push_back(aaddr);
                 continue;
             }
-            WEBSERVER_LOG_ERROR(g_logger) << "invalid address: " << a;
+            LOG_ERROR(g_logger) << "invalid address: " << a;
             _exit(0);
         }
         IOManager* accept_worker = webserver::IOManager::GetThis();
@@ -214,7 +214,7 @@ int Application::run_fiber() {
         if(!i.accept_worker.empty()) {
             accept_worker = webserver::WorkerMgr::GetInstance()->getAsIOManager(i.accept_worker).get();
             if(!accept_worker) {
-                WEBSERVER_LOG_ERROR(g_logger) << "accept_worker: " << i.accept_worker
+                LOG_ERROR(g_logger) << "accept_worker: " << i.accept_worker
                     << " not exists";
                 _exit(0);
             }
@@ -222,7 +222,7 @@ int Application::run_fiber() {
         if(!i.io_worker.empty()) {
             io_worker = webserver::WorkerMgr::GetInstance()->getAsIOManager(i.io_worker).get();
             if(!io_worker) {
-                WEBSERVER_LOG_ERROR(g_logger) << "io_worker: " << i.io_worker
+                LOG_ERROR(g_logger) << "io_worker: " << i.io_worker
                     << " not exists";
                 _exit(0);
             }
@@ -230,7 +230,7 @@ int Application::run_fiber() {
         if(!i.process_worker.empty()) {
             process_worker = webserver::WorkerMgr::GetInstance()->getAsIOManager(i.process_worker).get();
             if(!process_worker) {
-                WEBSERVER_LOG_ERROR(g_logger) << "process_worker: " << i.process_worker
+                LOG_ERROR(g_logger) << "process_worker: " << i.process_worker
                     << " not exists";
                 _exit(0);
             }
@@ -251,7 +251,7 @@ int Application::run_fiber() {
                             process_worker, io_worker, accept_worker));
             ModuleMgr::GetInstance()->add(std::make_shared<webserver::ns::NameServerModule>());
         } else {
-            WEBSERVER_LOG_ERROR(g_logger) << "invalid server type=" << i.type
+            LOG_ERROR(g_logger) << "invalid server type=" << i.type
                 << LexicalCast<TcpServerConf, std::string>()(i);
             _exit(0);
         }
@@ -261,14 +261,14 @@ int Application::run_fiber() {
         std::vector<Address::ptr> fails;
         if(!server->bind(address, fails, i.ssl)) {
             for(auto& x : fails) {
-                WEBSERVER_LOG_ERROR(g_logger) << "bind address fail:"
+                LOG_ERROR(g_logger) << "bind address fail:"
                     << *x;
             }
             _exit(0);
         }
         if(i.ssl) {
             if(!server->loadCertificates(i.cert_file, i.key_file)) {
-                WEBSERVER_LOG_ERROR(g_logger) << "loadCertificates fail, cert_file="
+                LOG_ERROR(g_logger) << "loadCertificates fail, cert_file="
                     << i.cert_file << " key_file=" << i.key_file;
             }
         }

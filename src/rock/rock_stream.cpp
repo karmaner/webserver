@@ -5,7 +5,7 @@
 
 namespace webserver {
 
-static webserver::Logger::ptr g_logger = WEBSERVER_LOG_NAME("system");
+static webserver::Logger::ptr g_logger = LOG_NAME("system");
 static webserver::ConfigVar<std::unordered_map<std::string
     ,std::unordered_map<std::string, std::string> > >::ptr g_rock_services =
     webserver::Config::Lookup("rock_services", std::unordered_map<std::string
@@ -29,13 +29,13 @@ std::string RockResult::toString() const {
 RockStream::RockStream(Socket::ptr sock)
     :AsyncSocketStream(sock, true)
     ,m_decoder(new RockMessageDecoder) {
-    WEBSERVER_LOG_DEBUG(g_logger) << "RockStream::RockStream "
+    LOG_DEBUG(g_logger) << "RockStream::RockStream "
         << this << " "
         << (sock ? sock->toString() : "");
 }
 
 RockStream::~RockStream() {
-    WEBSERVER_LOG_DEBUG(g_logger) << "RockStream::~RockStream "
+    LOG_DEBUG(g_logger) << "RockStream::~RockStream "
         << this << " "
         << (m_socket ? m_socket->toString() : "");
 }
@@ -82,7 +82,7 @@ bool RockStream::RockCtx::doSend(AsyncSocketStream::ptr stream) {
 }
 
 AsyncSocketStream::Ctx::ptr RockStream::doRecv() {
-    //WEBSERVER_LOG_INFO(g_logger) << "doRecv " << this;
+    //LOG_INFO(g_logger) << "doRecv " << this;
     auto msg = m_decoder->parseFrom(shared_from_this());
     if(!msg) {
         innerClose();
@@ -93,13 +93,13 @@ AsyncSocketStream::Ctx::ptr RockStream::doRecv() {
     if(type == Message::RESPONSE) {
         auto rsp = std::dynamic_pointer_cast<RockResponse>(msg);
         if(!rsp) {
-            WEBSERVER_LOG_WARN(g_logger) << "RockStream doRecv response not RockResponse: "
+            LOG_WARN(g_logger) << "RockStream doRecv response not RockResponse: "
                 << msg->toString();
             return nullptr;
         }
         RockCtx::ptr ctx = getAndDelCtxAs<RockCtx>(rsp->getSn());
         if(!ctx) {
-            WEBSERVER_LOG_WARN(g_logger) << "RockStream request timeout reponse="
+            LOG_WARN(g_logger) << "RockStream request timeout reponse="
                 << rsp->toString();
             return nullptr;
         }
@@ -109,7 +109,7 @@ AsyncSocketStream::Ctx::ptr RockStream::doRecv() {
     } else if(type == Message::REQUEST) {
         auto req = std::dynamic_pointer_cast<RockRequest>(msg);
         if(!req) {
-            WEBSERVER_LOG_WARN(g_logger) << "RockStream doRecv request not RockRequest: "
+            LOG_WARN(g_logger) << "RockStream doRecv request not RockRequest: "
                 << msg->toString();
             return nullptr;
         }
@@ -118,12 +118,12 @@ AsyncSocketStream::Ctx::ptr RockStream::doRecv() {
                         std::dynamic_pointer_cast<RockStream>(shared_from_this()),
                         req));
         } else {
-            WEBSERVER_LOG_WARN(g_logger) << "unhandle request " << req->toString();
+            LOG_WARN(g_logger) << "unhandle request " << req->toString();
         }
     } else if(type == Message::NOTIFY) {
         auto nty = std::dynamic_pointer_cast<RockNotify>(msg);
         if(!nty) {
-            WEBSERVER_LOG_WARN(g_logger) << "RockStream doRecv notify not RockNotify: "
+            LOG_WARN(g_logger) << "RockStream doRecv notify not RockNotify: "
                 << msg->toString();
             return nullptr;
         }
@@ -133,10 +133,10 @@ AsyncSocketStream::Ctx::ptr RockStream::doRecv() {
                         std::dynamic_pointer_cast<RockStream>(shared_from_this()),
                         nty));
         } else {
-            WEBSERVER_LOG_WARN(g_logger) << "unhandle notify " << nty->toString();
+            LOG_WARN(g_logger) << "unhandle notify " << nty->toString();
         }
     } else {
-        WEBSERVER_LOG_WARN(g_logger) << "RockStream recv unknow type=" << type
+        LOG_WARN(g_logger) << "RockStream recv unknow type=" << type
             << " msg: " << msg->toString();
     }
     return nullptr;
@@ -184,7 +184,7 @@ RockSDLoadBalance::RockSDLoadBalance(IServiceDiscovery::ptr sd)
 static SocketStream::ptr create_rock_stream(ServiceItemInfo::ptr info) {
     webserver::IPAddress::ptr addr = webserver::Address::LookupAnyIPAddress(info->getIp());
     if(!addr) {
-        WEBSERVER_LOG_ERROR(g_logger) << "invalid service info: " << info->toString();
+        LOG_ERROR(g_logger) << "invalid service info: " << info->toString();
         return nullptr;
     }
     addr->setPort(info->getPort());

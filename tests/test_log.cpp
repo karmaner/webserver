@@ -6,7 +6,7 @@ int main(int argc, char **argv)
 {
     webserver::Logger::ptr logger(new webserver::Logger);
     logger->addAppender(webserver::LogAppender::ptr(new webserver::StdoutLogAppender));
-    webserver::Logger::ptr t_logger = WEBSERVER_LOG_NAME("system");
+    webserver::Logger::ptr t_logger = LOG_NAME("system");
 
     webserver::FileLogAppender::ptr file_appender(new webserver::FileLogAppender("./bin/log.txt"));
     webserver::LogFormatter::ptr fmt(new webserver::LogFormatter("%d%T%p%T%m%n"));
@@ -20,13 +20,17 @@ int main(int argc, char **argv)
     // logger->log(webserver::LogLevel::DEBUG, event);
     std::cout << "hello webserver log" << std::endl;
 
-    WEBSERVER_LOG_INFO(logger) << "test macro";
-    WEBSERVER_LOG_ERROR(logger) << "test macro error";
+    LOG_INFO(logger) << "test macro";
+    LOG_ERROR(logger) << "test macro error";
 
-    WEBSERVER_LOG_FMT_ERROR(logger, "test macro fmt error %s", "aa");
+    LOG_FMT_INFO(logger, "test macro fmt %s", "aa");
+
+    LOG_FMT_ERROR(logger, "test macro fmt error %s", "aa");
 
     auto l = webserver::LoggerMgr::GetInstance()->getLogger("xx");
-    WEBSERVER_LOG_INFO(l) << "xxx";
-    WEBSERVER_LOG_INFO(t_logger) << "good?";
+    LOG_INFO(l) << "xxx";
+    LOG_INFO(l) << "it is good or not"; // 单例模式  dict[name] = logger 
+    LOG_INFO(t_logger) << "good?";
+
     return 0;
 }

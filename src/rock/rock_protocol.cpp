@@ -6,7 +6,7 @@
 
 namespace webserver {
 
-static webserver::Logger::ptr g_logger = WEBSERVER_LOG_NAME("system");
+static webserver::Logger::ptr g_logger = LOG_NAME("system");
 
 static webserver::ConfigVar<uint32_t>::ptr g_rock_protocol_max_length
     = webserver::Config::Lookup("rock.protocol.max_length",
@@ -58,7 +58,7 @@ bool RockRequest::serializeToByteArray(ByteArray::ptr bytearray) {
         v &= RockBody::serializeToByteArray(bytearray);
         return v;
     } catch (...) {
-        WEBSERVER_LOG_ERROR(g_logger) << "RockRequest serializeToByteArray error";
+        LOG_ERROR(g_logger) << "RockRequest serializeToByteArray error";
     }
     return false;
 }
@@ -70,7 +70,7 @@ bool RockRequest::parseFromByteArray(ByteArray::ptr bytearray) {
         v &= RockBody::parseFromByteArray(bytearray);
         return v;
     } catch (...) {
-        WEBSERVER_LOG_ERROR(g_logger) << "RockRequest parseFromByteArray error";
+        LOG_ERROR(g_logger) << "RockRequest parseFromByteArray error";
     }
     return false;
 }
@@ -102,7 +102,7 @@ bool RockResponse::serializeToByteArray(ByteArray::ptr bytearray) {
         v &= RockBody::serializeToByteArray(bytearray);
         return v;
     } catch (...) {
-        WEBSERVER_LOG_ERROR(g_logger) << "RockResponse serializeToByteArray error";
+        LOG_ERROR(g_logger) << "RockResponse serializeToByteArray error";
     }
     return false;
 }
@@ -114,7 +114,7 @@ bool RockResponse::parseFromByteArray(ByteArray::ptr bytearray) {
         v &= RockBody::parseFromByteArray(bytearray);
         return v;
     } catch (...) {
-        WEBSERVER_LOG_ERROR(g_logger) << "RockResponse parseFromByteArray error";
+        LOG_ERROR(g_logger) << "RockResponse parseFromByteArray error";
     }
     return false;
 }
@@ -143,7 +143,7 @@ bool RockNotify::serializeToByteArray(ByteArray::ptr bytearray) {
         v &= RockBody::serializeToByteArray(bytearray);
         return v;
     } catch (...) {
-        WEBSERVER_LOG_ERROR(g_logger) << "RockNotify serializeToByteArray error";
+        LOG_ERROR(g_logger) << "RockNotify serializeToByteArray error";
     }
     return false;
 }
@@ -155,7 +155,7 @@ bool RockNotify::parseFromByteArray(ByteArray::ptr bytearray) {
         v &= RockBody::parseFromByteArray(bytearray);
         return v;
     } catch (...) {
-        WEBSERVER_LOG_ERROR(g_logger) << "RockNotify parseFromByteArray error";
+        LOG_ERROR(g_logger) << "RockNotify parseFromByteArray error";
     }
     return false;
 }
@@ -173,30 +173,30 @@ Message::ptr RockMessageDecoder::parseFrom(Stream::ptr stream) {
     try {
         RockMsgHeader header;
         if(stream->readFixSize(&header, sizeof(header)) <= 0) {
-            WEBSERVER_LOG_ERROR(g_logger) << "RockMessageDecoder decode head error";
+            LOG_ERROR(g_logger) << "RockMessageDecoder decode head error";
             return nullptr;
         }
 
         if(memcmp(header.magic, s_rock_magic, sizeof(s_rock_magic))) {
-            WEBSERVER_LOG_ERROR(g_logger) << "RockMessageDecoder head.magic error";
+            LOG_ERROR(g_logger) << "RockMessageDecoder head.magic error";
             return nullptr;
         }
 
         if(header.version != 0x1) {
-            WEBSERVER_LOG_ERROR(g_logger) << "RockMessageDecoder head.version != 0x1";
+            LOG_ERROR(g_logger) << "RockMessageDecoder head.version != 0x1";
             return nullptr;
         }
 
         header.length = webserver::byteswapOnLittleEndian(header.length);
         if((uint32_t)header.length >= g_rock_protocol_max_length->getValue()) {
-            WEBSERVER_LOG_ERROR(g_logger) << "RockMessageDecoder head.length("
+            LOG_ERROR(g_logger) << "RockMessageDecoder head.length("
                                         << header.length << ") >="
                                         << g_rock_protocol_max_length->getValue();
             return nullptr;
         }
         webserver::ByteArray::ptr ba(new webserver::ByteArray);
         if(stream->readFixSize(ba, header.length) <= 0) {
-            WEBSERVER_LOG_ERROR(g_logger) << "RockMessageDecoder read body fail length=" << header.length;
+            LOG_ERROR(g_logger) << "RockMessageDecoder read body fail length=" << header.length;
             return nullptr;
         }
 
@@ -204,11 +204,11 @@ Message::ptr RockMessageDecoder::parseFrom(Stream::ptr stream) {
         if(header.flag & 0x1) { //gizp
             auto zstream = webserver::ZlibStream::CreateGzip(false);
             if(zstream->write(ba, -1) != Z_OK) {
-                WEBSERVER_LOG_ERROR(g_logger) << "RockMessageDecoder ungzip error";
+                LOG_ERROR(g_logger) << "RockMessageDecoder ungzip error";
                 return nullptr;
             }
             if(zstream->flush() != Z_OK) {
-                WEBSERVER_LOG_ERROR(g_logger) << "RockMessageDecoder ungzip flush error";
+                LOG_ERROR(g_logger) << "RockMessageDecoder ungzip flush error";
                 return nullptr;
             }
             ba = zstream->getByteArray();
@@ -226,19 +226,19 @@ Message::ptr RockMessageDecoder::parseFrom(Stream::ptr stream) {
                 msg.reset(new RockNotify);
                 break;
             default:
-                WEBSERVER_LOG_ERROR(g_logger) << "RockMessageDecoder invalid type=" << (int)type;
+                LOG_ERROR(g_logger) << "RockMessageDecoder invalid type=" << (int)type;
                 return nullptr;
         }
 
         if(!msg->parseFromByteArray(ba)) {
-            WEBSERVER_LOG_ERROR(g_logger) << "RockMessageDecoder parseFromByteArray fail type=" << (int)type;
+            LOG_ERROR(g_logger) << "RockMessageDecoder parseFromByteArray fail type=" << (int)type;
             return nullptr;
         }
         return msg;
     } catch (std::exception& e) {
-        WEBSERVER_LOG_ERROR(g_logger) << "RockMessageDecoder except:" << e.what();
+        LOG_ERROR(g_logger) << "RockMessageDecoder except:" << e.what();
     } catch (...) {
-        WEBSERVER_LOG_ERROR(g_logger) << "RockMessageDecoder except";
+        LOG_ERROR(g_logger) << "RockMessageDecoder except";
     }
     return nullptr;
 }
@@ -251,11 +251,11 @@ int32_t RockMessageDecoder::serializeTo(Stream::ptr stream, Message::ptr msg) {
     if((uint32_t)header.length >= g_rock_protocol_gzip_min_length->getValue()) {
         auto zstream = webserver::ZlibStream::CreateGzip(true);
         if(zstream->write(ba, -1) != Z_OK) {
-            WEBSERVER_LOG_ERROR(g_logger) << "RockMessageDecoder serializeTo gizp error";
+            LOG_ERROR(g_logger) << "RockMessageDecoder serializeTo gizp error";
             return -1;
         }
         if(zstream->flush() != Z_OK) {
-            WEBSERVER_LOG_ERROR(g_logger) << "RockMessageDecoder serializeTo gizp flush error";
+            LOG_ERROR(g_logger) << "RockMessageDecoder serializeTo gizp flush error";
             return -2;
         }
 
@@ -265,11 +265,11 @@ int32_t RockMessageDecoder::serializeTo(Stream::ptr stream, Message::ptr msg) {
     }
     header.length = webserver::byteswapOnLittleEndian(header.length);
     if(stream->writeFixSize(&header, sizeof(header)) <= 0) {
-        WEBSERVER_LOG_ERROR(g_logger) << "RockMessageDecoder serializeTo write header fail";
+        LOG_ERROR(g_logger) << "RockMessageDecoder serializeTo write header fail";
         return -3;
     }
     if(stream->writeFixSize(ba, ba->getReadSize()) <= 0) {
-        WEBSERVER_LOG_ERROR(g_logger) << "RockMessageDecoder serializeTo write body fail";
+        LOG_ERROR(g_logger) << "RockMessageDecoder serializeTo write body fail";
         return -4;
     }
     return sizeof(header) + ba->getSize();

@@ -15,7 +15,7 @@
 
 namespace webserver {
 
-static webserver::Logger::ptr g_logger = WEBSERVER_LOG_NAME("system");
+static webserver::Logger::ptr g_logger = LOG_NAME("system");
 
 pid_t GetThreadId() {
     return syscall(SYS_gettid);
@@ -50,7 +50,7 @@ void Backtrace(std::vector<std::string>& bt, int size, int skip) {
 
     char** strings = backtrace_symbols(array, s);
     if(strings == NULL) {
-        WEBSERVER_LOG_ERROR(g_logger) << "backtrace_synbols error";
+        LOG_ERROR(g_logger) << "backtrace_synbols error";
         return;
     }
 
@@ -552,7 +552,7 @@ in_addr_t GetIPv4Inet() {
 
     in_addr_t localhost = inet_addr("127.0.0.1");
     if(getifaddrs(&ifas)) {
-        WEBSERVER_LOG_ERROR(g_logger) << "getifaddrs errno=" << errno
+        LOG_ERROR(g_logger) << "getifaddrs errno=" << errno
             << " errstr=" << strerror(errno);
         return localhost;
     }

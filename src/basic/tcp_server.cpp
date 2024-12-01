@@ -8,7 +8,7 @@ static webserver::ConfigVar<uint64_t>::ptr g_tcp_server_read_timeout =
     webserver::Config::Lookup("tcp_server.read_timeout", (uint64_t)(60 * 1000 * 2),
             "tcp server read timeout");
 
-static webserver::Logger::ptr g_logger = WEBSERVER_LOG_NAME("system");
+static webserver::Logger::ptr g_logger = LOG_NAME("system");
 
 TcpServer::TcpServer(webserver::IOManager* worker,
                     webserver::IOManager* io_worker,
@@ -46,14 +46,14 @@ bool TcpServer::bind(const std::vector<Address::ptr>& addrs
     for(auto& addr : addrs) {
         Socket::ptr sock = ssl ? SSLSocket::CreateTCP(addr) : Socket::CreateTCP(addr);
         if(!sock->bind(addr)) {
-            WEBSERVER_LOG_ERROR(g_logger) << "bind fail errno="
+            LOG_ERROR(g_logger) << "bind fail errno="
                 << errno << " errstr=" << strerror(errno)
                 << " addr=[" << addr->toString() << "]";
             fails.push_back(addr);
             continue;
         }
         if(!sock->listen()) {
-            WEBSERVER_LOG_ERROR(g_logger) << "listen fail errno="
+            LOG_ERROR(g_logger) << "listen fail errno="
                 << errno << " errstr=" << strerror(errno)
                 << " addr=[" << addr->toString() << "]";
             fails.push_back(addr);
@@ -68,7 +68,7 @@ bool TcpServer::bind(const std::vector<Address::ptr>& addrs
     }
 
     for(auto& i : m_socks) {
-        WEBSERVER_LOG_INFO(g_logger) << "type=" << m_type
+        LOG_INFO(g_logger) << "type=" << m_type
             << " name=" << m_name
             << " ssl=" << m_ssl
             << " server bind success: " << *i;
@@ -84,7 +84,7 @@ void TcpServer::startAccept(Socket::ptr sock) {
             m_ioWorker->schedule(std::bind(&TcpServer::handleClient,
                         shared_from_this(), client));
         } else {
-            WEBSERVER_LOG_ERROR(g_logger) << "accept errno=" << errno
+            LOG_ERROR(g_logger) << "accept errno=" << errno
                 << " errstr=" << strerror(errno);
         }
     }
@@ -115,7 +115,7 @@ void TcpServer::stop() {
 }
 
 void TcpServer::handleClient(Socket::ptr client) {
-    WEBSERVER_LOG_INFO(g_logger) << "handleClient: " << *client;
+    LOG_INFO(g_logger) << "handleClient: " << *client;
 }
 
 bool TcpServer::loadCertificates(const std::string& cert_file, const std::string& key_file) {

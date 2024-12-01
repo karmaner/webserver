@@ -7,7 +7,7 @@
 
 namespace webserver {
 
-static Logger::ptr g_logger = WEBSERVER_LOG_NAME("system");
+static Logger::ptr g_logger = LOG_NAME("system");
 
 static std::atomic<uint64_t> s_fiber_id {0};
 static std::atomic<uint64_t> s_fiber_count {0};
@@ -48,7 +48,7 @@ Fiber::Fiber() {
 
     ++s_fiber_count;
 
-    WEBSERVER_LOG_DEBUG(g_logger) << "Fiber::Fiber main";
+    LOG_DEBUG(g_logger) << "Fiber::Fiber main";
 }
 
 Fiber::Fiber(std::function<void()> cb, size_t stacksize, bool use_caller)
@@ -71,7 +71,7 @@ Fiber::Fiber(std::function<void()> cb, size_t stacksize, bool use_caller)
         makecontext(&m_ctx, &Fiber::CallerMainFunc, 0);
     }
 
-    WEBSERVER_LOG_DEBUG(g_logger) << "Fiber::Fiber id=" << m_id;
+    LOG_DEBUG(g_logger) << "Fiber::Fiber id=" << m_id;
 }
 
 Fiber::~Fiber() {
@@ -91,7 +91,7 @@ Fiber::~Fiber() {
             SetThis(nullptr);
         }
     }
-    WEBSERVER_LOG_DEBUG(g_logger) << "Fiber::~Fiber id=" << m_id
+    LOG_DEBUG(g_logger) << "Fiber::~Fiber id=" << m_id
                               << " total=" << s_fiber_count;
 }
 
@@ -194,13 +194,13 @@ void Fiber::MainFunc() {
         cur->m_state = TERM;
     } catch (std::exception& ex) {
         cur->m_state = EXCEPT;
-        WEBSERVER_LOG_ERROR(g_logger) << "Fiber Except: " << ex.what()
+        LOG_ERROR(g_logger) << "Fiber Except: " << ex.what()
             << " fiber_id=" << cur->getId()
             << std::endl
             << webserver::BacktraceToString();
     } catch (...) {
         cur->m_state = EXCEPT;
-        WEBSERVER_LOG_ERROR(g_logger) << "Fiber Except"
+        LOG_ERROR(g_logger) << "Fiber Except"
             << " fiber_id=" << cur->getId()
             << std::endl
             << webserver::BacktraceToString();
@@ -222,13 +222,13 @@ void Fiber::CallerMainFunc() {
         cur->m_state = TERM;
     } catch (std::exception& ex) {
         cur->m_state = EXCEPT;
-        WEBSERVER_LOG_ERROR(g_logger) << "Fiber Except: " << ex.what()
+        LOG_ERROR(g_logger) << "Fiber Except: " << ex.what()
             << " fiber_id=" << cur->getId()
             << std::endl
             << webserver::BacktraceToString();
     } catch (...) {
         cur->m_state = EXCEPT;
-        WEBSERVER_LOG_ERROR(g_logger) << "Fiber Except"
+        LOG_ERROR(g_logger) << "Fiber Except"
             << " fiber_id=" << cur->getId()
             << std::endl
             << webserver::BacktraceToString();

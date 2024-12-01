@@ -5,7 +5,7 @@
 
 namespace webserver {
 
-static webserver::Logger::ptr g_logger = WEBSERVER_LOG_NAME("system");
+static webserver::Logger::ptr g_logger = LOG_NAME("system");
 
 static webserver::ConfigVar<std::map<std::string, std::map<std::string, std::string> > >::ptr g_sqlite3_dbs
     = webserver::Config::Lookup("sqlite3.dbs", std::map<std::string, std::map<std::string, std::string> >()
@@ -441,7 +441,7 @@ SQLite3Transaction::~SQLite3Transaction() {
         }
 
         if(m_status == 1) {
-            WEBSERVER_LOG_ERROR(g_logger) << m_db << " auto_commit=" << m_autoCommit << " fail";
+            LOG_ERROR(g_logger) << m_db << " auto_commit=" << m_autoCommit << " fail";
         }
     }
 }
@@ -542,7 +542,7 @@ SQLite3::ptr SQLite3Manager::get(const std::string& name) {
     lock.unlock();
     std::string path = webserver::GetParamValue<std::string>(args, "path");
     if(path.empty()) {
-        WEBSERVER_LOG_ERROR(g_logger) << "open db name=" << name << " path is null";
+        LOG_ERROR(g_logger) << "open db name=" << name << " path is null";
         return nullptr;
     }
 
@@ -552,7 +552,7 @@ SQLite3::ptr SQLite3Manager::get(const std::string& name) {
 
     sqlite3* db;
     if(sqlite3_open_v2(path.c_str(), &db, SQLite3::CREATE | SQLite3::READWRITE, nullptr)) {
-        WEBSERVER_LOG_ERROR(g_logger) << "open db name=" << name << " path=" << path << " fail";
+        LOG_ERROR(g_logger) << "open db name=" << name << " path=" << path << " fail";
         return nullptr;
     }
 
@@ -560,7 +560,7 @@ SQLite3::ptr SQLite3Manager::get(const std::string& name) {
     std::string sql = webserver::GetParamValue<std::string>(args, "sql");
     if(!sql.empty()) {
         if(rt->execute(sql)) {
-            WEBSERVER_LOG_ERROR(g_logger) << "execute sql=" << sql
+            LOG_ERROR(g_logger) << "execute sql=" << sql
                 << " errno=" << rt->getErrno() << " errstr=" << rt->getErrStr();
             delete rt;
             return nullptr;
@@ -609,7 +609,7 @@ int SQLite3Manager::execute(const std::string& name, const char* format, ...) {
 int SQLite3Manager::execute(const std::string& name, const char* format, va_list ap) {
     auto conn = get(name);
     if(!conn) {
-        WEBSERVER_LOG_ERROR(g_logger) << "SQLite3Manager::execute, get(" << name
+        LOG_ERROR(g_logger) << "SQLite3Manager::execute, get(" << name
             << ") fail, format=" << format;
         return -1;
     }
@@ -619,7 +619,7 @@ int SQLite3Manager::execute(const std::string& name, const char* format, va_list
 int SQLite3Manager::execute(const std::string& name, const std::string& sql) {
     auto conn = get(name);
     if(!conn) {
-        WEBSERVER_LOG_ERROR(g_logger) << "SQLite3Manager::execute, get(" << name
+        LOG_ERROR(g_logger) << "SQLite3Manager::execute, get(" << name
             << ") fail, sql=" << sql;
         return -1;
     }
@@ -637,7 +637,7 @@ ISQLData::ptr SQLite3Manager::query(const std::string& name, const char* format,
 ISQLData::ptr SQLite3Manager::query(const std::string& name, const char* format, va_list ap) {
     auto conn = get(name);
     if(!conn) {
-        WEBSERVER_LOG_ERROR(g_logger) << "SQLite3Manager::query, get(" << name
+        LOG_ERROR(g_logger) << "SQLite3Manager::query, get(" << name
             << ") fail, format=" << format;
         return nullptr;
     }
@@ -647,7 +647,7 @@ ISQLData::ptr SQLite3Manager::query(const std::string& name, const char* format,
 ISQLData::ptr SQLite3Manager::query(const std::string& name, const std::string& sql) {
     auto conn = get(name);
     if(!conn) {
-        WEBSERVER_LOG_ERROR(g_logger) << "SQLite3Manager::query, get(" << name
+        LOG_ERROR(g_logger) << "SQLite3Manager::query, get(" << name
             << ") fail, sql=" << sql;
         return nullptr;
     }
@@ -658,7 +658,7 @@ ISQLData::ptr SQLite3Manager::query(const std::string& name, const std::string& 
 SQLite3Transaction::ptr SQLite3Manager::openTransaction(const std::string& name, bool auto_commit) {
     auto conn = get(name);
     if(!conn) {
-        WEBSERVER_LOG_ERROR(g_logger) << "SQLite3Manager::openTransaction, get(" << name
+        LOG_ERROR(g_logger) << "SQLite3Manager::openTransaction, get(" << name
             << ") fail";
         return nullptr;
     }

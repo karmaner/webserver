@@ -3,7 +3,7 @@
 
 namespace webserver {
 
-static webserver::Logger::ptr g_logger = WEBSERVER_LOG_NAME("system");
+static webserver::Logger::ptr g_logger = LOG_NAME("system");
 
 SmtpClient::SmtpClient(Socket::ptr sock)
     :webserver::SocketStream(sock) {
@@ -12,7 +12,7 @@ SmtpClient::SmtpClient(Socket::ptr sock)
 SmtpClient::ptr SmtpClient::Create(const std::string& host, uint32_t port, bool ssl) {
     webserver::IPAddress::ptr addr = webserver::Address::LookupAnyIPAddress(host);
     if(!addr) {
-        WEBSERVER_LOG_ERROR(g_logger) << "invalid smtp server: " << host << ":" << port
+        LOG_ERROR(g_logger) << "invalid smtp server: " << host << ":" << port
             << " ssl=" << ssl;
         return nullptr;
     }
@@ -24,7 +24,7 @@ SmtpClient::ptr SmtpClient::Create(const std::string& host, uint32_t port, bool 
         sock = webserver::Socket::CreateTCP(addr);
     }
     if(!sock->connect(addr)) {
-        WEBSERVER_LOG_ERROR(g_logger) << "connect smtp server: " << host << ":" << port
+        LOG_ERROR(g_logger) << "connect smtp server: " << host << ":" << port
             << " ssl=" << ssl << " fail";
         return nullptr;
     }

@@ -8,7 +8,7 @@
 
 namespace webserver {
 
-static webserver::Logger::ptr g_logger = WEBSERVER_LOG_NAME("system");
+static webserver::Logger::ptr g_logger = LOG_NAME("system");
 
 Socket::ptr Socket::CreateTCP(webserver::Address::ptr address) {
     Socket::ptr sock(new Socket(address->getFamily(), TCP, 0));
@@ -97,7 +97,7 @@ void Socket::setRecvTimeout(int64_t v) {
 bool Socket::getOption(int level, int option, void* result, socklen_t* len) {
     int rt = getsockopt(m_sock, level, option, result, (socklen_t*)len);
     if(rt) {
-        WEBSERVER_LOG_DEBUG(g_logger) << "getOption sock=" << m_sock
+        LOG_DEBUG(g_logger) << "getOption sock=" << m_sock
             << " level=" << level << " option=" << option
             << " errno=" << errno << " errstr=" << strerror(errno);
         return false;
@@ -107,7 +107,7 @@ bool Socket::getOption(int level, int option, void* result, socklen_t* len) {
 
 bool Socket::setOption(int level, int option, const void* result, socklen_t len) {
     if(setsockopt(m_sock, level, option, result, (socklen_t)len)) {
-        WEBSERVER_LOG_DEBUG(g_logger) << "setOption sock=" << m_sock
+        LOG_DEBUG(g_logger) << "setOption sock=" << m_sock
             << " level=" << level << " option=" << option
             << " errno=" << errno << " errstr=" << strerror(errno);
         return false;
@@ -119,7 +119,7 @@ Socket::ptr Socket::accept() {
     Socket::ptr sock(new Socket(m_family, m_type, m_protocol));
     int newsock = ::accept(m_sock, nullptr, nullptr);
     if(newsock == -1) {
-        WEBSERVER_LOG_ERROR(g_logger) << "accept(" << m_sock << ") errno="
+        LOG_ERROR(g_logger) << "accept(" << m_sock << ") errno="
             << errno << " errstr=" << strerror(errno);
         return nullptr;
     }
@@ -152,7 +152,7 @@ bool Socket::bind(const Address::ptr addr) {
     }
 
     if(WEBSERVER_UNLIKELY(addr->getFamily() != m_family)) {
-        WEBSERVER_LOG_ERROR(g_logger) << "bind sock.family("
+        LOG_ERROR(g_logger) << "bind sock.family("
             << m_family << ") addr.family(" << addr->getFamily()
             << ") not equal, addr=" << addr->toString();
         return false;
@@ -169,7 +169,7 @@ bool Socket::bind(const Address::ptr addr) {
     }
 
     if(::bind(m_sock, addr->getAddr(), addr->getAddrLen())) {
-        WEBSERVER_LOG_ERROR(g_logger) << "bind error errrno=" << errno
+        LOG_ERROR(g_logger) << "bind error errrno=" << errno
             << " errstr=" << strerror(errno);
         return false;
     }
@@ -179,7 +179,7 @@ bool Socket::bind(const Address::ptr addr) {
 
 bool Socket::reconnect(uint64_t timeout_ms) {
     if(!m_remoteAddress) {
-        WEBSERVER_LOG_ERROR(g_logger) << "reconnect m_remoteAddress is null";
+        LOG_ERROR(g_logger) << "reconnect m_remoteAddress is null";
         return false;
     }
     m_localAddress.reset();
@@ -196,7 +196,7 @@ bool Socket::connect(const Address::ptr addr, uint64_t timeout_ms) {
     }
 
     if(WEBSERVER_UNLIKELY(addr->getFamily() != m_family)) {
-        WEBSERVER_LOG_ERROR(g_logger) << "connect sock.family("
+        LOG_ERROR(g_logger) << "connect sock.family("
             << m_family << ") addr.family(" << addr->getFamily()
             << ") not equal, addr=" << addr->toString();
         return false;
@@ -204,14 +204,14 @@ bool Socket::connect(const Address::ptr addr, uint64_t timeout_ms) {
 
     if(timeout_ms == (uint64_t)-1) {
         if(::connect(m_sock, addr->getAddr(), addr->getAddrLen())) {
-            WEBSERVER_LOG_ERROR(g_logger) << "sock=" << m_sock << " connect(" << addr->toString()
+            LOG_ERROR(g_logger) << "sock=" << m_sock << " connect(" << addr->toString()
                 << ") error errno=" << errno << " errstr=" << strerror(errno);
             close();
             return false;
         }
     } else {
         if(::connect_with_timeout(m_sock, addr->getAddr(), addr->getAddrLen(), timeout_ms)) {
-            WEBSERVER_LOG_ERROR(g_logger) << "sock=" << m_sock << " connect(" << addr->toString()
+            LOG_ERROR(g_logger) << "sock=" << m_sock << " connect(" << addr->toString()
                 << ") timeout=" << timeout_ms << " error errno="
                 << errno << " errstr=" << strerror(errno);
             close();
@@ -226,11 +226,11 @@ bool Socket::connect(const Address::ptr addr, uint64_t timeout_ms) {
 
 bool Socket::listen(int backlog) {
     if(!isValid()) {
-        WEBSERVER_LOG_ERROR(g_logger) << "listen error sock=-1";
+        LOG_ERROR(g_logger) << "listen error sock=-1";
         return false;
     }
     if(::listen(m_sock, backlog)) {
-        WEBSERVER_LOG_ERROR(g_logger) << "listen error errno=" << errno
+        LOG_ERROR(g_logger) << "listen error errno=" << errno
             << " errstr=" << strerror(errno);
         return false;
     }
@@ -348,7 +348,7 @@ Address::ptr Socket::getRemoteAddress() {
     }
     socklen_t addrlen = result->getAddrLen();
     if(getpeername(m_sock, result->getAddr(), &addrlen)) {
-        WEBSERVER_LOG_ERROR(g_logger) << "getpeername error sock=" << m_sock
+        LOG_ERROR(g_logger) << "getpeername error sock=" << m_sock
             << " errno=" << errno << " errstr=" << strerror(errno);
         return Address::ptr(new UnknownAddress(m_family));
     }
@@ -382,7 +382,7 @@ Address::ptr Socket::getLocalAddress() {
     }
     socklen_t addrlen = result->getAddrLen();
     if(getsockname(m_sock, result->getAddr(), &addrlen)) {
-        WEBSERVER_LOG_ERROR(g_logger) << "getsockname error sock=" << m_sock
+        LOG_ERROR(g_logger) << "getsockname error sock=" << m_sock
             << " errno=" << errno << " errstr=" << strerror(errno);
         return Address::ptr(new UnknownAddress(m_family));
     }
@@ -458,7 +458,7 @@ void Socket::newSock() {
     if(WEBSERVER_LIKELY(m_sock != -1)) {
         initSock();
     } else {
-        WEBSERVER_LOG_ERROR(g_logger) << "socket(" << m_family
+        LOG_ERROR(g_logger) << "socket(" << m_family
             << ", " << m_type << ", " << m_protocol << ") errno="
             << errno << " errstr=" << strerror(errno);
     }
@@ -486,7 +486,7 @@ Socket::ptr SSLSocket::accept() {
     SSLSocket::ptr sock(new SSLSocket(m_family, m_type, m_protocol));
     int newsock = ::accept(m_sock, nullptr, nullptr);
     if(newsock == -1) {
-        WEBSERVER_LOG_ERROR(g_logger) << "accept(" << m_sock << ") errno="
+        LOG_ERROR(g_logger) << "accept(" << m_sock << ") errno="
             << errno << " errstr=" << strerror(errno);
         return nullptr;
     }
@@ -603,17 +603,17 @@ bool SSLSocket::init(int sock) {
 bool SSLSocket::loadCertificates(const std::string& cert_file, const std::string& key_file) {
     m_ctx.reset(SSL_CTX_new(SSLv23_server_method()), SSL_CTX_free);
     if(SSL_CTX_use_certificate_chain_file(m_ctx.get(), cert_file.c_str()) != 1) {
-        WEBSERVER_LOG_ERROR(g_logger) << "SSL_CTX_use_certificate_chain_file("
+        LOG_ERROR(g_logger) << "SSL_CTX_use_certificate_chain_file("
             << cert_file << ") error";
         return false;
     }
     if(SSL_CTX_use_PrivateKey_file(m_ctx.get(), key_file.c_str(), SSL_FILETYPE_PEM) != 1) {
-        WEBSERVER_LOG_ERROR(g_logger) << "SSL_CTX_use_PrivateKey_file("
+        LOG_ERROR(g_logger) << "SSL_CTX_use_PrivateKey_file("
             << key_file << ") error";
         return false;
     }
     if(SSL_CTX_check_private_key(m_ctx.get()) != 1) {
-        WEBSERVER_LOG_ERROR(g_logger) << "SSL_CTX_check_private_key cert_file="
+        LOG_ERROR(g_logger) << "SSL_CTX_check_private_key cert_file="
             << cert_file << " key_file=" << key_file;
         return false;
     }

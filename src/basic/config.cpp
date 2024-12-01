@@ -9,7 +9,7 @@
 
 namespace webserver {
 
-static webserver::Logger::ptr g_logger = WEBSERVER_LOG_NAME("system");
+static webserver::Logger::ptr g_logger = LOG_NAME("system");
 
 ConfigVarBase::ptr Config::LookupBase(const std::string& name) {
     RWMutexType::ReadLock lock(GetMutex());
@@ -21,7 +21,7 @@ static void ListAllMember(const std::string& prefix
                             ,const YAML::Node& node
                             ,std::list<std::pair<std::string, const YAML::Node> >& output) {
     if(prefix.find_first_not_of("abcdefghikjlmnopqrstuvwxyz._012345678") != std::string::npos) {
-        WEBSERVER_LOG_ERROR(g_logger) << "Config invalid name: " << prefix << " : " << node;
+        LOG_ERROR(g_logger) << "Config invalid name: " << prefix << " : " << node;
         return;
     }
 
@@ -83,10 +83,10 @@ void Config::LoadFromConfDir(const std::string& path, bool force) {
         try {
             YAML::Node root = YAML::LoadFile(i);
             LoadFromYaml(root);
-            WEBSERVER_LOG_INFO(g_logger) << "LoadConfFile file="
+            LOG_INFO(g_logger) << "LoadConfFile file="
                 << i << " ok";
         } catch (...) {
-            WEBSERVER_LOG_ERROR(g_logger) << "LoadConfFile file="
+            LOG_ERROR(g_logger) << "LoadConfFile file="
                 << i << " failed";
         }
     }

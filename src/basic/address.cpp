@@ -9,7 +9,7 @@
 
 namespace webserver {
 
-static webserver::Logger::ptr g_logger = WEBSERVER_LOG_NAME("system");
+static webserver::Logger::ptr g_logger = LOG_NAME("system");
 
 template<class T>
 static T CreateMask(uint32_t bits) {
@@ -95,7 +95,7 @@ bool Address::Lookup(std::vector<Address::ptr>& result, const std::string& host,
     }
     int error = getaddrinfo(node.c_str(), service, &hints, &results);
     if(error) {
-        WEBSERVER_LOG_DEBUG(g_logger) << "Address::Lookup getaddress(" << host << ", "
+        LOG_DEBUG(g_logger) << "Address::Lookup getaddress(" << host << ", "
             << family << ", " << type << ") err=" << error << " errstr="
             << gai_strerror(error);
         return false;
@@ -104,7 +104,7 @@ bool Address::Lookup(std::vector<Address::ptr>& result, const std::string& host,
     next = results;
     while(next) {
         result.push_back(Create(next->ai_addr, (socklen_t)next->ai_addrlen));
-        //WEBSERVER_LOG_INFO(g_logger) << ((sockaddr_in*)next->ai_addr)->sin_addr.s_addr;
+        //LOG_INFO(g_logger) << ((sockaddr_in*)next->ai_addr)->sin_addr.s_addr;
         next = next->ai_next;
     }
 
@@ -117,7 +117,7 @@ bool Address::GetInterfaceAddresses(std::multimap<std::string
                     int family) {
     struct ifaddrs *next, *results;
     if(getifaddrs(&results) != 0) {
-        WEBSERVER_LOG_DEBUG(g_logger) << "Address::GetInterfaceAddresses getifaddrs "
+        LOG_DEBUG(g_logger) << "Address::GetInterfaceAddresses getifaddrs "
             " err=" << errno << " errstr=" << strerror(errno);
         return false;
     }
@@ -157,7 +157,7 @@ bool Address::GetInterfaceAddresses(std::multimap<std::string
             }
         }
     } catch (...) {
-        WEBSERVER_LOG_ERROR(g_logger) << "Address::GetInterfaceAddresses exception";
+        LOG_ERROR(g_logger) << "Address::GetInterfaceAddresses exception";
         freeifaddrs(results);
         return false;
     }
@@ -252,7 +252,7 @@ IPAddress::ptr IPAddress::Create(const char* address, uint16_t port) {
 
     int error = getaddrinfo(address, NULL, &hints, &results);
     if(error) {
-        WEBSERVER_LOG_DEBUG(g_logger) << "IPAddress::Create(" << address
+        LOG_DEBUG(g_logger) << "IPAddress::Create(" << address
             << ", " << port << ") error=" << error
             << " errno=" << errno << " errstr=" << strerror(errno);
         return nullptr;
@@ -277,7 +277,7 @@ IPv4Address::ptr IPv4Address::Create(const char* address, uint16_t port) {
     rt->m_addr.sin_port = byteswapOnLittleEndian(port);
     int result = inet_pton(AF_INET, address, &rt->m_addr.sin_addr);
     if(result <= 0) {
-        WEBSERVER_LOG_DEBUG(g_logger) << "IPv4Address::Create(" << address << ", "
+        LOG_DEBUG(g_logger) << "IPv4Address::Create(" << address << ", "
                 << port << ") rt=" << result << " errno=" << errno
                 << " errstr=" << strerror(errno);
         return nullptr;
@@ -361,7 +361,7 @@ IPv6Address::ptr IPv6Address::Create(const char* address, uint16_t port) {
     rt->m_addr.sin6_port = byteswapOnLittleEndian(port);
     int result = inet_pton(AF_INET6, address, &rt->m_addr.sin6_addr);
     if(result <= 0) {
-        WEBSERVER_LOG_DEBUG(g_logger) << "IPv6Address::Create(" << address << ", "
+        LOG_DEBUG(g_logger) << "IPv6Address::Create(" << address << ", "
                 << port << ") rt=" << result << " errno=" << errno
                 << " errstr=" << strerror(errno);
         return nullptr;

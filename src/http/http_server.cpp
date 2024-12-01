@@ -6,7 +6,7 @@
 namespace webserver {
 namespace http {
 
-static webserver::Logger::ptr g_logger = WEBSERVER_LOG_NAME("system");
+static webserver::Logger::ptr g_logger = LOG_NAME("system");
 
 HttpServer::HttpServer(bool keepalive
                 ,webserver::IOManager* worker
@@ -27,12 +27,12 @@ void HttpServer::setName(const std::string& v) {
 }
 
 void HttpServer::handleClient(Socket::ptr client) {
-    WEBSERVER_LOG_DEBUG(g_logger) << "handleClient " << *client;
+    LOG_DEBUG(g_logger) << "handleClient " << *client;
     HttpSession::ptr session(new HttpSession(client));
     do {
         auto req = session->recvRequest();
         if(!req) {
-            WEBSERVER_LOG_DEBUG(g_logger) << "recv http request fail, errno="
+            LOG_DEBUG(g_logger) << "recv http request fail, errno="
                 << errno << " errstr=" << strerror(errno)
                 << " cliet:" << *client << " keep_alive=" << m_isKeepalive;
             break;

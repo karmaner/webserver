@@ -42,8 +42,8 @@ public:
         if(s) {
             s->schedule(fc, thread);
         } else {
-            static webserver::Logger::ptr s_logger = WEBSERVER_LOG_NAME("system");
-            WEBSERVER_LOG_ERROR(s_logger) << "schedule name=" << name
+            static webserver::Logger::ptr s_logger = LOG_NAME("system");
+            LOG_ERROR(s_logger) << "schedule name=" << name
                 << " not exists";
         }
     }
@@ -54,8 +54,8 @@ public:
         if(s) {
             s->schedule(begin, end);
         } else {
-            static webserver::Logger::ptr s_logger = WEBSERVER_LOG_NAME("system");
-            WEBSERVER_LOG_ERROR(s_logger) << "schedule name=" << name
+            static webserver::Logger::ptr s_logger = LOG_NAME("system");
+            LOG_ERROR(s_logger) << "schedule name=" << name
                 << " not exists";
         }
     }

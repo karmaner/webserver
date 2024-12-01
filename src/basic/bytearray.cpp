@@ -9,7 +9,7 @@
 
 namespace webserver {
 
-static webserver::Logger::ptr g_logger = WEBSERVER_LOG_NAME("system");
+static webserver::Logger::ptr g_logger = LOG_NAME("system");
 
 ByteArray::Node::Node(size_t s)
     :ptr(new char[s])
@@ -457,7 +457,7 @@ bool ByteArray::writeToFile(const std::string& name) const {
     std::ofstream ofs;
     ofs.open(name, std::ios::trunc | std::ios::binary);
     if(!ofs) {
-        WEBSERVER_LOG_ERROR(g_logger) << "writeToFile name=" << name
+        LOG_ERROR(g_logger) << "writeToFile name=" << name
             << " error , errno=" << errno << " errstr=" << strerror(errno);
         return false;
     }
@@ -482,7 +482,7 @@ bool ByteArray::readFromFile(const std::string& name) {
     std::ifstream ifs;
     ifs.open(name, std::ios::binary);
     if(!ifs) {
-        WEBSERVER_LOG_ERROR(g_logger) << "readFromFile name=" << name
+        LOG_ERROR(g_logger) << "readFromFile name=" << name
             << " error, errno=" << errno << " errstr=" << strerror(errno);
         return false;
     }

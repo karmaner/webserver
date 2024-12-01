@@ -2,7 +2,7 @@
 #include "src/ds/bitmap.h"
 #include "src/ds/roaring_bitmap.h"
 
-static webserver::Logger::ptr g_logger = WEBSERVER_LOG_ROOT();
+static webserver::Logger::ptr g_logger = LOG_ROOT();
 #if 0
 void init(uint32_t size, std::set<uint32_t> v = {}) {
     //uint32_t size = rand() % 8 * 7 + 128;
@@ -71,7 +71,7 @@ void init(uint32_t size, std::set<uint32_t> v = {}) {
     webserver::ds::Bitmap::ptr bb(new webserver::ds::Bitmap(size, 0xFF));
     *b &= *bb;
 #define XX(v) \
-        WEBSERVER_LOG_INFO(g_logger) << #v ": " << webserver::Join(v.begin(), v.end(), ",");
+        LOG_INFO(g_logger) << #v ": " << webserver::Join(v.begin(), v.end(), ",");
 
 #define XX_ASSERT(a, b) \
         if(a != b) { \
@@ -97,7 +97,7 @@ void init(uint32_t size, std::set<uint32_t> v = {}) {
 #undef XX_ASSERT
 #undef XX
     }
-    //WEBSERVER_LOG_INFO(g_logger) << "size: " << size;
+    //LOG_INFO(g_logger) << "size: " << size;
 }
 
 void test_compress(size_t size, std::set<uint32_t> v = {}) {
@@ -121,10 +121,10 @@ void test_compress(size_t size, std::set<uint32_t> v = {}) {
     auto bb = bc->uncompress();
 
     if(*b != *bb) {
-        WEBSERVER_LOG_INFO(g_logger) << "b  :" << b->toString();
-        WEBSERVER_LOG_INFO(g_logger) << "bc :" << bc->toString();
-        WEBSERVER_LOG_INFO(g_logger) << "bb :" << bb->toString();
-        WEBSERVER_LOG_INFO(g_logger) << "size=" << size << " - " << webserver::Join(v.begin(), v.end(), ",");
+        LOG_INFO(g_logger) << "b  :" << b->toString();
+        LOG_INFO(g_logger) << "bc :" << bc->toString();
+        LOG_INFO(g_logger) << "bb :" << bb->toString();
+        LOG_INFO(g_logger) << "size=" << size << " - " << webserver::Join(v.begin(), v.end(), ",");
 
         WEBSERVER_ASSERT(*b == *bb);
     }
@@ -193,7 +193,7 @@ void test_op(size_t size, std::set<uint32_t> v1, std::set<uint32_t> v2) {
     });
 
 #define XX(v) \
-        WEBSERVER_LOG_INFO(g_logger) << #v ": " << webserver::Join(v.begin(), v.end(), ",");
+        LOG_INFO(g_logger) << #v ": " << webserver::Join(v.begin(), v.end(), ",");
 
 #define XX_ASSERT(a, b) \
         if(a != b) { \

@@ -2,7 +2,7 @@
 #include "src/basic/log.h"
 #include "src/basic/util.h"
 
-static webserver::Logger::ptr g_logger = WEBSERVER_LOG_ROOT();
+static webserver::Logger::ptr g_logger = LOG_ROOT();
 
 void test_batch(webserver::SQLite3::ptr db) {
     auto ts = webserver::GetCurrentMS();
@@ -21,18 +21,18 @@ void test_batch(webserver::SQLite3::ptr db) {
     trans.commit();
     auto ts2 = webserver::GetCurrentMS();
 
-    WEBSERVER_LOG_INFO(g_logger) << "used: " << (ts2 - ts) / 1000.0 << "s batch insert n=" << n;
+    LOG_INFO(g_logger) << "used: " << (ts2 - ts) / 1000.0 << "s batch insert n=" << n;
 }
 
 int main(int argc, char* argv[]) {
     const std::string dbname = "test.db";
     auto db = webserver::SQLite3::Create(dbname, webserver::SQLite3::READWRITE);
     if(!db) {
-        WEBSERVER_LOG_INFO(g_logger) << "dbname=" << dbname << " not exists";
+        LOG_INFO(g_logger) << "dbname=" << dbname << " not exists";
         db = webserver::SQLite3::Create(dbname
                 , webserver::SQLite3::READWRITE | webserver::SQLite3::CREATE);
         if(!db) {
-            WEBSERVER_LOG_INFO(g_logger) << "dbname=" << dbname << " create error";
+            LOG_INFO(g_logger) << "dbname=" << dbname << " create error";
             return 0;
         }
 
@@ -47,7 +47,7 @@ XX(create table user (
 #undef XX
 
         if(rt != SQLITE_OK) {
-            WEBSERVER_LOG_ERROR(g_logger) << "create table error "
+            LOG_ERROR(g_logger) << "create table error "
                 << db->getErrno() << " - " << db->getErrStr();
             return 0;
         }
@@ -56,7 +56,7 @@ XX(create table user (
     for(int i = 0; i < 10; ++i) {
         if(db->execute("insert into user(name, age) values(\"name_%d\",%d)", i, i)
                 != SQLITE_OK) {
-            WEBSERVER_LOG_ERROR(g_logger) << "insert into error " << i << " "
+            LOG_ERROR(g_logger) << "insert into error " << i << " "
                 << db->getErrno() << " - " << db->getErrStr();
         }
     }
@@ -64,7 +64,7 @@ XX(create table user (
     webserver::SQLite3Stmt::ptr stmt = webserver::SQLite3Stmt::Create(db,
                 "insert into user(name, age, create_time) values(?, ?, ?)");
     if(!stmt) {
-        WEBSERVER_LOG_ERROR(g_logger) << "create statement error "
+        LOG_ERROR(g_logger) << "create statement error "
             << db->getErrno() << " - " << db->getErrStr();
         return 0;
     }
@@ -79,7 +79,7 @@ XX(create table user (
         //stmt->bind(4, i + 1);
 
         if(stmt->execute() != SQLITE_OK) {
-            WEBSERVER_LOG_ERROR(g_logger) << "execute statment error " << i << " "
+            LOG_ERROR(g_logger) << "execute statment error " << i << " "
                 << db->getErrno() << " - " << db->getErrStr();
         }
         stmt->reset();
@@ -88,19 +88,19 @@ XX(create table user (
     webserver::SQLite3Stmt::ptr query = webserver::SQLite3Stmt::Create(db,
             "select * from user");
     if(!query) {
-        WEBSERVER_LOG_ERROR(g_logger) << "create statement error "
+        LOG_ERROR(g_logger) << "create statement error "
             << db->getErrno() << " - " << db->getErrStr();
         return 0;
     }
     auto ds = query->query();
     if(!ds) {
-        WEBSERVER_LOG_ERROR(g_logger) << "query error "
+        LOG_ERROR(g_logger) << "query error "
             << db->getErrno() << " - " << db->getErrStr();
         return 0;
     }
 
     while(ds->next()) {
-        //WEBSERVER_LOG_INFO(g_logger) << "query ";
+        //LOG_INFO(g_logger) << "query ";
     };
 
     //const char v[] = "hello ' world";
@@ -109,7 +109,7 @@ XX(create table user (
 
     auto dd = (db->queryStmt("select * from user"));
     while(dd->next()) {
-        WEBSERVER_LOG_INFO(g_logger) << "ds.data_count=" << dd->getDataCount()
+        LOG_INFO(g_logger) << "ds.data_count=" << dd->getDataCount()
             << " ds.column_count=" << dd->getColumnCount()
             << " 0=" << dd->getInt32(0) << " 1=" << dd->getString(1)
             << " 2=" << dd->getString(2)

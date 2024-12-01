@@ -10,7 +10,7 @@
 
 namespace webserver {
 
-static webserver::Logger::ptr g_logger = WEBSERVER_LOG_NAME("system");
+static webserver::Logger::ptr g_logger = LOG_NAME("system");
 
 enum EpollCtlOp {
 };
@@ -78,7 +78,7 @@ void IOManager::FdContext::resetContext(EventContext& ctx) {
 }
 
 void IOManager::FdContext::triggerEvent(IOManager::Event event) {
-    //WEBSERVER_LOG_INFO(g_logger) << "fd=" << fd
+    //LOG_INFO(g_logger) << "fd=" << fd
     //    << " triggerEvent event=" << event
     //    << " events=" << events;
     WEBSERVER_ASSERT(events & event);
@@ -159,7 +159,7 @@ int IOManager::addEvent(int fd, Event event, std::function<void()> cb) {
 
     FdContext::MutexType::Lock lock2(fd_ctx->mutex);
     if(WEBSERVER_UNLIKELY(fd_ctx->events & event)) {
-        WEBSERVER_LOG_ERROR(g_logger) << "addEvent assert fd=" << fd
+        LOG_ERROR(g_logger) << "addEvent assert fd=" << fd
                     << " event=" << (EPOLL_EVENTS)event
                     << " fd_ctx.event=" << (EPOLL_EVENTS)fd_ctx->events;
         WEBSERVER_ASSERT(!(fd_ctx->events & event));
@@ -172,7 +172,7 @@ int IOManager::addEvent(int fd, Event event, std::function<void()> cb) {
 
     int rt = epoll_ctl(m_epfd, op, fd, &epevent);
     if(rt) {
-        WEBSERVER_LOG_ERROR(g_logger) << "epoll_ctl(" << m_epfd << ", "
+        LOG_ERROR(g_logger) << "epoll_ctl(" << m_epfd << ", "
             << (EpollCtlOp)op << ", " << fd << ", " << (EPOLL_EVENTS)epevent.events << "):"
             << rt << " (" << errno << ") (" << strerror(errno) << ") fd_ctx->events="
             << (EPOLL_EVENTS)fd_ctx->events;
@@ -218,7 +218,7 @@ bool IOManager::delEvent(int fd, Event event) {
 
     int rt = epoll_ctl(m_epfd, op, fd, &epevent);
     if(rt) {
-        WEBSERVER_LOG_ERROR(g_logger) << "epoll_ctl(" << m_epfd << ", "
+        LOG_ERROR(g_logger) << "epoll_ctl(" << m_epfd << ", "
             << (EpollCtlOp)op << ", " << fd << ", " << (EPOLL_EVENTS)epevent.events << "):"
             << rt << " (" << errno << ") (" << strerror(errno) << ")";
         return false;
@@ -252,7 +252,7 @@ bool IOManager::cancelEvent(int fd, Event event) {
 
     int rt = epoll_ctl(m_epfd, op, fd, &epevent);
     if(rt) {
-        WEBSERVER_LOG_ERROR(g_logger) << "epoll_ctl(" << m_epfd << ", "
+        LOG_ERROR(g_logger) << "epoll_ctl(" << m_epfd << ", "
             << (EpollCtlOp)op << ", " << fd << ", " << (EPOLL_EVENTS)epevent.events << "):"
             << rt << " (" << errno << ") (" << strerror(errno) << ")";
         return false;
@@ -283,7 +283,7 @@ bool IOManager::cancelAll(int fd) {
 
     int rt = epoll_ctl(m_epfd, op, fd, &epevent);
     if(rt) {
-        WEBSERVER_LOG_ERROR(g_logger) << "epoll_ctl(" << m_epfd << ", "
+        LOG_ERROR(g_logger) << "epoll_ctl(" << m_epfd << ", "
             << (EpollCtlOp)op << ", " << fd << ", " << (EPOLL_EVENTS)epevent.events << "):"
             << rt << " (" << errno << ") (" << strerror(errno) << ")";
         return false;
@@ -328,7 +328,7 @@ bool IOManager::stopping() {
 }
 
 void IOManager::idle() {
-    WEBSERVER_LOG_DEBUG(g_logger) << "idle";
+    LOG_DEBUG(g_logger) << "idle";
     const uint64_t MAX_EVNETS = 256;
     epoll_event* events = new epoll_event[MAX_EVNETS]();
     std::shared_ptr<epoll_event> shared_events(events, [](epoll_event* ptr){
@@ -338,7 +338,7 @@ void IOManager::idle() {
     while(true) {
         uint64_t next_timeout = 0;
         if(WEBSERVER_UNLIKELY(stopping(next_timeout))) {
-            WEBSERVER_LOG_INFO(g_logger) << "name=" << getName()
+            LOG_INFO(g_logger) << "name=" << getName()
                                         << " idle stopping exit";
             break;
         }
@@ -362,13 +362,13 @@ void IOManager::idle() {
         std::vector<std::function<void()> > cbs;
         listExpiredCb(cbs);
         if(!cbs.empty()) {
-            //WEBSERVER_LOG_DEBUG(g_logger) << "on timer cbs.size=" << cbs.size();
+            //LOG_DEBUG(g_logger) << "on timer cbs.size=" << cbs.size();
             schedule(cbs.begin(), cbs.end());
             cbs.clear();
         }
 
         //if(WEBSERVER_UNLIKELY(rt == MAX_EVNETS)) {
-        //    WEBSERVER_LOG_INFO(g_logger) << "epoll wait events=" << rt;
+        //    LOG_INFO(g_logger) << "epoll wait events=" << rt;
         //}
 
         for(int i = 0; i < rt; ++i) {
@@ -402,13 +402,13 @@ void IOManager::idle() {
 
             int rt2 = epoll_ctl(m_epfd, op, fd_ctx->fd, &event);
             if(rt2) {
-                WEBSERVER_LOG_ERROR(g_logger) << "epoll_ctl(" << m_epfd << ", "
+                LOG_ERROR(g_logger) << "epoll_ctl(" << m_epfd << ", "
                     << (EpollCtlOp)op << ", " << fd_ctx->fd << ", " << (EPOLL_EVENTS)event.events << "):"
                     << rt2 << " (" << errno << ") (" << strerror(errno) << ")";
                 continue;
             }
 
-            //WEBSERVER_LOG_INFO(g_logger) << " fd=" << fd_ctx->fd << " events=" << fd_ctx->events
+            //LOG_INFO(g_logger) << " fd=" << fd_ctx->fd << " events=" << fd_ctx->events
             //                         << " real_events=" << real_events;
             if(real_events & READ) {
                 fd_ctx->triggerEvent(READ);

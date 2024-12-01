@@ -349,7 +349,7 @@ public:
             RWMutexType::ReadLock lock(m_mutex);
             return ToStr()(m_val);
         } catch (std::exception& e) {
-            WEBSERVER_LOG_ERROR(WEBSERVER_LOG_ROOT()) << "ConfigVar::toString exception "
+            LOG_ERROR(LOG_ROOT()) << "ConfigVar::toString exception "
                 << e.what() << " convert: " << TypeToName<T>() << " to string"
                 << " name=" << m_name;
         }
@@ -364,7 +364,7 @@ public:
         try {
             setValue(FromStr()(val));
         } catch (std::exception& e) {
-            WEBSERVER_LOG_ERROR(WEBSERVER_LOG_ROOT()) << "ConfigVar::fromString exception "
+            LOG_ERROR(LOG_ROOT()) << "ConfigVar::fromString exception "
                 << e.what() << " convert: string to " << TypeToName<T>()
                 << " name=" << m_name
                 << " - " << val;
@@ -476,10 +476,10 @@ public:
         if(it != GetDatas().end()) {
             auto tmp = std::dynamic_pointer_cast<ConfigVar<T> >(it->second);
             if(tmp) {
-                WEBSERVER_LOG_INFO(WEBSERVER_LOG_ROOT()) << "Lookup name=" << name << " exists";
+                LOG_INFO(LOG_ROOT()) << "Lookup name=" << name << " exists";
                 return tmp;
             } else {
-                WEBSERVER_LOG_ERROR(WEBSERVER_LOG_ROOT()) << "Lookup name=" << name << " exists but type not "
+                LOG_ERROR(LOG_ROOT()) << "Lookup name=" << name << " exists but type not "
                         << TypeToName<T>() << " real_type=" << it->second->getTypeName()
                         << " " << it->second->toString();
                 return nullptr;
@@ -488,7 +488,7 @@ public:
 
         if(name.find_first_not_of("abcdefghikjlmnopqrstuvwxyz._012345678")
                 != std::string::npos) {
-            WEBSERVER_LOG_ERROR(WEBSERVER_LOG_ROOT()) << "Lookup name invalid " << name;
+            LOG_ERROR(LOG_ROOT()) << "Lookup name invalid " << name;
             throw std::invalid_argument(name);
         }
 

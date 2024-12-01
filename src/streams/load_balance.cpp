@@ -6,7 +6,7 @@
 
 namespace webserver {
 
-static webserver::Logger::ptr g_logger = WEBSERVER_LOG_NAME("system");
+static webserver::Logger::ptr g_logger = LOG_NAME("system");
 
 HolderStats HolderStatsSet::getTotal() {
     HolderStats rt;
@@ -411,7 +411,7 @@ LoadBalanceItem::ptr SDLoadBalance::createLoadBalanceItem(ILoadBalance::Type typ
 void SDLoadBalance::onServiceChange(const std::string& domain, const std::string& service
                             ,const std::unordered_map<uint64_t, ServiceItemInfo::ptr>& old_value
                             ,const std::unordered_map<uint64_t, ServiceItemInfo::ptr>& new_value) {
-    WEBSERVER_LOG_INFO(g_logger) << "onServiceChange domain=" << domain
+    LOG_INFO(g_logger) << "onServiceChange domain=" << domain
                              << " service=" << service;
     auto type = getType(domain, service);
     auto lb = get(domain, service, true);
@@ -433,7 +433,7 @@ void SDLoadBalance::onServiceChange(const std::string& domain, const std::string
     for(auto& i : add_values) {
         auto stream = m_cb(i.second);
         if(!stream) {
-            WEBSERVER_LOG_ERROR(g_logger) << "create stream fail, " << i.second->toString();
+            LOG_ERROR(g_logger) << "create stream fail, " << i.second->toString();
             continue;
         }
         

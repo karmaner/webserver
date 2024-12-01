@@ -5,7 +5,7 @@
 namespace webserver {
 namespace orm {
 
-static webserver::Logger::ptr g_logger = WEBSERVER_LOG_NAME("orm");
+static webserver::Logger::ptr g_logger = LOG_NAME("orm");
 
 Column::Type Column::ParseType(const std::string& v) {
 #define XX(a, b, c)         \
@@ -185,20 +185,20 @@ std::string Column::getSQLite3Default() {
 
 bool Column::init(const tinyxml2::XMLElement& node) {
     if(!node.Attribute("name")) {
-        WEBSERVER_LOG_ERROR(g_logger) << "column name not exists";
+        LOG_ERROR(g_logger) << "column name not exists";
         return false;
     }
     m_name = node.Attribute("name");
 
     if(!node.Attribute("type")) {
-        WEBSERVER_LOG_ERROR(g_logger) << "column name=" << m_name
+        LOG_ERROR(g_logger) << "column name=" << m_name
             << " type is null";
         return false;
     }
     m_type = node.Attribute("type");
     m_dtype = ParseType(m_type);
     if(m_dtype == TYPE_NULL) {
-        WEBSERVER_LOG_ERROR(g_logger) << "column name=" << m_name
+        LOG_ERROR(g_logger) << "column name=" << m_name
             << " type=" << m_type
             << " type is invalid";
         return false;

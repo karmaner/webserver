@@ -2,7 +2,7 @@
 #include "src/basic/iomanager.h"
 #include "src/basic/log.h"
 
-static webserver::Logger::ptr g_logger = WEBSERVER_LOG_ROOT();
+static webserver::Logger::ptr g_logger = LOG_ROOT();
 
 void run() {
     auto addr = webserver::Address::LookupAny("0.0.0.0:8033");

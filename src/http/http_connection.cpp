@@ -7,7 +7,7 @@
 namespace webserver {
 namespace http {
 
-static webserver::Logger::ptr g_logger = WEBSERVER_LOG_NAME("system");
+static webserver::Logger::ptr g_logger = LOG_NAME("system");
 
 std::string HttpResult::toString() const {
     std::stringstream ss;
@@ -23,7 +23,7 @@ HttpConnection::HttpConnection(Socket::ptr sock, bool owner)
 }
 
 HttpConnection::~HttpConnection() {
-    WEBSERVER_LOG_DEBUG(g_logger) << "HttpConnection::~HttpConnection";
+    LOG_DEBUG(g_logger) << "HttpConnection::~HttpConnection";
 }
 
 HttpResponse::ptr HttpConnection::recvResponse() {
@@ -88,7 +88,7 @@ HttpResponse::ptr HttpConnection::recvResponse() {
             } while(!parser->isFinished());
             //len -= 2;
             
-            WEBSERVER_LOG_DEBUG(g_logger) << "content_len=" << client_parser.content_len;
+            LOG_DEBUG(g_logger) << "content_len=" << client_parser.content_len;
             if(client_parser.content_len + 2 <= len) {
                 body.append(data, client_parser.content_len);
                 memmove(data, data + client_parser.content_len + 2
@@ -134,7 +134,7 @@ HttpResponse::ptr HttpConnection::recvResponse() {
     }
     if(!body.empty()) {
         auto content_encoding = parser->getData()->getHeader("content-encoding");
-        WEBSERVER_LOG_DEBUG(g_logger) << "content_encoding: " << content_encoding
+        LOG_DEBUG(g_logger) << "content_encoding: " << content_encoding
             << " size=" << body.size();
         if(strcasecmp(content_encoding.c_str(), "gzip") == 0) {
             auto zs = ZlibStream::CreateGzip(false);
@@ -291,7 +291,7 @@ HttpConnectionPool::ptr HttpConnectionPool::Create(const std::string& uri
                                                     ,uint32_t max_request) {
     Uri::ptr turi = Uri::Create(uri);
     if(!turi) {
-        WEBSERVER_LOG_ERROR(g_logger) << "invalid uri=" << uri;
+        LOG_ERROR(g_logger) << "invalid uri=" << uri;
     }
     return std::make_shared<HttpConnectionPool>(turi->getHost()
             , vhost, turi->getPort(), turi->getScheme() == "https"
@@ -342,17 +342,17 @@ HttpConnection::ptr HttpConnectionPool::getConnection() {
     if(!ptr) {
         IPAddress::ptr addr = Address::LookupAnyIPAddress(m_host);
         if(!addr) {
-            WEBSERVER_LOG_ERROR(g_logger) << "get addr fail: " << m_host;
+            LOG_ERROR(g_logger) << "get addr fail: " << m_host;
             return nullptr;
         }
         addr->setPort(m_port);
         Socket::ptr sock = m_isHttps ? SSLSocket::CreateTCP(addr) : Socket::CreateTCP(addr);
         if(!sock) {
-            WEBSERVER_LOG_ERROR(g_logger) << "create sock fail: " << *addr;
+            LOG_ERROR(g_logger) << "create sock fail: " << *addr;
             return nullptr;
         }
         if(!sock->connect(addr)) {
-            WEBSERVER_LOG_ERROR(g_logger) << "sock connect fail: " << *addr;
+            LOG_ERROR(g_logger) << "sock connect fail: " << *addr;
             return nullptr;
         }
 

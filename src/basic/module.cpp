@@ -11,7 +11,7 @@ namespace webserver {
 static webserver::ConfigVar<std::string>::ptr g_module_path
     = Config::Lookup("module.path", std::string("module"), "module path");
 
-static webserver::Logger::ptr g_logger = WEBSERVER_LOG_NAME("system");
+static webserver::Logger::ptr g_logger = LOG_NAME("system");
 
 Module::Module(const std::string& name
             ,const std::string& version
@@ -33,14 +33,14 @@ void Module::onAfterArgsParse(int argc, char* argv[]) {
 bool Module::handleRequest(webserver::Message::ptr req
                             ,webserver::Message::ptr rsp
                             ,webserver::Stream::ptr stream) {
-    WEBSERVER_LOG_DEBUG(g_logger) << "handleRequest req=" << req->toString()
+    LOG_DEBUG(g_logger) << "handleRequest req=" << req->toString()
             << " rsp=" << rsp->toString() << " stream=" << stream;
     return true;
 }
 
 bool Module::handleNotify(webserver::Message::ptr notify
                             ,webserver::Stream::ptr stream) {
-    WEBSERVER_LOG_DEBUG(g_logger) << "handleNotify nty=" << notify->toString()
+    LOG_DEBUG(g_logger) << "handleNotify nty=" << notify->toString()
             << " stream=" << stream;
     return true;
 }

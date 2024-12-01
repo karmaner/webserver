@@ -99,6 +99,7 @@ class MessageFormatItem : public LogFormatter::FormatItem {
 public:
     MessageFormatItem(const std::string& str = "") {}
     void format(std::ostream& os, Logger::ptr logger, LogLevel::Level level, LogEvent::ptr event) override {
+        os << ">> ";
         os << event->getContent();
     }
 };
@@ -705,17 +706,17 @@ struct LogIniter {
     LogIniter() {
         g_log_defines->addListener([](const std::set<LogDefine>& old_value,
                     const std::set<LogDefine>& new_value){
-            WEBSERVER_LOG_INFO(WEBSERVER_LOG_ROOT()) << "on_logger_conf_changed";
+            LOG_INFO(LOG_ROOT()) << "on_logger_conf_changed";
             for(auto& i : new_value) {
                 auto it = old_value.find(i);
                 webserver::Logger::ptr logger;
                 if(it == old_value.end()) {
                     //新增logger
-                    logger = WEBSERVER_LOG_NAME(i.name);
+                    logger = LOG_NAME(i.name);
                 } else {
                     if(!(i == *it)) {
                         //修改的logger
-                        logger = WEBSERVER_LOG_NAME(i.name);
+                        logger = LOG_NAME(i.name);
                     } else {
                         continue;
                     }
@@ -755,7 +756,7 @@ struct LogIniter {
                 auto it = new_value.find(i);
                 if(it == new_value.end()) {
                     //删除logger
-                    auto logger = WEBSERVER_LOG_NAME(i.name);
+                    auto logger = LOG_NAME(i.name);
                     logger->setLevel((LogLevel::Level)0);
                     logger->clearAppenders();
                 }

@@ -9,7 +9,7 @@
 
 namespace webserver {
 
-static webserver::Logger::ptr g_logger = WEBSERVER_LOG_NAME("system");
+static webserver::Logger::ptr g_logger = LOG_NAME("system");
 static webserver::ConfigVar<uint32_t>::ptr g_daemon_restart_interval
     = webserver::Config::Lookup("daemon.restart_interval", (uint32_t)5, "daemon restart interval");
 
@@ -41,10 +41,10 @@ static int real_daemon(int argc, char** argv,
             //子进程返回
             ProcessInfoMgr::GetInstance()->main_id = getpid();
             ProcessInfoMgr::GetInstance()->main_start_time  = time(0);
-            WEBSERVER_LOG_INFO(g_logger) << "process start pid=" << getpid();
+            LOG_INFO(g_logger) << "process start pid=" << getpid();
             return real_start(argc, argv, main_cb);
         } else if(pid < 0) {
-            WEBSERVER_LOG_ERROR(g_logger) << "fork fail return=" << pid
+            LOG_ERROR(g_logger) << "fork fail return=" << pid
                 << " errno=" << errno << " errstr=" << strerror(errno);
             return -1;
         } else {
@@ -53,14 +53,14 @@ static int real_daemon(int argc, char** argv,
             waitpid(pid, &status, 0);
             if(status) {
                 if(status == 9) {
-                    WEBSERVER_LOG_INFO(g_logger) << "killed";
+                    LOG_INFO(g_logger) << "killed";
                     break;
                 } else {
-                    WEBSERVER_LOG_ERROR(g_logger) << "child crash pid=" << pid
+                    LOG_ERROR(g_logger) << "child crash pid=" << pid
                         << " status=" << status;
                 }
             } else {
-                WEBSERVER_LOG_INFO(g_logger) << "child finished pid=" << pid;
+                LOG_INFO(g_logger) << "child finished pid=" << pid;
                 break;
             }
             ProcessInfoMgr::GetInstance()->restart_count += 1;

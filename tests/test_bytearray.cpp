@@ -1,7 +1,7 @@
 #include "src/basic/bytearray.h"
 #include "src/webserver.h"
 
-static webserver::Logger::ptr g_logger = WEBSERVER_LOG_ROOT();
+static webserver::Logger::ptr g_logger = LOG_ROOT();
 void test() {
 #define XX(type, len, write_fun, read_fun, base_len) {                  \
     std::vector<type> vec;                                              \
@@ -18,7 +18,7 @@ void test() {
         WEBSERVER_ASSERT(v == vec[i]);                                  \
     }                                                                   \
     WEBSERVER_ASSERT(ba->getReadSize() == 0);                           \
-    WEBSERVER_LOG_INFO(g_logger) << #write_fun "/" #read_fun            \
+    LOG_INFO(g_logger) << #write_fun "/" #read_fun            \
                     " (" #type " ) len=" << len                         \
                     << " base_len=" << base_len                         \
                     << " size=" << ba->getSize();                       \
@@ -54,7 +54,7 @@ void test() {
         WEBSERVER_ASSERT(v == vec[i]);                                  \
     }                                                                   \
     WEBSERVER_ASSERT(ba->getReadSize() == 0);                           \
-    WEBSERVER_LOG_INFO(g_logger) << #write_fun "/" #read_fun            \
+    LOG_INFO(g_logger) << #write_fun "/" #read_fun            \
                     " (" #type " ) len=" << len                         \
                     << " base_len=" << base_len                         \
                     << " size=" << ba->getSize();                       \

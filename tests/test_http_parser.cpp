@@ -1,7 +1,7 @@
 #include "src/http/http_parser.h"
 #include "src/basic/log.h"
 
-static webserver::Logger::ptr g_logger = WEBSERVER_LOG_ROOT();
+static webserver::Logger::ptr g_logger = LOG_ROOT();
 
 const char test_request_data[] = "POST / HTTP/1.1\r\n"
                                 "Host: www.webserver.top\r\n"
@@ -12,14 +12,14 @@ void test_request() {
     webserver::http::HttpRequestParser parser;
     std::string tmp = test_request_data;
     size_t s = parser.execute(&tmp[0], tmp.size());
-    WEBSERVER_LOG_ERROR(g_logger) << "execute rt=" << s
+    LOG_ERROR(g_logger) << "execute rt=" << s
         << "has_error=" << parser.hasError()
         << " is_finished=" << parser.isFinished()
         << " total=" << tmp.size()
         << " content_length=" << parser.getContentLength();
     tmp.resize(tmp.size() - s);
-    WEBSERVER_LOG_INFO(g_logger) << parser.getData()->toString();
-    WEBSERVER_LOG_INFO(g_logger) << tmp;
+    LOG_INFO(g_logger) << parser.getData()->toString();
+    LOG_INFO(g_logger) << tmp;
 }
 
 const char test_response_data[] = "HTTP/1.1 200 OK\r\n"
@@ -41,7 +41,7 @@ void test_response() {
     webserver::http::HttpResponseParser parser;
     std::string tmp = test_response_data;
     size_t s = parser.execute(&tmp[0], tmp.size(), true);
-    WEBSERVER_LOG_ERROR(g_logger) << "execute rt=" << s
+    LOG_ERROR(g_logger) << "execute rt=" << s
         << " has_error=" << parser.hasError()
         << " is_finished=" << parser.isFinished()
         << " total=" << tmp.size()
@@ -50,13 +50,13 @@ void test_response() {
 
     tmp.resize(tmp.size() - s);
 
-    WEBSERVER_LOG_INFO(g_logger) << parser.getData()->toString();
-    WEBSERVER_LOG_INFO(g_logger) << tmp;
+    LOG_INFO(g_logger) << parser.getData()->toString();
+    LOG_INFO(g_logger) << tmp;
 }
 
 int main(int argc, char* argv[]) {
     test_request();
-    WEBSERVER_LOG_INFO(g_logger) << "--------------";
+    LOG_INFO(g_logger) << "--------------";
     test_response();
     return 0;
 }

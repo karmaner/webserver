@@ -4,7 +4,7 @@
 
 namespace webserver {
 
-static webserver::Logger::ptr g_logger = WEBSERVER_LOG_NAME("system");
+static webserver::Logger::ptr g_logger = LOG_NAME("system");
 static webserver::ConfigVar<std::map<std::string, std::map<std::string, std::string> > >::ptr g_redis =
     webserver::Config::Lookup("redis.config", std::map<std::string, std::map<std::string, std::string> >(), "redis config");
 
@@ -117,7 +117,7 @@ ReplyPtr Redis::cmd(const char* fmt, va_list ap) {
     auto r = (redisReply*)redisvCommand(m_context.get(), fmt, ap);
     if(!r) {
         if(m_logEnable) {
-            WEBSERVER_LOG_ERROR(g_logger) << "redisCommand error: (" << fmt << ")(" << m_host << ":" << m_port << ")(" << m_name << ")";
+            LOG_ERROR(g_logger) << "redisCommand error: (" << fmt << ")(" << m_host << ":" << m_port << ")(" << m_name << ")";
         }
         return nullptr;
     }
@@ -126,7 +126,7 @@ ReplyPtr Redis::cmd(const char* fmt, va_list ap) {
         return rt;
     }
     if(m_logEnable) {
-        WEBSERVER_LOG_ERROR(g_logger) << "redisCommand error: (" << fmt << ")(" << m_host << ":" << m_port << ")(" << m_name << ")"
+        LOG_ERROR(g_logger) << "redisCommand error: (" << fmt << ")(" << m_host << ":" << m_port << ")(" << m_name << ")"
                     << ": " << r->str;
     }
     return nullptr;
@@ -143,7 +143,7 @@ ReplyPtr Redis::cmd(const std::vector<std::string>& argv) {
     auto r = (redisReply*)redisCommandArgv(m_context.get(), argv.size(), &v[0], &l[0]);
     if(!r) {
         if(m_logEnable) {
-            WEBSERVER_LOG_ERROR(g_logger) << "redisCommandArgv error: (" << m_host << ":" << m_port << ")(" << m_name << ")";
+            LOG_ERROR(g_logger) << "redisCommandArgv error: (" << m_host << ":" << m_port << ")(" << m_name << ")";
         }
         return nullptr;
     }
@@ -152,7 +152,7 @@ ReplyPtr Redis::cmd(const std::vector<std::string>& argv) {
         return rt;
     }
     if(m_logEnable) {
-        WEBSERVER_LOG_ERROR(g_logger) << "redisCommandArgv error: (" << m_host << ":" << m_port << ")(" << m_name << ")"
+        LOG_ERROR(g_logger) << "redisCommandArgv error: (" << m_host << ":" << m_port << ")(" << m_name << ")"
                     << r->str;
     }
     return nullptr;
@@ -165,7 +165,7 @@ ReplyPtr Redis::getReply() {
         return rt;
     }
     if(m_logEnable) {
-        WEBSERVER_LOG_ERROR(g_logger) << "redisGetReply error: (" << m_host << ":" << m_port << ")(" << m_name << ")";
+        LOG_ERROR(g_logger) << "redisGetReply error: (" << m_host << ":" << m_port << ")(" << m_name << ")";
     }
     return nullptr;
 }
@@ -256,7 +256,7 @@ ReplyPtr RedisCluster::cmd(const char* fmt, va_list ap) {
     auto r = (redisReply*)redisClustervCommand(m_context.get(), fmt, ap);
     if(!r) {
         if(m_logEnable) {
-            WEBSERVER_LOG_ERROR(g_logger) << "redisCommand error: (" << fmt << ")(" << m_host << ":" << m_port << ")(" << m_name << ")";
+            LOG_ERROR(g_logger) << "redisCommand error: (" << fmt << ")(" << m_host << ":" << m_port << ")(" << m_name << ")";
         }
         return nullptr;
     }
@@ -265,7 +265,7 @@ ReplyPtr RedisCluster::cmd(const char* fmt, va_list ap) {
         return rt;
     }
     if(m_logEnable) {
-        WEBSERVER_LOG_ERROR(g_logger) << "redisCommand error: (" << fmt << ")(" << m_host << ":" << m_port << ")(" << m_name << ")"
+        LOG_ERROR(g_logger) << "redisCommand error: (" << fmt << ")(" << m_host << ":" << m_port << ")(" << m_name << ")"
                     << ": " << r->str;
     }
     return nullptr;
@@ -282,7 +282,7 @@ ReplyPtr RedisCluster::cmd(const std::vector<std::string>& argv) {
     auto r = (redisReply*)redisClusterCommandArgv(m_context.get(), argv.size(), &v[0], &l[0]);
     if(!r) {
         if(m_logEnable) {
-            WEBSERVER_LOG_ERROR(g_logger) << "redisCommandArgv error: (" << m_host << ":" << m_port << ")(" << m_name << ")";
+            LOG_ERROR(g_logger) << "redisCommandArgv error: (" << m_host << ":" << m_port << ")(" << m_name << ")";
         }
         return nullptr;
     }
@@ -291,7 +291,7 @@ ReplyPtr RedisCluster::cmd(const std::vector<std::string>& argv) {
         return rt;
     }
     if(m_logEnable) {
-        WEBSERVER_LOG_ERROR(g_logger) << "redisCommandArgv error: (" << m_host << ":" << m_port << ")(" << m_name << ")"
+        LOG_ERROR(g_logger) << "redisCommandArgv error: (" << m_host << ":" << m_port << ")(" << m_name << ")"
                     << r->str;
     }
     return nullptr;
@@ -304,7 +304,7 @@ ReplyPtr RedisCluster::getReply() {
         return rt;
     }
     if(m_logEnable) {
-        WEBSERVER_LOG_ERROR(g_logger) << "redisGetReply error: (" << m_host << ":" << m_port << ")(" << m_name << ")";
+        LOG_ERROR(g_logger) << "redisGetReply error: (" << m_host << ":" << m_port << ")(" << m_name << ")";
     }
     return nullptr;
 }
@@ -357,12 +357,12 @@ FoxRedis::FoxRedis(webserver::FoxThread* thr, const std::map<std::string, std::s
 void FoxRedis::ConnectCb(const redisAsyncContext* c, int status) {
     FoxRedis* ar = static_cast<FoxRedis*>(c->data);
     if(!status) {
-        WEBSERVER_LOG_INFO(g_logger) << "FoxRedis::ConnectCb "
+        LOG_INFO(g_logger) << "FoxRedis::ConnectCb "
                     << c->c.tcp.host << ":" << c->c.tcp.port
                     << " success";
         ar->m_status = CONNECTED;
     } else {
-        WEBSERVER_LOG_ERROR(g_logger) << "FoxRedis::ConnectCb "
+        LOG_ERROR(g_logger) << "FoxRedis::ConnectCb "
                     << c->c.tcp.host << ":" << c->c.tcp.port
                     << " fail, error:" << c->errstr;
         ar->m_status = UNCONNECTED;
@@ -370,7 +370,7 @@ void FoxRedis::ConnectCb(const redisAsyncContext* c, int status) {
 }
 
 void FoxRedis::DisconnectCb(const redisAsyncContext* c, int status) {
-    WEBSERVER_LOG_INFO(g_logger) << "FoxRedis::DisconnectCb "
+    LOG_INFO(g_logger) << "FoxRedis::DisconnectCb "
                 << c->c.tcp.host << ":" << c->c.tcp.port
                 << " status:" << status;
     FoxRedis* ar = static_cast<FoxRedis*>(c->data);
@@ -385,7 +385,7 @@ void FoxRedis::CmdCb(redisAsyncContext *ac, void *r, void *privdata) {
     if(ctx->timeout) {
         delete ctx;
         //if(ctx && ctx->fiber) {
-        //    WEBSERVER_LOG_ERROR(g_logger) << "redis cmd: '" << ctx->cmd << "' timeout("
+        //    LOG_ERROR(g_logger) << "redis cmd: '" << ctx->cmd << "' timeout("
         //                << (ctx->rds->m_cmdTimeout.tv_sec * 1000
         //                        + ctx->rds->m_cmdTimeout.tv_usec / 1000)
         //                << "ms)";
@@ -401,7 +401,7 @@ void FoxRedis::CmdCb(redisAsyncContext *ac, void *r, void *privdata) {
     if(ac->err) {
         if(m_logEnable) {
             webserver::replace(ctx->cmd, "\r\n", "\\r\\n");
-            WEBSERVER_LOG_ERROR(g_logger) << "redis cmd: '" << ctx->cmd
+            LOG_ERROR(g_logger) << "redis cmd: '" << ctx->cmd
                         << "' "
                         << "(" << ac->err << ") " << ac->errstr;
         }
@@ -411,7 +411,7 @@ void FoxRedis::CmdCb(redisAsyncContext *ac, void *r, void *privdata) {
     } else if(!reply) {
         if(m_logEnable) {
             webserver::replace(ctx->cmd, "\r\n", "\\r\\n");
-            WEBSERVER_LOG_ERROR(g_logger) << "redis cmd: '" << ctx->cmd
+            LOG_ERROR(g_logger) << "redis cmd: '" << ctx->cmd
                         << "' "
                         << "reply: NULL";
         }
@@ -421,7 +421,7 @@ void FoxRedis::CmdCb(redisAsyncContext *ac, void *r, void *privdata) {
     } else if(reply->type == REDIS_REPLY_ERROR) {
         if(m_logEnable) {
             webserver::replace(ctx->cmd, "\r\n", "\\r\\n");
-            WEBSERVER_LOG_ERROR(g_logger) << "redis cmd: '" << ctx->cmd
+            LOG_ERROR(g_logger) << "redis cmd: '" << ctx->cmd
                         << "' "
                         << "reply: " << reply->str;
         }
@@ -449,7 +449,7 @@ struct Res {
 };
 
 //void DelayTimeCb(int fd, short event, void* d) {
-//    WEBSERVER_LOG_INFO(g_logger) << "DelayTimeCb";
+//    LOG_INFO(g_logger) << "DelayTimeCb";
 //    Res* res = static_cast<Res*>(d);
 //    redisAsyncFree(res->ctx);
 //    evtimer_del(res->event);
@@ -481,18 +481,18 @@ void FoxRedis::delayDelete(redisAsyncContext* c) {
 }
 
 bool FoxRedis::pinit() {
-    //WEBSERVER_LOG_INFO(g_logger) << "pinit m_status=" << m_status;
+    //LOG_INFO(g_logger) << "pinit m_status=" << m_status;
     if(m_status != UNCONNECTED) {
         return true;
     }
     auto ctx = redisAsyncConnect(m_host.c_str(), m_port);
     if(!ctx) {
-        WEBSERVER_LOG_ERROR(g_logger) << "redisAsyncConnect (" << m_host << ":" << m_port
+        LOG_ERROR(g_logger) << "redisAsyncConnect (" << m_host << ":" << m_port
                     << ") null";
         return false;
     }
     if(ctx->err) {
-        WEBSERVER_LOG_ERROR(g_logger) << "Error:(" << ctx->err << ")" << ctx->errstr;
+        LOG_ERROR(g_logger) << "Error:(" << ctx->err << ")" << ctx->errstr;
         return false;
     }
     ctx->data = this;
@@ -525,7 +525,7 @@ ReplyPtr FoxRedis::cmd(const char* fmt, va_list ap) {
     //int len = vasprintf(&buf, fmt, ap);
     int len = redisvFormatCommand(&buf, fmt, ap);
     if(len == -1) {
-        WEBSERVER_LOG_ERROR(g_logger) << "redis fmt error: " << fmt;
+        LOG_ERROR(g_logger) << "redis fmt error: " << fmt;
         return nullptr;
     }
     //Ctx::ptr ctx(new Ctx(this));
@@ -562,7 +562,7 @@ ReplyPtr FoxRedis::cmd(const std::vector<std::string>& argv) {
         char* buf = nullptr;
         int len = redisFormatCommandArgv(&buf, argv.size(), &(args[0]), &(args_len[0]));
         if(len == -1 || !buf) {
-            WEBSERVER_LOG_ERROR(g_logger) << "redis fmt error";
+            LOG_ERROR(g_logger) << "redis fmt error";
             return nullptr;
         }
         fctx.cmd.append(buf, len);
@@ -583,7 +583,7 @@ ReplyPtr FoxRedis::cmd(const std::vector<std::string>& argv) {
 
 void FoxRedis::pcmd(FCtx* fctx) {
     if(m_status == UNCONNECTED) {
-        WEBSERVER_LOG_INFO(g_logger) << "redis (" << m_host << ":" << m_port << ") unconnected "
+        LOG_INFO(g_logger) << "redis (" << m_host << ":" << m_port << ") unconnected "
                     << fctx->cmd;
         init();
         if(fctx->fiber) {
@@ -671,7 +671,7 @@ void FoxRedis::Ctx::EventCb(int fd, short event, void* d) {
     ctx->timeout = 1;
     if(ctx->rds->m_logEnable) {
         webserver::replace(ctx->cmd, "\r\n", "\\r\\n");
-        WEBSERVER_LOG_INFO(g_logger) << "redis cmd: '" << ctx->cmd << "' reach timeout "
+        LOG_INFO(g_logger) << "redis cmd: '" << ctx->cmd << "' reach timeout "
                    << (ctx->rds->m_cmdTimeout.tv_sec * 1000
                             + ctx->rds->m_cmdTimeout.tv_usec / 1000) << "ms";
     }
@@ -703,18 +703,18 @@ FoxRedisCluster::FoxRedisCluster(webserver::FoxThread* thr, const std::map<std::
 
 void FoxRedisCluster::ConnectCb(const redisAsyncContext* c, int status) {
     if(!status) {
-        WEBSERVER_LOG_INFO(g_logger) << "FoxRedisCluster::ConnectCb "
+        LOG_INFO(g_logger) << "FoxRedisCluster::ConnectCb "
                     << c->c.tcp.host << ":" << c->c.tcp.port
                     << " success";
     } else {
-        WEBSERVER_LOG_ERROR(g_logger) << "FoxRedisCluster::ConnectCb "
+        LOG_ERROR(g_logger) << "FoxRedisCluster::ConnectCb "
                     << c->c.tcp.host << ":" << c->c.tcp.port
                     << " fail, error:" << c->errstr;
     }
 }
 
 void FoxRedisCluster::DisconnectCb(const redisAsyncContext* c, int status) {
-    WEBSERVER_LOG_INFO(g_logger) << "FoxRedisCluster::DisconnectCb "
+    LOG_INFO(g_logger) << "FoxRedisCluster::DisconnectCb "
                 << c->c.tcp.host << ":" << c->c.tcp.port
                 << " status:" << status;
 }
@@ -724,7 +724,7 @@ void FoxRedisCluster::CmdCb(redisClusterAsyncContext *ac, void *r, void *privdat
     if(ctx->timeout) {
         delete ctx;
         //if(ctx && ctx->fiber) {
-        //    WEBSERVER_LOG_ERROR(g_logger) << "redis cmd: '" << ctx->cmd << "' timeout("
+        //    LOG_ERROR(g_logger) << "redis cmd: '" << ctx->cmd << "' timeout("
         //                << (ctx->rds->m_cmdTimeout.tv_sec * 1000
         //                        + ctx->rds->m_cmdTimeout.tv_usec / 1000)
         //                << "ms)";
@@ -740,7 +740,7 @@ void FoxRedisCluster::CmdCb(redisClusterAsyncContext *ac, void *r, void *privdat
     if(ac->err) {
         if(m_logEnable) {
             webserver::replace(ctx->cmd, "\r\n", "\\r\\n");
-            WEBSERVER_LOG_ERROR(g_logger) << "redis cmd: '" << ctx->cmd
+            LOG_ERROR(g_logger) << "redis cmd: '" << ctx->cmd
                         << "' "
                         << "(" << ac->err << ") " << ac->errstr;
         }
@@ -750,7 +750,7 @@ void FoxRedisCluster::CmdCb(redisClusterAsyncContext *ac, void *r, void *privdat
     } else if(!reply) {
         if(m_logEnable) {
             webserver::replace(ctx->cmd, "\r\n", "\\r\\n");
-            WEBSERVER_LOG_ERROR(g_logger) << "redis cmd: '" << ctx->cmd
+            LOG_ERROR(g_logger) << "redis cmd: '" << ctx->cmd
                         << "' "
                         << "reply: NULL";
         }
@@ -760,7 +760,7 @@ void FoxRedisCluster::CmdCb(redisClusterAsyncContext *ac, void *r, void *privdat
     } else if(reply->type == REDIS_REPLY_ERROR) {
         if(m_logEnable) {
             webserver::replace(ctx->cmd, "\r\n", "\\r\\n");
-            WEBSERVER_LOG_ERROR(g_logger) << "redis cmd: '" << ctx->cmd
+            LOG_ERROR(g_logger) << "redis cmd: '" << ctx->cmd
                         << "' "
                         << "reply: " << reply->str;
         }
@@ -810,15 +810,15 @@ bool FoxRedisCluster::pinit() {
     if(m_status != UNCONNECTED) {
         return true;
     }
-    WEBSERVER_LOG_INFO(g_logger) << "FoxRedisCluster pinit:" << m_host;
+    LOG_INFO(g_logger) << "FoxRedisCluster pinit:" << m_host;
     auto ctx = redisClusterAsyncConnect(m_host.c_str(), 0);
     if(!ctx) {
-        WEBSERVER_LOG_ERROR(g_logger) << "redisClusterAsyncConnect (" << m_host
+        LOG_ERROR(g_logger) << "redisClusterAsyncConnect (" << m_host
                     << ") null";
         return false;
     }
     if(ctx->err) {
-        WEBSERVER_LOG_ERROR(g_logger) << "Error:(" << ctx->err << ")" << ctx->errstr;
+        LOG_ERROR(g_logger) << "Error:(" << ctx->err << ")" << ctx->errstr;
         return false;
     }
     ctx->data = this;
@@ -851,7 +851,7 @@ ReplyPtr FoxRedisCluster::cmd(const char* fmt, va_list ap) {
     //int len = vasprintf(&buf, fmt, ap);
     int len = redisvFormatCommand(&buf, fmt, ap);
     if(len == -1 || !buf) {
-        WEBSERVER_LOG_ERROR(g_logger) << "redis fmt error: " << fmt;
+        LOG_ERROR(g_logger) << "redis fmt error: " << fmt;
         return nullptr;
     }
     FCtx fctx;
@@ -887,7 +887,7 @@ ReplyPtr FoxRedisCluster::cmd(const std::vector<std::string>& argv) {
         char* buf = nullptr;
         int len = redisFormatCommandArgv(&buf, argv.size(), &(args[0]), &(args_len[0]));
         if(len == -1 || !buf) {
-            WEBSERVER_LOG_ERROR(g_logger) << "redis fmt error";
+            LOG_ERROR(g_logger) << "redis fmt error";
             return nullptr;
         }
         fctx.cmd.append(buf, len);
@@ -904,7 +904,7 @@ ReplyPtr FoxRedisCluster::cmd(const std::vector<std::string>& argv) {
 
 void FoxRedisCluster::pcmd(FCtx* fctx) {
     if(m_status != CONNECTED) {
-        WEBSERVER_LOG_INFO(g_logger) << "redis (" << m_host << ") unconnected "
+        LOG_INFO(g_logger) << "redis (" << m_host << ") unconnected "
                     << fctx->cmd;
         init();
         if(fctx->fiber) {
@@ -969,17 +969,17 @@ FoxRedisCluster::Ctx::~Ctx() {
 }
 
 void FoxRedisCluster::Ctx::cancelEvent() {
-    //WEBSERVER_LOG_INFO(g_logger) << "cancelEvent " << webserver::FoxThread::GetThis()
+    //LOG_INFO(g_logger) << "cancelEvent " << webserver::FoxThread::GetThis()
     //           << " - " << thread
     //           << " - " << webserver::IOManager::GetThis()
     //           << " - " << cancel_count;
     //if(thread != webserver::FoxThread::GetThis()) {
-    //    WEBSERVER_LOG_INFO(g_logger) << "cancelEvent " << webserver::FoxThread::GetThis()
+    //    LOG_INFO(g_logger) << "cancelEvent " << webserver::FoxThread::GetThis()
     //               << " - " << thread
     //               << " - " << webserver::IOManager::GetThis()
     //               << " - " << cancel_count;
 
-    //    //WEBSERVER_LOG_INFO(g_logger) << "cancelEvent thread=" << thread << " " << thread->getId()
+    //    //LOG_INFO(g_logger) << "cancelEvent thread=" << thread << " " << thread->getId()
     //    //           << " this=" << webserver::FoxThread::GetThis();
     //    //WEBSERVER_ASSERT(thread == webserver::FoxThread::GetThis());
     //}
@@ -1026,7 +1026,7 @@ void FoxRedisCluster::Ctx::EventCb(int fd, short event, void* d) {
     ctx->timeout = 1;
     if(ctx->rds->m_logEnable) {
         webserver::replace(ctx->cmd, "\r\n", "\\r\\n");
-        WEBSERVER_LOG_INFO(g_logger) << "redis cmd: '" << ctx->cmd << "' reach timeout "
+        LOG_INFO(g_logger) << "redis cmd: '" << ctx->cmd << "' reach timeout "
                    << (ctx->rds->m_cmdTimeout.tv_sec * 1000
                             + ctx->rds->m_cmdTimeout.tv_usec / 1000) << "ms";
     }

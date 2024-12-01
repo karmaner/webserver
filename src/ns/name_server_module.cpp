@@ -5,7 +5,7 @@
 namespace webserver {
 namespace ns {
 
-static webserver::Logger::ptr g_logger = WEBSERVER_LOG_NAME("system");
+static webserver::Logger::ptr g_logger = LOG_NAME("system");
 
 uint64_t s_request_count = 0;
 uint64_t s_on_connect = 0;
@@ -28,7 +28,7 @@ bool NameServerModule::handleRockRequest(webserver::RockRequest::ptr request
         case (int)NSCommand::TICK:
             return handleTick(request, response, stream);
         default:
-            WEBSERVER_LOG_WARN(g_logger) << "invalid cmd=0x" << std::hex << request->getCmd();
+            LOG_WARN(g_logger) << "invalid cmd=0x" << std::hex << request->getCmd();
             break;
     }
     return true;
@@ -43,12 +43,12 @@ bool NameServerModule::onConnect(webserver::Stream::ptr stream) {
     webserver::Atomic::addFetch(s_on_connect, 1);
     auto rockstream = std::dynamic_pointer_cast<RockStream>(stream);
     if(!rockstream) {
-        WEBSERVER_LOG_ERROR(g_logger) << "invalid stream";
+        LOG_ERROR(g_logger) << "invalid stream";
         return false;
     }
     auto addr = rockstream->getRemoteAddress();
     if(addr) {
-        WEBSERVER_LOG_INFO(g_logger) << "onConnect: " << *addr;
+        LOG_INFO(g_logger) << "onConnect: " << *addr;
     }
     return true;
 }
@@ -57,12 +57,12 @@ bool NameServerModule::onDisconnect(webserver::Stream::ptr stream) {
     webserver::Atomic::addFetch(s_on_disconnect, 1);
     auto rockstream = std::dynamic_pointer_cast<RockStream>(stream);
     if(!rockstream) {
-        WEBSERVER_LOG_ERROR(g_logger) << "invalid stream";
+        LOG_ERROR(g_logger) << "invalid stream";
         return false;
     }
     auto addr = rockstream->getRemoteAddress();
     if(addr) {
-        WEBSERVER_LOG_INFO(g_logger) << "onDisconnect: " << *addr;
+        LOG_INFO(g_logger) << "onDisconnect: " << *addr;
     }
     set(rockstream, nullptr);
     //setQueryDomain(rockstream, {});
@@ -80,7 +80,7 @@ bool NameServerModule::handleRegister(webserver::RockRequest::ptr request
                                         ,webserver::RockStream::ptr stream) {
     auto rr = request->getAsPB<RegisterRequest>();
     if(!rr) {
-        WEBSERVER_LOG_ERROR(g_logger) << "invalid register request from: "
+        LOG_ERROR(g_logger) << "invalid register request from: "
             << stream->getRemoteAddressString();
         return false;
     }
@@ -90,7 +90,7 @@ bool NameServerModule::handleRegister(webserver::RockRequest::ptr request
         auto& info = rr->infos(i);
 #define XX(info, attr) \
         if(!info.has_##attr()) { \
-            WEBSERVER_LOG_ERROR(g_logger) << "invalid register request from: " \
+            LOG_ERROR(g_logger) << "invalid register request from: " \
                 << stream->getRemoteAddressString() \
                 << " " #attr " is null"; \
             return false; \
@@ -99,7 +99,7 @@ bool NameServerModule::handleRegister(webserver::RockRequest::ptr request
         XX(info, domain);
 
         if(info.cmds_size() == 0) {
-            WEBSERVER_LOG_ERROR(g_logger) << "invalid register request from: "
+            LOG_ERROR(g_logger) << "invalid register request from: "
                 << stream->getRemoteAddressString()
                 << " cmds is null";
             return false;
@@ -111,7 +111,7 @@ bool NameServerModule::handleRegister(webserver::RockRequest::ptr request
 
         NSNode::ptr ns_node(new NSNode(node.ip(), node.port(), node.weight()));
         if(!(ns_node->getId() >> 32)) {
-            WEBSERVER_LOG_ERROR(g_logger) << "invalid register request from: "
+            LOG_ERROR(g_logger) << "invalid register request from: "
                 << stream->getRemoteAddressString()
                 << " ip=" << node.ip() << " invalid";
             return false;
@@ -119,7 +119,7 @@ bool NameServerModule::handleRegister(webserver::RockRequest::ptr request
 
         if(old_value) {
             if(old_value->m_node->getId() != ns_node->getId()) {
-                WEBSERVER_LOG_ERROR(g_logger) << "invalid register request from: "
+                LOG_ERROR(g_logger) << "invalid register request from: "
                     << stream->getRemoteAddressString()
                     << " old.ip=" << old_value->m_node->getIp()
                     << " old.port=" << old_value->m_node->getPort()
@@ -130,7 +130,7 @@ bool NameServerModule::handleRegister(webserver::RockRequest::ptr request
         }
         if(new_value) {
             if(new_value->m_node->getId() != ns_node->getId()) {
-                WEBSERVER_LOG_ERROR(g_logger) << "invalid register request from: "
+                LOG_ERROR(g_logger) << "invalid register request from: "
                     << stream->getRemoteAddressString()
                     << " new.ip=" << new_value->m_node->getIp()
                     << " new.port=" << new_value->m_node->getPort()
@@ -307,12 +307,12 @@ bool NameServerModule::handleQuery(webserver::RockRequest::ptr request
                                     ,webserver::RockStream::ptr stream) {
     auto qreq = request->getAsPB<QueryRequest>();
     if(!qreq) {
-        WEBSERVER_LOG_ERROR(g_logger) << "invalid query request from: "
+        LOG_ERROR(g_logger) << "invalid query request from: "
             << stream->getRemoteAddressString();
         return false;
     }
     if(!qreq->domains_size()) {
-        WEBSERVER_LOG_ERROR(g_logger) << "invalid query request from: "
+        LOG_ERROR(g_logger) << "invalid query request from: "
             << stream->getRemoteAddressString()
             << " domains is null";
     }

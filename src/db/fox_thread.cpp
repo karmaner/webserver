@@ -8,7 +8,7 @@
 
 namespace webserver {
 
-static webserver::Logger::ptr g_logger = WEBSERVER_LOG_NAME("system");
+static webserver::Logger::ptr g_logger = LOG_NAME("system");
 
 static webserver::ConfigVar<std::map<std::string, std::map<std::string, std::string> > >::ptr g_thread_info_set
             = Config::Lookup("fox_thread", std::map<std::string, std::map<std::string, std::string> >()
@@ -35,11 +35,11 @@ void FoxThread::read_cb(evutil_socket_t sock, short which, void* args) {
                 try {
                     (*it)();
                 } catch (std::exception& ex) {
-                    WEBSERVER_LOG_ERROR(g_logger) << "exception:" << ex.what();
+                    LOG_ERROR(g_logger) << "exception:" << ex.what();
                 } catch (const char* c) {
-                    WEBSERVER_LOG_ERROR(g_logger) << "exception:" << c;
+                    LOG_ERROR(g_logger) << "exception:" << c;
                 } catch (...) {
-                    WEBSERVER_LOG_ERROR(g_logger) << "uncatch exception";
+                    LOG_ERROR(g_logger) << "uncatch exception";
                 }
             } else {
                 event_base_loopbreak(thread->m_base);
@@ -65,7 +65,7 @@ FoxThread::FoxThread(const std::string& name, struct event_base* base)
     ,m_total(0) {
     int fds[2];
     if(evutil_socketpair(AF_UNIX, SOCK_STREAM, 0, fds) == -1) {
-        //WEBSERVER_LOG_ERROR(g_logger) << "FoxThread init error";
+        //LOG_ERROR(g_logger) << "FoxThread init error";
         throw std::logic_error("thread init error");
     }
 
@@ -134,7 +134,7 @@ FoxThread::~FoxThread() {
 
 void FoxThread::start() {
     if(m_thread) {
-        //WEBSERVER_LOG_ERROR(g_logger) << "FoxThread is running";
+        //LOG_ERROR(g_logger) << "FoxThread is running";
         throw std::logic_error("FoxThread is running");
     }
 
@@ -459,7 +459,7 @@ void FoxThreadManager::init() {
         auto name = i.first;
         auto advance = webserver::GetParamValue(i.second, "advance", 0);
         if(num <= 0) {
-            WEBSERVER_LOG_ERROR(g_logger) << "thread pool:" << name
+            LOG_ERROR(g_logger) << "thread pool:" << name
                         << " num:" << num
                         << " advance:" << advance
                         << " invalid";
@@ -467,11 +467,11 @@ void FoxThreadManager::init() {
         }
         if(num == 1) {
             m_threads[i.first] = FoxThread::ptr(new FoxThread(i.first));
-            WEBSERVER_LOG_INFO(g_logger) << "init thread : " << i.first;
+            LOG_INFO(g_logger) << "init thread : " << i.first;
         } else {
             m_threads[i.first] = FoxThreadPool::ptr(new FoxThreadPool(
                             num, name, advance));
-            WEBSERVER_LOG_INFO(g_logger) << "init thread pool:" << name
+            LOG_INFO(g_logger) << "init thread pool:" << name
                         << " num:" << num
                         << " advance:" << advance;
         }
@@ -480,22 +480,22 @@ void FoxThreadManager::init() {
 
 void FoxThreadManager::start() {
     for(auto i : m_threads) {
-        WEBSERVER_LOG_INFO(g_logger) << "thread: " << i.first << " start begin";
+        LOG_INFO(g_logger) << "thread: " << i.first << " start begin";
         i.second->start();
-        WEBSERVER_LOG_INFO(g_logger) << "thread: " << i.first << " start end";
+        LOG_INFO(g_logger) << "thread: " << i.first << " start end";
     }
 }
 
 void FoxThreadManager::stop() {
     for(auto i : m_threads) {
-        WEBSERVER_LOG_INFO(g_logger) << "thread: " << i.first << " stop begin";
+        LOG_INFO(g_logger) << "thread: " << i.first << " stop begin";
         i.second->stop();
-        WEBSERVER_LOG_INFO(g_logger) << "thread: " << i.first << " stop end";
+        LOG_INFO(g_logger) << "thread: " << i.first << " stop end";
     }
     for(auto i : m_threads) {
-        WEBSERVER_LOG_INFO(g_logger) << "thread: " << i.first << " join begin";
+        LOG_INFO(g_logger) << "thread: " << i.first << " join begin";
         i.second->join();
-        WEBSERVER_LOG_INFO(g_logger) << "thread: " << i.first << " join end";
+        LOG_INFO(g_logger) << "thread: " << i.first << " join end";
     }
 }
 

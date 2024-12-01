@@ -5,7 +5,7 @@
 
 namespace webserver {
 
-static webserver::Logger::ptr g_logger = WEBSERVER_LOG_NAME("system");
+static webserver::Logger::ptr g_logger = LOG_NAME("system");
 
 AsyncSocketStream::Ctx::Ctx()
     :sn(0)
@@ -106,7 +106,7 @@ void AsyncSocketStream::doRead() {
         //TODO log
     }
 
-    WEBSERVER_LOG_DEBUG(g_logger) << "doRead out " << this;
+    LOG_DEBUG(g_logger) << "doRead out " << this;
     innerClose();
     m_waitSem.notify();
 
@@ -135,7 +135,7 @@ void AsyncSocketStream::doWrite() {
     } catch (...) {
         //TODO log
     }
-    WEBSERVER_LOG_DEBUG(g_logger) << "doWrite out " << this;
+    LOG_DEBUG(g_logger) << "doWrite out " << this;
     {
         RWMutexType::WriteLock lock(m_queueMutex);
         m_queue.clear();

@@ -5,7 +5,7 @@
 
 namespace webserver {
 
-static webserver::Logger::ptr g_logger = WEBSERVER_LOG_NAME("system");
+static webserver::Logger::ptr g_logger = LOG_NAME("system");
 
 static thread_local Scheduler* t_scheduler = nullptr;
 static thread_local Fiber* t_scheduler_fiber = nullptr;
@@ -67,7 +67,7 @@ void Scheduler::start() {
     //if(m_rootFiber) {
     //    //m_rootFiber->swapIn();
     //    m_rootFiber->call();
-    //    WEBSERVER_LOG_INFO(g_logger) << "call out " << m_rootFiber->getState();
+    //    LOG_INFO(g_logger) << "call out " << m_rootFiber->getState();
     //}
 }
 
@@ -77,7 +77,7 @@ void Scheduler::stop() {
             && m_threadCount == 0
             && (m_rootFiber->getState() == Fiber::TERM
                 || m_rootFiber->getState() == Fiber::INIT)) {
-        WEBSERVER_LOG_INFO(g_logger) << this << " stopped";
+        LOG_INFO(g_logger) << this << " stopped";
         m_stopping = true;
 
         if(stopping()) {
@@ -106,7 +106,7 @@ void Scheduler::stop() {
         //    if(m_rootFiber->getState() == Fiber::TERM
         //            || m_rootFiber->getState() == Fiber::EXCEPT) {
         //        m_rootFiber.reset(new Fiber(std::bind(&Scheduler::run, this), 0, true));
-        //        WEBSERVER_LOG_INFO(g_logger) << " root fiber is term, reset";
+        //        LOG_INFO(g_logger) << " root fiber is term, reset";
         //        t_fiber = m_rootFiber.get();
         //    }
         //    m_rootFiber->call();
@@ -134,7 +134,7 @@ void Scheduler::setThis() {
 }
 
 void Scheduler::run() {
-    WEBSERVER_LOG_DEBUG(g_logger) << m_name << " run";
+    LOG_DEBUG(g_logger) << m_name << " run";
     set_hook_enable(true);
     setThis();
     if(webserver::GetThreadId() != m_rootThread) {
@@ -215,7 +215,7 @@ void Scheduler::run() {
                 continue;
             }
             if(idle_fiber->getState() == Fiber::TERM) {
-                WEBSERVER_LOG_INFO(g_logger) << "idle fiber term";
+                LOG_INFO(g_logger) << "idle fiber term";
                 break;
             }
 
@@ -231,7 +231,7 @@ void Scheduler::run() {
 }
 
 void Scheduler::tickle() {
-    WEBSERVER_LOG_INFO(g_logger) << "tickle";
+    LOG_INFO(g_logger) << "tickle";
 }
 
 bool Scheduler::stopping() {
@@ -241,7 +241,7 @@ bool Scheduler::stopping() {
 }
 
 void Scheduler::idle() {
-    WEBSERVER_LOG_INFO(g_logger) << "idle";
+    LOG_INFO(g_logger) << "idle";
     while(!stopping()) {
         webserver::Fiber::YieldToHold();
     }

@@ -3,7 +3,7 @@
 #include "src/basic/log.h"
 #include <stdlib.h>
 
-static webserver::Logger::ptr g_logger = WEBSERVER_LOG_ROOT();
+static webserver::Logger::ptr g_logger = LOG_ROOT();
 
 const char* ip = nullptr;
 uint16_t port = 0;
@@ -11,7 +11,7 @@ uint16_t port = 0;
 void run() {
     webserver::IPAddress::ptr addr = webserver::Address::LookupAnyIPAddress(ip);
     if(!addr) {
-        WEBSERVER_LOG_ERROR(g_logger) << "invalid ip: " << ip;
+        LOG_ERROR(g_logger) << "invalid ip: " << ip;
         return;
     }
     addr->setPort(port);
@@ -20,7 +20,7 @@ void run() {
 
     webserver::IOManager::GetThis()->schedule([sock](){
             webserver::Address::ptr addr(new webserver::IPv4Address);
-            WEBSERVER_LOG_INFO(g_logger) << "begin recv";
+            LOG_INFO(g_logger) << "begin recv";
             while(true) {
                 char buff[1024];
                 int len = sock->recvFrom(buff, 1024, addr);
@@ -38,12 +38,12 @@ void run() {
             int len = sock->sendTo(line.c_str(), line.size(), addr);
             if(len < 0) {
                 int err = sock->getError();
-                WEBSERVER_LOG_ERROR(g_logger) << "send error err=" << err
+                LOG_ERROR(g_logger) << "send error err=" << err
                         << " errstr=" << strerror(err) << " len=" << len
                         << " addr=" << *addr
                         << " sock=" << *sock;
             } else {
-                WEBSERVER_LOG_INFO(g_logger) << "send " << line << " len:" << len;
+                LOG_INFO(g_logger) << "send " << line << " len:" << len;
             }
         }
     }
@@ -51,7 +51,7 @@ void run() {
 
 int main(int argc, char** argv) {
     if(argc < 3) {
-        WEBSERVER_LOG_INFO(g_logger) << "use as[" << argv[0] << " ip port]";
+        LOG_INFO(g_logger) << "use as[" << argv[0] << " ip port]";
         return 0;
     }
     ip = argv[1];

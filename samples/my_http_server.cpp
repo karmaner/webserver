@@ -1,13 +1,13 @@
 #include "src/http/http_server.h"
 #include "src/basic/log.h"
 
-webserver::Logger::ptr g_logger = WEBSERVER_LOG_ROOT();
+webserver::Logger::ptr g_logger = LOG_ROOT();
 webserver::IOManager::ptr worker;
 void run() {
     g_logger->setLevel(webserver::LogLevel::INFO);
     webserver::Address::ptr addr = webserver::Address::LookupAnyIPAddress("0.0.0.0:8020");
     if(!addr) {
-        WEBSERVER_LOG_ERROR(g_logger) << "get address error";
+        LOG_ERROR(g_logger) << "get address error";
         return;
     }
 
@@ -15,7 +15,7 @@ void run() {
     //webserver::http::HttpServer::ptr http_server(new webserver::http::HttpServer(true));
     bool ssl = false;
     while(!http_server->bind(addr, ssl)) {
-        WEBSERVER_LOG_ERROR(g_logger) << "bind " << *addr << " fail";
+        LOG_ERROR(g_logger) << "bind " << *addr << " fail";
         sleep(1);
     }
     if(ssl) {

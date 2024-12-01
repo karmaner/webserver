@@ -2,7 +2,7 @@
 #include "src/ns/ns_protocol.h"
 #include "src/ns/ns_client.h"
 
-static webserver::Logger::ptr g_logger = WEBSERVER_LOG_ROOT();
+static webserver::Logger::ptr g_logger = LOG_ROOT();
 
 int type = 0;
 
@@ -10,7 +10,7 @@ void run() {
     g_logger->setLevel(webserver::LogLevel::INFO);
     auto addr = webserver::IPAddress::Create("127.0.0.1", 8072);
     //if(!conn->connect(addr)) {
-    //    WEBSERVER_LOG_ERROR(g_logger) << "connect to: " << *addr << " fail";
+    //    LOG_ERROR(g_logger) << "connect to: " << *addr << " fail";
     //    return;
     //}
     if(type == 0) {
@@ -31,7 +31,7 @@ void run() {
                     req->setAsPB(*rinfo);
 
                     auto rt = conn->request(req, 100);
-                    WEBSERVER_LOG_INFO(g_logger) << "[result="
+                    LOG_INFO(g_logger) << "[result="
                         << rt->result << " response="
                         << (rt->response ? rt->response->toString() : "null")
                         << "]";
@@ -45,7 +45,7 @@ void run() {
             nsclient->addQueryDomain(std::to_string(i % 2) + "domain.com");
             nsclient->connect(addr);
             nsclient->start();
-            WEBSERVER_LOG_INFO(g_logger) << "NSClient start: i=" << i;
+            LOG_INFO(g_logger) << "NSClient start: i=" << i;
 
             if(i == 0) {
                 //webserver::IOManager::GetThis()->addTimer(1000, [nsclient](){
@@ -63,7 +63,7 @@ void run() {
         //    rinfo->add_domains("0domain.com");
         //    req->setAsPB(*rinfo);
         //    auto rt = conn->request(req, 1000);
-        //    WEBSERVER_LOG_INFO(g_logger) << "[result="
+        //    LOG_INFO(g_logger) << "[result="
         //        << rt->result << " response="
         //        << (rt->response ? rt->response->toString() : "null")
         //        << "]";
@@ -73,10 +73,10 @@ void run() {
         //conn->setNotifyHandler([](webserver::RockNotify::ptr nty,webserver::RockStream::ptr stream){
         //        auto nm = nty->getAsPB<webserver::ns::NotifyMessage>();
         //        if(!nm) {
-        //            WEBSERVER_LOG_ERROR(g_logger) << "invalid notify message";
+        //            LOG_ERROR(g_logger) << "invalid notify message";
         //            return true;
         //        }
-        //        WEBSERVER_LOG_INFO(g_logger) << webserver::PBToJsonString(*nm);
+        //        LOG_INFO(g_logger) << webserver::PBToJsonString(*nm);
         //        return true;
         //});
     }

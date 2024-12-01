@@ -17,7 +17,7 @@
 /**
  * @brief 使用流式方式将日志级别level的日志写入到logger
  */
-#define WEBSERVER_LOG_LEVEL(logger, level) \
+#define LOG_LEVEL(logger, level) \
     if(logger->getLevel() <= level) \
         webserver::LogEventWrap(webserver::LogEvent::ptr(new webserver::LogEvent(logger, level, \
                         __FILE__, __LINE__, 0, webserver::GetThreadId(),\
@@ -26,32 +26,32 @@
 /**
  * @brief 使用流式方式将日志级别debug的日志写入到logger
  */
-#define WEBSERVER_LOG_DEBUG(logger) WEBSERVER_LOG_LEVEL(logger, webserver::LogLevel::DEBUG)
+#define LOG_DEBUG(logger) LOG_LEVEL(logger, webserver::LogLevel::DEBUG)
 
 /**
  * @brief 使用流式方式将日志级别info的日志写入到logger
  */
-#define WEBSERVER_LOG_INFO(logger) WEBSERVER_LOG_LEVEL(logger, webserver::LogLevel::INFO)
+#define LOG_INFO(logger) LOG_LEVEL(logger, webserver::LogLevel::INFO)
 
 /**
  * @brief 使用流式方式将日志级别warn的日志写入到logger
  */
-#define WEBSERVER_LOG_WARN(logger) WEBSERVER_LOG_LEVEL(logger, webserver::LogLevel::WARN)
+#define LOG_WARN(logger) LOG_LEVEL(logger, webserver::LogLevel::WARN)
 
 /**
  * @brief 使用流式方式将日志级别error的日志写入到logger
  */
-#define WEBSERVER_LOG_ERROR(logger) WEBSERVER_LOG_LEVEL(logger, webserver::LogLevel::ERROR)
+#define LOG_ERROR(logger) LOG_LEVEL(logger, webserver::LogLevel::ERROR)
 
 /**
  * @brief 使用流式方式将日志级别fatal的日志写入到logger
  */
-#define WEBSERVER_LOG_FATAL(logger) WEBSERVER_LOG_LEVEL(logger, webserver::LogLevel::FATAL)
+#define LOG_FATAL(logger) LOG_LEVEL(logger, webserver::LogLevel::FATAL)
 
 /**
  * @brief 使用格式化方式将日志级别level的日志写入到logger
  */
-#define WEBSERVER_LOG_FMT_LEVEL(logger, level, fmt, ...) \
+#define LOG_FMT_LEVEL(logger, level, fmt, ...) \
     if(logger->getLevel() <= level) \
         webserver::LogEventWrap(webserver::LogEvent::ptr(new webserver::LogEvent(logger, level, \
                         __FILE__, __LINE__, 0, webserver::GetThreadId(),\
@@ -60,37 +60,37 @@
 /**
  * @brief 使用格式化方式将日志级别debug的日志写入到logger
  */
-#define WEBSERVER_LOG_FMT_DEBUG(logger, fmt, ...) WEBSERVER_LOG_FMT_LEVEL(logger, webserver::LogLevel::DEBUG, fmt, __VA_ARGS__)
+#define LOG_FMT_DEBUG(logger, fmt, ...) LOG_FMT_LEVEL(logger, webserver::LogLevel::DEBUG, fmt, __VA_ARGS__)
 
 /**
  * @brief 使用格式化方式将日志级别info的日志写入到logger
  */
-#define WEBSERVER_LOG_FMT_INFO(logger, fmt, ...)  WEBSERVER_LOG_FMT_LEVEL(logger, webserver::LogLevel::INFO, fmt, __VA_ARGS__)
+#define LOG_FMT_INFO(logger, fmt, ...)  LOG_FMT_LEVEL(logger, webserver::LogLevel::INFO, fmt, __VA_ARGS__)
 
 /**
  * @brief 使用格式化方式将日志级别warn的日志写入到logger
  */
-#define WEBSERVER_LOG_FMT_WARN(logger, fmt, ...)  WEBSERVER_LOG_FMT_LEVEL(logger, webserver::LogLevel::WARN, fmt, __VA_ARGS__)
+#define LOG_FMT_WARN(logger, fmt, ...)  LOG_FMT_LEVEL(logger, webserver::LogLevel::WARN, fmt, __VA_ARGS__)
 
 /**
  * @brief 使用格式化方式将日志级别error的日志写入到logger
  */
-#define WEBSERVER_LOG_FMT_ERROR(logger, fmt, ...) WEBSERVER_LOG_FMT_LEVEL(logger, webserver::LogLevel::ERROR, fmt, __VA_ARGS__)
+#define LOG_FMT_ERROR(logger, fmt, ...) LOG_FMT_LEVEL(logger, webserver::LogLevel::ERROR, fmt, __VA_ARGS__)
 
 /**
  * @brief 使用格式化方式将日志级别fatal的日志写入到logger
  */
-#define WEBSERVER_LOG_FMT_FATAL(logger, fmt, ...) WEBSERVER_LOG_FMT_LEVEL(logger, webserver::LogLevel::FATAL, fmt, __VA_ARGS__)
+#define LOG_FMT_FATAL(logger, fmt, ...) LOG_FMT_LEVEL(logger, webserver::LogLevel::FATAL, fmt, __VA_ARGS__)
 
 /**
  * @brief 获取主日志器
  */
-#define WEBSERVER_LOG_ROOT() webserver::LoggerMgr::GetInstance()->getRoot()
+#define LOG_ROOT() webserver::LoggerMgr::GetInstance()->getRoot()
 
 /**
  * @brief 获取name的日志器
  */
-#define WEBSERVER_LOG_NAME(name) webserver::LoggerMgr::GetInstance()->getLogger(name)
+#define LOG_NAME(name) webserver::LoggerMgr::GetInstance()->getLogger(name)
 
 namespace webserver {
 

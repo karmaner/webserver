@@ -6,7 +6,7 @@
 namespace webserver {
 namespace http {
 
-static webserver::Logger::ptr g_logger = WEBSERVER_LOG_NAME("system");
+static webserver::Logger::ptr g_logger = LOG_NAME("system");
 
 webserver::ConfigVar<uint32_t>::ptr g_websocket_message_max_size
     = webserver::Config::Lookup("websocket.message.max_size"
@@ -21,24 +21,24 @@ HttpRequest::ptr WSSession::handleShake() {
     do {
         req = recvRequest();
         if(!req) {
-            WEBSERVER_LOG_INFO(g_logger) << "invalid http request";
+            LOG_INFO(g_logger) << "invalid http request";
             break;
         }
         if(strcasecmp(req->getHeader("Upgrade").c_str(), "websocket")) {
-            WEBSERVER_LOG_INFO(g_logger) << "http header Upgrade != websocket";
+            LOG_INFO(g_logger) << "http header Upgrade != websocket";
             break;
         }
         if(strcasecmp(req->getHeader("Connection").c_str(), "Upgrade")) {
-            WEBSERVER_LOG_INFO(g_logger) << "http header Connection != Upgrade";
+            LOG_INFO(g_logger) << "http header Connection != Upgrade";
             break;
         }
         if(req->getHeaderAs<int>("Sec-webSocket-Version") != 13) {
-            WEBSERVER_LOG_INFO(g_logger) << "http header Sec-webSocket-Version != 13";
+            LOG_INFO(g_logger) << "http header Sec-webSocket-Version != 13";
             break;
         }
         std::string key = req->getHeader("Sec-WebSocket-Key");
         if(key.empty()) {
-            WEBSERVER_LOG_INFO(g_logger) << "http header Sec-WebSocket-Key = null";
+            LOG_INFO(g_logger) << "http header Sec-WebSocket-Key = null";
             break;
         }
 
@@ -55,12 +55,12 @@ HttpRequest::ptr WSSession::handleShake() {
         rsp->setHeader("Sec-WebSocket-Accept", v);
 
         sendResponse(rsp);
-        WEBSERVER_LOG_DEBUG(g_logger) << *req;
-        WEBSERVER_LOG_DEBUG(g_logger) << *rsp;
+        LOG_DEBUG(g_logger) << *req;
+        LOG_DEBUG(g_logger) << *rsp;
         return req;
     } while(false);
     if(req) {
-        WEBSERVER_LOG_INFO(g_logger) << *req;
+        LOG_INFO(g_logger) << *req;
     }
     return nullptr;
 }
@@ -108,10 +108,10 @@ WSFrameMessage::ptr WSRecvMessage(Stream* stream, bool client) {
         if(stream->readFixSize(&ws_head, sizeof(ws_head)) <= 0) {
             break;
         }
-        WEBSERVER_LOG_DEBUG(g_logger) << "WSFrameHead " << ws_head.toString();
+        LOG_DEBUG(g_logger) << "WSFrameHead " << ws_head.toString();
 
         if(ws_head.opcode == WSFrameHead::PING) {
-            WEBSERVER_LOG_INFO(g_logger) << "PING";
+            LOG_INFO(g_logger) << "PING";
             if(WSPong(stream) <= 0) {
                 break;
             }
@@ -120,7 +120,7 @@ WSFrameMessage::ptr WSRecvMessage(Stream* stream, bool client) {
                 || ws_head.opcode == WSFrameHead::TEXT_FRAME
                 || ws_head.opcode == WSFrameHead::BIN_FRAME) {
             if(!client && !ws_head.mask) {
-                WEBSERVER_LOG_INFO(g_logger) << "WSFrameHead mask != 1";
+                LOG_INFO(g_logger) << "WSFrameHead mask != 1";
                 break;
             }
             uint64_t length = 0;
@@ -141,7 +141,7 @@ WSFrameMessage::ptr WSRecvMessage(Stream* stream, bool client) {
             }
 
             if((cur_len + length) >= g_websocket_message_max_size->getValue()) {
-                WEBSERVER_LOG_WARN(g_logger) << "WSFrameMessage length > "
+                LOG_WARN(g_logger) << "WSFrameMessage length > "
                     << g_websocket_message_max_size->getValue()
                     << " (" << (cur_len + length) << ")";
                 break;
@@ -169,11 +169,11 @@ WSFrameMessage::ptr WSRecvMessage(Stream* stream, bool client) {
             }
 
             if(ws_head.fin) {
-                WEBSERVER_LOG_DEBUG(g_logger) << data;
+                LOG_DEBUG(g_logger) << data;
                 return WSFrameMessage::ptr(new WSFrameMessage(opcode, std::move(data)));
             }
         } else {
-            WEBSERVER_LOG_DEBUG(g_logger) << "invalid opcode=" << ws_head.opcode;
+            LOG_DEBUG(g_logger) << "invalid opcode=" << ws_head.opcode;
         }
     } while(true);
     stream->close();

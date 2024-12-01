@@ -4,7 +4,7 @@
 
 namespace webserver {
 
-static webserver::Logger::ptr g_logger = WEBSERVER_LOG_NAME("system");
+static webserver::Logger::ptr g_logger = LOG_NAME("system");
 
 RockServer::RockServer(const std::string& type
                         ,webserver::IOManager* worker
@@ -15,7 +15,7 @@ RockServer::RockServer(const std::string& type
 }
 
 void RockServer::handleClient(Socket::ptr client) {
-    WEBSERVER_LOG_DEBUG(g_logger) << "handleClient " << *client;
+    LOG_DEBUG(g_logger) << "handleClient " << *client;
     webserver::RockSession::ptr session(new webserver::RockSession(client));
     session->setWorker(m_worker);
     ModuleMgr::GetInstance()->foreach(Module::ROCK,
@@ -34,7 +34,7 @@ void RockServer::handleClient(Socket::ptr client) {
         [](webserver::RockRequest::ptr req
             ,webserver::RockResponse::ptr rsp
             ,webserver::RockStream::ptr conn)->bool {
-            // WEBSERVER_LOG_INFO(g_logger) << "handleReq " << req->toString()
+            // LOG_INFO(g_logger) << "handleReq " << req->toString()
             //                             << " body=" << req->getBody();
             bool rt = false;
             ModuleMgr::GetInstance()->foreach(Module::ROCK,
@@ -50,7 +50,7 @@ void RockServer::handleClient(Socket::ptr client) {
     session->setNotifyHandler(
         [](webserver::RockNotify::ptr nty
             ,webserver::RockStream::ptr conn)->bool {
-            WEBSERVER_LOG_INFO(g_logger) <<  "handleNty " << nty->toString()
+            LOG_INFO(g_logger) <<  "handleNty " << nty->toString()
                                         << " body=" << nty->getBody();
             bool rt = false;
             ModuleMgr::GetInstance()->foreach(Module::ROCK,

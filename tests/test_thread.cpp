@@ -1,14 +1,14 @@
 #include "src/webserver.h"
 #include <unistd.h>
 
-webserver::Logger::ptr g_logger = WEBSERVER_LOG_ROOT();
+webserver::Logger::ptr g_logger = LOG_ROOT();
 
 int count = 0;
 //webserver::RWMutex s_mutex;
 webserver::Mutex s_mutex;
 
 void fun1() {
-    WEBSERVER_LOG_INFO(g_logger) << "name: " << webserver::Thread::GetName()
+    LOG_INFO(g_logger) << "name: " << webserver::Thread::GetName()
                                 << " this.name: " << webserver::Thread::GetThis()->getName()
                                 << " id: " << webserver::GetThreadId()
                              << " this.id: " << webserver::Thread::GetThis()->getId();
@@ -22,18 +22,18 @@ void fun1() {
 
 void fun2() {
     while(true) {
-        WEBSERVER_LOG_INFO(g_logger) << "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
+        LOG_INFO(g_logger) << "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
     }
 }
 
 void fun3() {
     while(true) {
-        WEBSERVER_LOG_INFO(g_logger) << "========================================";
+        LOG_INFO(g_logger) << "========================================";
     }
 }
 
 int main(int argc, char* argv[]) {
-    WEBSERVER_LOG_INFO(g_logger) << "thread test begin";
+    LOG_INFO(g_logger) << "thread test begin";
     YAML::Node root = YAML::LoadFile("/home/karmaner/myRepo/webserver/bin/conf/log2.yml");
     webserver::Config::LoadFromYaml(root);
 
@@ -48,8 +48,8 @@ int main(int argc, char* argv[]) {
     for(size_t i = 0; i < thrs.size(); ++i) {
         thrs[i]->join();
     }
-    WEBSERVER_LOG_INFO(g_logger) << "thread test end";
-    WEBSERVER_LOG_INFO(g_logger) << "count=" << count;
+    LOG_INFO(g_logger) << "thread test end";
+    LOG_INFO(g_logger) << "count=" << count;
 
     return 0;
 }

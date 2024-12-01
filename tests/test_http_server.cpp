@@ -1,7 +1,7 @@
 #include "src/http/http_server.h"
 #include "src/basic/log.h"
 
-static webserver::Logger::ptr g_logger = WEBSERVER_LOG_ROOT();
+static webserver::Logger::ptr g_logger = LOG_ROOT();
 
 #define XX(...) #__VA_ARGS__
 

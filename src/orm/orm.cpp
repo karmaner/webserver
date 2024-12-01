@@ -2,7 +2,7 @@
 #include "src/basic/util.h"
 #include "src/basic/log.h"
 
-static webserver::Logger::ptr g_logger = WEBSERVER_LOG_NAME("orm");
+static webserver::Logger::ptr g_logger = LOG_NAME("orm");
 
 void gen_cmake(const std::string& path, const std::map<std::string, webserver::orm::Table::ptr>& tbs) {
     std::ofstream ofs(path + "/CMakeLists.txt");
@@ -38,21 +38,21 @@ int main(int argc, char** argv) {
     std::vector<webserver::orm::Table::ptr> tbs;
     bool has_error = false;
     for(auto& i : files) {
-        WEBSERVER_LOG_INFO(g_logger) << "init xml=" << i << " begin";
+        LOG_INFO(g_logger) << "init xml=" << i << " begin";
         tinyxml2::XMLDocument doc;
         if(doc.LoadFile(i.c_str())) {
-            WEBSERVER_LOG_ERROR(g_logger) << "error: " << doc.ErrorStr();
+            LOG_ERROR(g_logger) << "error: " << doc.ErrorStr();
             has_error = true;
         } else {
             webserver::orm::Table::ptr table(new webserver::orm::Table);
             if(!table->init(*doc.RootElement())) {
-                WEBSERVER_LOG_ERROR(g_logger) << "table init error";
+                LOG_ERROR(g_logger) << "table init error";
                 has_error = true;
             } else {
                 tbs.push_back(table);
             }
         }
-        WEBSERVER_LOG_INFO(g_logger) << "init xml=" << i << " end";
+        LOG_INFO(g_logger) << "init xml=" << i << " end";
     }
     if(has_error) {
         return 0;

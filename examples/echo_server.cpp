@@ -4,7 +4,7 @@
 #include "src/basic/bytearray.h"
 #include "src/basic/address.h"
 
-static webserver::Logger::ptr g_logger = WEBSERVER_LOG_ROOT();
+static webserver::Logger::ptr g_logger = LOG_ROOT();
 
 class EchoServer : public webserver::TcpServer {
 public:
@@ -20,7 +20,7 @@ EchoServer::EchoServer(int type)
 }
 
 void EchoServer::handleClient(webserver::Socket::ptr client) {
-    WEBSERVER_LOG_INFO(g_logger) << "handleClient " << *client;   
+    LOG_INFO(g_logger) << "handleClient " << *client;   
     webserver::ByteArray::ptr ba(new webserver::ByteArray);
     while(true) {
         ba->clear();
@@ -29,16 +29,16 @@ void EchoServer::handleClient(webserver::Socket::ptr client) {
 
         int rt = client->recv(&iovs[0], iovs.size());
         if(rt == 0) {
-            WEBSERVER_LOG_INFO(g_logger) << "client close: " << *client;
+            LOG_INFO(g_logger) << "client close: " << *client;
             break;
         } else if(rt < 0) {
-            WEBSERVER_LOG_INFO(g_logger) << "client error rt=" << rt
+            LOG_INFO(g_logger) << "client error rt=" << rt
                 << " errno=" << errno << " errstr=" << strerror(errno);
             break;
         }
         ba->setPosition(ba->getPosition() + rt);
         ba->setPosition(0);
-        //WEBSERVER_LOG_INFO(g_logger) << "recv rt=" << rt << " data=" << std::string((char*)iovs[0].iov_base, rt);
+        //LOG_INFO(g_logger) << "recv rt=" << rt << " data=" << std::string((char*)iovs[0].iov_base, rt);
         if(m_type == 1) {//text 
             std::cout << ba->toString();// << std::endl;
         } else {
@@ -51,7 +51,7 @@ void EchoServer::handleClient(webserver::Socket::ptr client) {
 int type = 1;
 
 void run() {
-    WEBSERVER_LOG_INFO(g_logger) << "server type=" << type;
+    LOG_INFO(g_logger) << "server type=" << type;
     EchoServer::ptr es(new EchoServer(type));
     auto addr = webserver::Address::LookupAny("0.0.0.0:8020");
     while(!es->bind(addr)) {
@@ -62,7 +62,7 @@ void run() {
 
 int main(int argc, char** argv) {
     if(argc < 2) {
-        WEBSERVER_LOG_INFO(g_logger) << "used as[" << argv[0] << " -t] or [" << argv[0] << " -b]";
+        LOG_INFO(g_logger) << "used as[" << argv[0] << " -t] or [" << argv[0] << " -b]";
         return 0;
     }
 
