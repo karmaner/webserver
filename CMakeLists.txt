@@ -159,7 +159,7 @@ set(LIBS
         )
 
 #${PROTOBUF_LIBRARIES})
-
+set(TEST ON)
 if(TEST)
 webserver_add_executable(test_log "tests/test_log.cpp" webserver "${LIBS}")
 webserver_add_executable(test_config "tests/test_config.cpp" webserver "${LIBS}")

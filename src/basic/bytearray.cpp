@@ -68,42 +68,42 @@ void ByteArray::writeFuint8 (uint8_t value) {
     write(&value, sizeof(value));
 }
 void ByteArray::writeFint16 (int16_t value) {
-    if(m_endian != WEBSERVER_BYTE_ORDER) {
+    if(m_endian != BYTE_ORDER) {
         value = byteswap(value);
     }
     write(&value, sizeof(value));
 }
 
 void ByteArray::writeFuint16(uint16_t value) {
-    if(m_endian != WEBSERVER_BYTE_ORDER) {
+    if(m_endian != BYTE_ORDER) {
         value = byteswap(value);
     }
     write(&value, sizeof(value));
 }
 
 void ByteArray::writeFint32 (int32_t value) {
-    if(m_endian != WEBSERVER_BYTE_ORDER) {
+    if(m_endian != BYTE_ORDER) {
         value = byteswap(value);
     }
     write(&value, sizeof(value));
 }
 
 void ByteArray::writeFuint32(uint32_t value) {
-    if(m_endian != WEBSERVER_BYTE_ORDER) {
+    if(m_endian != BYTE_ORDER) {
         value = byteswap(value);
     }
     write(&value, sizeof(value));
 }
 
 void ByteArray::writeFint64 (int64_t value) {
-    if(m_endian != WEBSERVER_BYTE_ORDER) {
+    if(m_endian != BYTE_ORDER) {
         value = byteswap(value);
     }
     write(&value, sizeof(value));
 }
 
 void ByteArray::writeFuint64(uint64_t value) {
-    if(m_endian != WEBSERVER_BYTE_ORDER) {
+    if(m_endian != BYTE_ORDER) {
         value = byteswap(value);
     }
     write(&value, sizeof(value));
@@ -215,7 +215,7 @@ uint8_t  ByteArray::readFuint8() {
 #define XX(type) \
     type v; \
     read(&v, sizeof(v)); \
-    if(m_endian == WEBSERVER_BYTE_ORDER) { \
+    if(m_endian == BYTE_ORDER) { \
         return v; \
     } else { \
         return byteswap(v); \

@@ -184,7 +184,7 @@ bool AsyncSocketStream::addCtx(Ctx::ptr ctx) {
 }
 
 bool AsyncSocketStream::enqueue(SendCtx::ptr ctx) {
-    WEBSERVER_ASSERT(ctx);
+    ASSERT(ctx);
     RWMutexType::WriteLock lock(m_queueMutex);
     bool empty = m_queue.empty();
     m_queue.push_back(ctx);
@@ -196,7 +196,7 @@ bool AsyncSocketStream::enqueue(SendCtx::ptr ctx) {
 }
 
 bool AsyncSocketStream::innerClose() {
-    WEBSERVER_ASSERT(m_iomanager == webserver::IOManager::GetThis());
+    ASSERT(m_iomanager == webserver::IOManager::GetThis());
     if(isConnected() && m_disconnectCb) {
         m_disconnectCb(shared_from_this());
     }

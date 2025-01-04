@@ -27,7 +27,7 @@ void init(uint32_t size, std::set<uint32_t> v = {}) {
 
     webserver::ds::Bitmap::ptr c(new webserver::ds::Bitmap(size, 0xFF));
     *c &= *b;
-    WEBSERVER_ASSERT(c->getCount() == v0.size());
+    ASSERT(c->getCount() == v0.size());
 
     std::vector<uint32_t> v00(v0.begin(), v0.end());
     std::vector<uint32_t> v000(v0.rbegin(), v0.rend());
@@ -82,7 +82,7 @@ void init(uint32_t size, std::set<uint32_t> v = {}) {
             XX(v2); \
             XX(v4); \
             XX(v5); \
-            WEBSERVER_ASSERT(a == b); \
+            ASSERT(a == b); \
         }
 
     XX_ASSERT(v00, v5);
@@ -91,9 +91,9 @@ void init(uint32_t size, std::set<uint32_t> v = {}) {
         XX_ASSERT(v000, v2);
         XX_ASSERT(v00, v3);
         XX_ASSERT(v000, v4);
-        //WEBSERVER_ASSERT(v00 == v3);
-        //WEBSERVER_ASSERT(v1 == v3);
-        //WEBSERVER_ASSERT(v2 == v4);
+        //ASSERT(v00 == v3);
+        //ASSERT(v1 == v3);
+        //ASSERT(v2 == v4);
 #undef XX_ASSERT
 #undef XX
     }
@@ -126,7 +126,7 @@ void test_compress(size_t size, std::set<uint32_t> v = {}) {
         LOG_INFO(g_logger) << "bb :" << bb->toString();
         LOG_INFO(g_logger) << "size=" << size << " - " << webserver::Join(v.begin(), v.end(), ",");
 
-        WEBSERVER_ASSERT(*b == *bb);
+        ASSERT(*b == *bb);
     }
     //std::cout << "size=" << size << " value_size=" << v.size()
     //          << " compress_rate=" << bc->getCompressRate() << std::endl;
@@ -170,7 +170,7 @@ void test_op(size_t size, std::set<uint32_t> v1, std::set<uint32_t> v2) {
     auto xorb = ~*bc;
     auto xorb2 = ~*bc;
 
-    WEBSERVER_ASSERT(a->cross(*b) == a->cross(*bc));
+    ASSERT(a->cross(*b) == a->cross(*bc));
 
 
     std::vector<uint32_t> and_sv;
@@ -179,7 +179,7 @@ void test_op(size_t size, std::set<uint32_t> v1, std::set<uint32_t> v2) {
     std::set_union(v1.begin(), v1.end(), v2.begin(), v2.end(), std::back_inserter(or_sv));
     std::set_intersection(v1.begin(), v1.end(), v2.begin(), v2.end(), std::back_inserter(and_sv));
 
-    WEBSERVER_ASSERT(a->cross(*b) == (!and_sv.empty()));
+    ASSERT(a->cross(*b) == (!and_sv.empty()));
 
     std::vector<uint32_t> and_sv2;
     std::vector<uint32_t> or_sv2;
@@ -204,7 +204,7 @@ void test_op(size_t size, std::set<uint32_t> v1, std::set<uint32_t> v2) {
             XX(and_sv2); \
             XX(or_sv); \
             XX(or_sv2); \
-            WEBSERVER_ASSERT(a == b); \
+            ASSERT(a == b); \
         }
         XX_ASSERT(and_sv, and_sv2);
         XX_ASSERT(or_sv, or_sv2);
@@ -220,9 +220,9 @@ void test_op(size_t size, std::set<uint32_t> v1, std::set<uint32_t> v2) {
             std::cout << "b: " << b->toString() << std::endl;
             XX_ASSERT(xorb2, *bc);
         }
-        //WEBSERVER_ASSERT(v00 == v3);
-        //WEBSERVER_ASSERT(v1 == v3);
-        //WEBSERVER_ASSERT(v2 == v4);
+        //ASSERT(v00 == v3);
+        //ASSERT(v1 == v3);
+        //ASSERT(v2 == v4);
 #undef XX_ASSERT
 #undef XX
 
@@ -388,7 +388,7 @@ void test_uncompress3() {
             webserver::ds::Bitmap::ptr b(new webserver::ds::Bitmap(M));
             *b |= *vs2[i];
 
-            WEBSERVER_ASSERT(*b == *vs2[i]->uncompress());
+            ASSERT(*b == *vs2[i]->uncompress());
         }
     }
 }
@@ -399,7 +399,7 @@ void test_uncompress4() {
             webserver::ds::Bitmap::ptr b(new webserver::ds::Bitmap(M, 0xff));
             *b &= *vs2[i];
 
-            WEBSERVER_ASSERT(*b == *vs2[i]->uncompress());
+            ASSERT(*b == *vs2[i]->uncompress());
         }
     }
 }

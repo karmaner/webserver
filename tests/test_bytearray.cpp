@@ -15,9 +15,9 @@ void test() {
     ba->setPosition(0);                                                 \
     for(size_t i = 0; i < vec.size(); ++i) {                            \
         type v = ba->read_fun();                                        \
-        WEBSERVER_ASSERT(v == vec[i]);                                  \
+        ASSERT(v == vec[i]);                                  \
     }                                                                   \
-    WEBSERVER_ASSERT(ba->getReadSize() == 0);                           \
+    ASSERT(ba->getReadSize() == 0);                           \
     LOG_INFO(g_logger) << #write_fun "/" #read_fun            \
                     " (" #type " ) len=" << len                         \
                     << " base_len=" << base_len                         \
@@ -51,21 +51,21 @@ void test() {
     ba->setPosition(0);                                                 \
     for(size_t i = 0; i < vec.size(); ++i) {                            \
         type v = ba->read_fun();                                        \
-        WEBSERVER_ASSERT(v == vec[i]);                                  \
+        ASSERT(v == vec[i]);                                  \
     }                                                                   \
-    WEBSERVER_ASSERT(ba->getReadSize() == 0);                           \
+    ASSERT(ba->getReadSize() == 0);                           \
     LOG_INFO(g_logger) << #write_fun "/" #read_fun            \
                     " (" #type " ) len=" << len                         \
                     << " base_len=" << base_len                         \
                     << " size=" << ba->getSize();                       \
     ba->setPosition(0);                                                 \
-    WEBSERVER_ASSERT(ba->writeToFile("/tmp/" #type "_" #len "-" #read_fun ".dat"));     \
+    ASSERT(ba->writeToFile("/tmp/" #type "_" #len "-" #read_fun ".dat"));     \
     webserver::ByteArray::ptr ba2(new webserver::ByteArray(base_len * 2));              \
-    WEBSERVER_ASSERT(ba2->readFromFile("/tmp/" #type "_" #len "-" #read_fun ".dat"));   \
+    ASSERT(ba2->readFromFile("/tmp/" #type "_" #len "-" #read_fun ".dat"));   \
     ba2->setPosition(0);                                                                \
-    WEBSERVER_ASSERT(ba->toString() == ba2->toString());                                \
-    WEBSERVER_ASSERT(ba->getPosition() == 0);                                           \
-    WEBSERVER_ASSERT(ba2->getPosition() == 0);                                          \
+    ASSERT(ba->toString() == ba2->toString());                                \
+    ASSERT(ba->getPosition() == 0);                                           \
+    ASSERT(ba2->getPosition() == 0);                                          \
 }
     XX(int8_t,  100, writeFint8, readFint8, 1);
     XX(uint8_t, 100, writeFuint8, readFuint8, 1);

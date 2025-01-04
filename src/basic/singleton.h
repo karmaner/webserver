@@ -1,5 +1,4 @@
-#ifndef __SRC_BASIC_SINGLETON_H__
-#define __SRC_BASIC_SINGLETON_H__
+#pragma once
 
 #include <memory>
 
@@ -9,14 +8,14 @@ namespace {
 
 template<class T, class X, int N>
 T& GetInstanceX() {
-    static T v;
-    return v;
+	static T v;
+	return v;
 }
 
 template<class T, class X, int N>
 std::shared_ptr<T> GetInstancePtr() {
-    static std::shared_ptr<T> v(new T);
-    return v;
+	static std::shared_ptr<T> v(new T);
+	return v;
 }
 
 }
@@ -25,19 +24,17 @@ std::shared_ptr<T> GetInstancePtr() {
 template <class T, class X = void, int N = 0> 
 class Singleton {
 public:
-    static T *GetInstance() {
-        return &GetInstanceX<T, X, N>();
-    }
+	static T *GetInstance() {
+		return &GetInstanceX<T, X, N>();
+	}
 };
 
 template <class T, class X = void, int N = 0> 
 class SingletonPtr {
 public:
-    static std::shared_ptr<T> GetInstance() {
-        return GetInstancePtr<T, X, N>();
-    }
+	static std::shared_ptr<T> GetInstance() {
+		return GetInstancePtr<T, X, N>();
+	}
 };
 
 } // namespace webserver
-
-#endif

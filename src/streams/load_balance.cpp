@@ -225,7 +225,7 @@ int32_t WeightLoadBalance::getIdx(uint64_t v) {
     uint64_t dis = (v == (uint64_t)-1 ? rand() : v) % total;
     auto it = std::upper_bound(m_weights.begin()
                 ,m_weights.end(), dis);
-    WEBSERVER_ASSERT(it != m_weights.end());
+    ASSERT(it != m_weights.end());
     return std::distance(m_weights.begin(), it);
 }
 

@@ -173,7 +173,7 @@ int main(int argc, char* argv[]) {
     //     auto v = webserver::random_string(128, "0123456789");
     //     std::cout << "[" << v << "]" << std::endl;
     //     for(auto& n : v) {
-    //         WEBSERVER_ASSERT(n);
+    //         ASSERT(n);
     //     }
     // }
     // std::cout << "===" << std::endl;

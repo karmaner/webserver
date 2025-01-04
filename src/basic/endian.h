@@ -1,5 +1,4 @@
-#ifndef __WEBSERVER_ENDIAN_H__
-#define __WEBSERVER_ENDIAN_H__
+#pragma once
 
 #define WEBSERVER_LITTLE_ENDIAN 1
 #define WEBSERVER_BIG_ENDIAN 2
@@ -33,7 +32,7 @@ byteswap(T value) {
 #define WEBSERVER_BYTE_ORDER WEBSERVER_BIG_ENDIAN
 #else
 #define WEBSERVER_BYTE_ORDER WEBSERVER_LITTLE_ENDIAN
-#endif
+#endif // BYTE_ORDER
 
 #if WEBSERVER_BYTE_ORDER == WEBSERVER_BIG_ENDIAN
 template<class T>
@@ -46,7 +45,7 @@ T byteswapOnBigEndian(T t) {
     return byteswap(t);
 }
 
-#else
+#else // WEBSERVER_BYTE_ORDER == WEBSERVER_LITTLE_ENDIAN
 
 template<class T>
 T byteswapOnLittleEndian(T t) {
@@ -58,8 +57,6 @@ T byteswapOnBigEndian(T t) {
     return t;
 }
 
-#endif
+#endif // WEBSERVER_BYTE_ORDER
 
-}
-
-#endif
+} // namespace webserver

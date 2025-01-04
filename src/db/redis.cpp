@@ -630,8 +630,8 @@ FoxRedis::Ctx::Ctx(FoxRedis* r)
 
 FoxRedis::Ctx::~Ctx() {
     //cancelEvent();
-    WEBSERVER_ASSERT(thread == webserver::FoxThread::GetThis());
-    //WEBSERVER_ASSERT(destory == 0);
+    ASSERT(thread == webserver::FoxThread::GetThis());
+    //ASSERT(destory == 0);
     webserver::Atomic::subFetch(rds->m_ctxCount, 1);
     //++destory;
     //cancelEvent();
@@ -955,8 +955,8 @@ FoxRedisCluster::Ctx::Ctx(FoxRedisCluster* r)
 }
 
 FoxRedisCluster::Ctx::~Ctx() {
-    WEBSERVER_ASSERT(thread == webserver::FoxThread::GetThis());
-    //WEBSERVER_ASSERT(destory == 0);
+    ASSERT(thread == webserver::FoxThread::GetThis());
+    //ASSERT(destory == 0);
     webserver::Atomic::subFetch(rds->m_ctxCount, 1);
     //++destory;
     //cancelEvent();
@@ -981,13 +981,13 @@ void FoxRedisCluster::Ctx::cancelEvent() {
 
     //    //LOG_INFO(g_logger) << "cancelEvent thread=" << thread << " " << thread->getId()
     //    //           << " this=" << webserver::FoxThread::GetThis();
-    //    //WEBSERVER_ASSERT(thread == webserver::FoxThread::GetThis());
+    //    //ASSERT(thread == webserver::FoxThread::GetThis());
     //}
-    //WEBSERVER_ASSERT(!webserver::IOManager::GetThis());
+    //ASSERT(!webserver::IOManager::GetThis());
     ////if(webserver::Atomic::addFetch(cancel_count) > 1) {
     ////    return;
     ////}
-    ////WEBSERVER_ASSERT(!webserver::Fiber::GetThis());
+    ////ASSERT(!webserver::Fiber::GetThis());
     ////webserver::RWMutex::WriteLock lock(mutex);
     //if(++cancel_count > 1) {
     //    return;
@@ -1012,7 +1012,7 @@ void FoxRedisCluster::Ctx::cancelEvent() {
 }
 
 bool FoxRedisCluster::Ctx::init() {
-    WEBSERVER_ASSERT(thread == webserver::FoxThread::GetThis());
+    ASSERT(thread == webserver::FoxThread::GetThis());
     ev = evtimer_new(rds->m_thread->getBase(), EventCb, this);
     evtimer_add(ev, &rds->m_cmdTimeout);
     return true;

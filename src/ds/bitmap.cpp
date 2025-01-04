@@ -351,8 +351,8 @@ Bitmap::ptr Bitmap::compress() const{
         }
 
         if((cur_count / VALUE_SIZE) > 1) {
-            WEBSERVER_ASSERT(cur_count % VALUE_SIZE == 0);
-            //WEBSERVER_ASSERT(cur_count < (1ul << VALUE_SIZE));
+            ASSERT(cur_count % VALUE_SIZE == 0);
+            //ASSERT(cur_count < (1ul << VALUE_SIZE));
             while(cur_count) {
                 data[dst_cur_pos++] = cur_value ? (COMPRESS_MASK | VALUE_MASK | (cur_count & COUNT_MASK)) : (COMPRESS_MASK | (cur_count & COUNT_MASK));
                 cur_count >>= VALUE_SIZE;
@@ -818,8 +818,8 @@ void Bitmap::set(uint32_t from, uint32_t size, bool v) {
     uint32_t cur_to = (from + size) / VALUE_SIZE;
     uint32_t pos_to = (from + size) % VALUE_SIZE;
 
-    WEBSERVER_ASSERT(pos_from == 0);
-    WEBSERVER_ASSERT(pos_to == 0);
+    ASSERT(pos_from == 0);
+    ASSERT(pos_to == 0);
 
     for(uint32_t i = cur_from; i < cur_to; ++i) {
         m_data[i] = v ? (COUNT_MASK) : (0);
@@ -835,8 +835,8 @@ bool Bitmap::get(uint32_t from, uint32_t size, bool v) const {
     uint32_t cur_to = (from + size) / VALUE_SIZE;
     uint32_t pos_to = (from + size) % VALUE_SIZE;
 
-    WEBSERVER_ASSERT(pos_from == 0);
-    WEBSERVER_ASSERT(pos_to == 0);
+    ASSERT(pos_from == 0);
+    ASSERT(pos_to == 0);
 
     for(uint32_t i = cur_from; i < cur_to; ++i) {
         if(v) {

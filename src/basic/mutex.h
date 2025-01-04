@@ -1,5 +1,4 @@
-#ifndef __SRC_BASIC_MUTEX_H__
-#define __SRC_BASIC_MUTEX_H__
+#pragma once
 
 #include <functional>
 #include <memory>
@@ -19,28 +18,28 @@ namespace webserver {
  */
 class Semaphore : Noncopyable {
 public:
-    /**
-     * @brief 构造函数
-     * @param[in] count 信号量值的大小
-     */
-    Semaphore(uint32_t count = 0);
+	/**
+	 * @brief 构造函数
+	 * @param[in] count 信号量值的大小
+	 */
+	Semaphore(uint32_t count = 0);
 
-    /**
-     * @brief 析构函数
-     */
-    ~Semaphore();
+	/**
+	 * @brief 析构函数
+	 */
+	~Semaphore();
 
-    /**
-     * @brief 获取信号量
-     */
-    void wait();
+	/**
+	 * @brief 获取信号量
+	 */
+	void wait();
 
-    /**
-     * @brief 释放信号量
-     */
-    void notify();
+	/**
+	 * @brief 释放信号量
+	 */
+	void notify();
 private:
-    sem_t m_semaphore;
+	sem_t m_semaphore;
 };
 
 /**
@@ -49,47 +48,47 @@ private:
 template<class T>
 struct ScopedLockImpl {
 public:
-    /**
-     * @brief 构造函数
-     * @param[in] mutex Mutex
-     */
-    ScopedLockImpl(T& mutex)
-        :m_mutex(mutex) {
-        m_mutex.lock();
-        m_locked = true;
-    }
+	/**
+	 * @brief 构造函数
+	 * @param[in] mutex Mutex
+	 */
+	ScopedLockImpl(T& mutex)
+		:m_mutex(mutex) {
+		m_mutex.lock();
+		m_locked = true;
+	}
 
-    /**
-     * @brief 析构函数,自动释放锁
-     */
-    ~ScopedLockImpl() {
-        unlock();
-    }
+	/**
+	 * @brief 析构函数,自动释放锁
+	 */
+	~ScopedLockImpl() {
+		unlock();
+	}
 
-    /**
-     * @brief 加锁
-     */
-    void lock() {
-        if(!m_locked) {
-            m_mutex.lock();
-            m_locked = true;
-        }
-    }
+	/**
+	 * @brief 加锁
+	 */
+	void lock() {
+		if(!m_locked) {
+			m_mutex.lock();
+			m_locked = true;
+		}
+	}
 
-    /**
-     * @brief 解锁
-     */
-    void unlock() {
-        if(m_locked) {
-            m_mutex.unlock();
-            m_locked = false;
-        }
-    }
+	/**
+	 * @brief 解锁
+	 */
+	void unlock() {
+		if(m_locked) {
+			m_mutex.unlock();
+			m_locked = false;
+		}
+	}
 private:
-    /// mutex
-    T& m_mutex;
-    /// 是否已上锁
-    bool m_locked;
+	/// mutex
+	T& m_mutex;
+	/// 是否已上锁
+	bool m_locked;
 };
 
 /**
@@ -98,47 +97,47 @@ private:
 template<class T>
 struct ReadScopedLockImpl {
 public:
-    /**
-     * @brief 构造函数
-     * @param[in] mutex 读写锁
-     */
-    ReadScopedLockImpl(T& mutex)
-        :m_mutex(mutex) {
-        m_mutex.rdlock();
-        m_locked = true;
-    }
+	/**
+	 * @brief 构造函数
+	 * @param[in] mutex 读写锁
+	 */
+	ReadScopedLockImpl(T& mutex)
+		:m_mutex(mutex) {
+		m_mutex.rdlock();
+		m_locked = true;
+	}
 
-    /**
-     * @brief 析构函数,自动释放锁
-     */
-    ~ReadScopedLockImpl() {
-        unlock();
-    }
+	/**
+	 * @brief 析构函数,自动释放锁
+	 */
+	~ReadScopedLockImpl() {
+		unlock();
+	}
 
-    /**
-     * @brief 上读锁
-     */
-    void lock() {
-        if(!m_locked) {
-            m_mutex.rdlock();
-            m_locked = true;
-        }
-    }
+	/**
+	 * @brief 上读锁
+	 */
+	void lock() {
+		if(!m_locked) {
+			m_mutex.rdlock();
+			m_locked = true;
+		}
+	}
 
-    /**
-     * @brief 释放锁
-     */
-    void unlock() {
-        if(m_locked) {
-            m_mutex.unlock();
-            m_locked = false;
-        }
-    }
+	/**
+	 * @brief 释放锁
+	 */
+	void unlock() {
+		if(m_locked) {
+			m_mutex.unlock();
+			m_locked = false;
+		}
+	}
 private:
-    /// mutex
-    T& m_mutex;
-    /// 是否已上锁
-    bool m_locked;
+	/// mutex
+	T& m_mutex;
+	/// 是否已上锁
+	bool m_locked;
 };
 
 /**
@@ -147,47 +146,47 @@ private:
 template<class T>
 struct WriteScopedLockImpl {
 public:
-    /**
-     * @brief 构造函数
-     * @param[in] mutex 读写锁
-     */
-    WriteScopedLockImpl(T& mutex)
-        :m_mutex(mutex) {
-        m_mutex.wrlock();
-        m_locked = true;
-    }
+	/**
+	 * @brief 构造函数
+	 * @param[in] mutex 读写锁
+	 */
+	WriteScopedLockImpl(T& mutex)
+		:m_mutex(mutex) {
+		m_mutex.wrlock();
+		m_locked = true;
+	}
 
-    /**
-     * @brief 析构函数
-     */
-    ~WriteScopedLockImpl() {
-        unlock();
-    }
+	/**
+	 * @brief 析构函数
+	 */
+	~WriteScopedLockImpl() {
+		unlock();
+	}
 
-    /**
-     * @brief 上写锁
-     */
-    void lock() {
-        if(!m_locked) {
-            m_mutex.wrlock();
-            m_locked = true;
-        }
-    }
+	/**
+	 * @brief 上写锁
+	 */
+	void lock() {
+		if(!m_locked) {
+			m_mutex.wrlock();
+			m_locked = true;
+		}
+	}
 
-    /**
-     * @brief 解锁
-     */
-    void unlock() {
-        if(m_locked) {
-            m_mutex.unlock();
-            m_locked = false;
-        }
-    }
+	/**
+	 * @brief 解锁
+	 */
+	void unlock() {
+		if(m_locked) {
+			m_mutex.unlock();
+			m_locked = false;
+		}
+	}
 private:
-    /// Mutex
-    T& m_mutex;
-    /// 是否已上锁
-    bool m_locked;
+	/// Mutex
+	T& m_mutex;
+	/// 是否已上锁
+	bool m_locked;
 };
 
 /**
@@ -195,39 +194,39 @@ private:
  */
 class Mutex : Noncopyable {
 public: 
-    /// 局部锁
-    typedef ScopedLockImpl<Mutex> Lock;
+	/// 局部锁
+	typedef ScopedLockImpl<Mutex> Lock;
 
-    /**
-     * @brief 构造函数
-     */
-    Mutex() {
-        pthread_mutex_init(&m_mutex, nullptr);
-    }
+	/**
+	 * @brief 构造函数
+	 */
+	Mutex() {
+		pthread_mutex_init(&m_mutex, nullptr);
+	}
 
-    /**
-     * @brief 析构函数
-     */
-    ~Mutex() {
-        pthread_mutex_destroy(&m_mutex);
-    }
+	/**
+	 * @brief 析构函数
+	 */
+	~Mutex() {
+		pthread_mutex_destroy(&m_mutex);
+	}
 
-    /**
-     * @brief 加锁
-     */
-    void lock() {
-        pthread_mutex_lock(&m_mutex);
-    }
+	/**
+	 * @brief 加锁
+	 */
+	void lock() {
+		pthread_mutex_lock(&m_mutex);
+	}
 
-    /**
-     * @brief 解锁
-     */
-    void unlock() {
-        pthread_mutex_unlock(&m_mutex);
-    }
+	/**
+	 * @brief 解锁
+	 */
+	void unlock() {
+		pthread_mutex_unlock(&m_mutex);
+	}
 private:
-    /// mutex
-    pthread_mutex_t m_mutex;
+	/// mutex
+	pthread_mutex_t m_mutex;
 };
 
 /**
@@ -235,28 +234,28 @@ private:
  */
 class NullMutex : Noncopyable{
 public:
-    /// 局部锁
-    typedef ScopedLockImpl<NullMutex> Lock;
+	/// 局部锁
+	typedef ScopedLockImpl<NullMutex> Lock;
 
-    /**
-     * @brief 构造函数
-     */
-    NullMutex() {}
+	/**
+	 * @brief 构造函数
+	 */
+	NullMutex() {}
 
-    /**
-     * @brief 析构函数
-     */
-    ~NullMutex() {}
+	/**
+	 * @brief 析构函数
+	 */
+	~NullMutex() {}
 
-    /**
-     * @brief 加锁
-     */
-    void lock() {}
+	/**
+	 * @brief 加锁
+	 */
+	void lock() {}
 
-    /**
-     * @brief 解锁
-     */
-    void unlock() {}
+	/**
+	 * @brief 解锁
+	 */
+	void unlock() {}
 };
 
 /**
@@ -265,49 +264,49 @@ public:
 class RWMutex : Noncopyable{
 public:
 
-    /// 局部读锁
-    typedef ReadScopedLockImpl<RWMutex> ReadLock;
+	/// 局部读锁
+	typedef ReadScopedLockImpl<RWMutex> ReadLock;
 
-    /// 局部写锁
-    typedef WriteScopedLockImpl<RWMutex> WriteLock;
+	/// 局部写锁
+	typedef WriteScopedLockImpl<RWMutex> WriteLock;
 
-    /**
-     * @brief 构造函数
-     */
-    RWMutex() {
-        pthread_rwlock_init(&m_lock, nullptr);
-    }
-    
-    /**
-     * @brief 析构函数
-     */
-    ~RWMutex() {
-        pthread_rwlock_destroy(&m_lock);
-    }
+	/**
+	 * @brief 构造函数
+	 */
+	RWMutex() {
+		pthread_rwlock_init(&m_lock, nullptr);
+	}
+	
+	/**
+	 * @brief 析构函数
+	 */
+	~RWMutex() {
+		pthread_rwlock_destroy(&m_lock);
+	}
 
-    /**
-     * @brief 上读锁
-     */
-    void rdlock() {
-        pthread_rwlock_rdlock(&m_lock);
-    }
+	/**
+	 * @brief 上读锁
+	 */
+	void rdlock() {
+		pthread_rwlock_rdlock(&m_lock);
+	}
 
-    /**
-     * @brief 上写锁
-     */
-    void wrlock() {
-        pthread_rwlock_wrlock(&m_lock);
-    }
+	/**
+	 * @brief 上写锁
+	 */
+	void wrlock() {
+		pthread_rwlock_wrlock(&m_lock);
+	}
 
-    /**
-     * @brief 解锁
-     */
-    void unlock() {
-        pthread_rwlock_unlock(&m_lock);
-    }
+	/**
+	 * @brief 解锁
+	 */
+	void unlock() {
+		pthread_rwlock_unlock(&m_lock);
+	}
 private:
-    /// 读写锁
-    pthread_rwlock_t m_lock;
+	/// 读写锁
+	pthread_rwlock_t m_lock;
 };
 
 /**
@@ -315,33 +314,33 @@ private:
  */
 class NullRWMutex : Noncopyable {
 public:
-    /// 局部读锁
-    typedef ReadScopedLockImpl<NullMutex> ReadLock;
-    /// 局部写锁
-    typedef WriteScopedLockImpl<NullMutex> WriteLock;
+	/// 局部读锁
+	typedef ReadScopedLockImpl<NullMutex> ReadLock;
+	/// 局部写锁
+	typedef WriteScopedLockImpl<NullMutex> WriteLock;
 
-    /**
-     * @brief 构造函数
-     */
-    NullRWMutex() {}
-    /**
-     * @brief 析构函数
-     */
-    ~NullRWMutex() {}
+	/**
+	 * @brief 构造函数
+	 */
+	NullRWMutex() {}
+	/**
+	 * @brief 析构函数
+	 */
+	~NullRWMutex() {}
 
-    /**
-     * @brief 上读锁
-     */
-    void rdlock() {}
+	/**
+	 * @brief 上读锁
+	 */
+	void rdlock() {}
 
-    /**
-     * @brief 上写锁
-     */
-    void wrlock() {}
-    /**
-     * @brief 解锁
-     */
-    void unlock() {}
+	/**
+	 * @brief 上写锁
+	 */
+	void wrlock() {}
+	/**
+	 * @brief 解锁
+	 */
+	void unlock() {}
 };
 
 /**
@@ -349,39 +348,39 @@ public:
  */
 class Spinlock : Noncopyable {
 public:
-    /// 局部锁
-    typedef ScopedLockImpl<Spinlock> Lock;
+	/// 局部锁
+	typedef ScopedLockImpl<Spinlock> Lock;
 
-    /**
-     * @brief 构造函数
-     */
-    Spinlock() {
-        pthread_spin_init(&m_mutex, 0);
-    }
+	/**
+	 * @brief 构造函数
+	 */
+	Spinlock() {
+		pthread_spin_init(&m_mutex, 0);
+	}
 
-    /**
-     * @brief 析构函数
-     */
-    ~Spinlock() {
-        pthread_spin_destroy(&m_mutex);
-    }
+	/**
+	 * @brief 析构函数
+	 */
+	~Spinlock() {
+		pthread_spin_destroy(&m_mutex);
+	}
 
-    /**
-     * @brief 上锁
-     */
-    void lock() {
-        pthread_spin_lock(&m_mutex);
-    }
+	/**
+	 * @brief 上锁
+	 */
+	void lock() {
+		pthread_spin_lock(&m_mutex);
+	}
 
-    /**
-     * @brief 解锁
-     */
-    void unlock() {
-        pthread_spin_unlock(&m_mutex);
-    }
+	/**
+	 * @brief 解锁
+	 */
+	void unlock() {
+		pthread_spin_unlock(&m_mutex);
+	}
 private:
-    /// 自旋锁
-    pthread_spinlock_t m_mutex;
+	/// 自旋锁
+	pthread_spinlock_t m_mutex;
 };
 
 /**
@@ -389,62 +388,59 @@ private:
  */
 class CASLock : Noncopyable {
 public:
-    /// 局部锁
-    typedef ScopedLockImpl<CASLock> Lock;
+	/// 局部锁
+	typedef ScopedLockImpl<CASLock> Lock;
 
-    /**
-     * @brief 构造函数
-     */
-    CASLock() {
-        m_mutex.clear();
-    }
+	/**
+	 * @brief 构造函数
+	 */
+	CASLock() {
+		m_mutex.clear();
+	}
 
-    /**
-     * @brief 析构函数
-     */
-    ~CASLock() {
-    }
+	/**
+	 * @brief 析构函数
+	 */
+	~CASLock() {
+	}
 
-    /**
-     * @brief 上锁
-     */
-    void lock() {
-        while(std::atomic_flag_test_and_set_explicit(&m_mutex, std::memory_order_acquire));
-    }
+	/**
+	 * @brief 上锁
+	 */
+	void lock() {
+		while(std::atomic_flag_test_and_set_explicit(&m_mutex, std::memory_order_acquire));
+	}
 
-    /**
-     * @brief 解锁
-     */
-    void unlock() {
-        std::atomic_flag_clear_explicit(&m_mutex, std::memory_order_release);
-    }
+	/**
+	 * @brief 解锁
+	 */
+	void unlock() {
+		std::atomic_flag_clear_explicit(&m_mutex, std::memory_order_release);
+	}
 private:
-    /// 原子状态
-    volatile std::atomic_flag m_mutex;
+	/// 原子状态
+	volatile std::atomic_flag m_mutex;
 };
 
 class Scheduler;
 class FiberSemaphore : Noncopyable {
 public:
-    typedef Spinlock MutexType;
+	typedef Spinlock MutexType;
 
-    FiberSemaphore(size_t initial_concurrency = 0);
-    ~FiberSemaphore();
+	FiberSemaphore(size_t initial_concurrency = 0);
+	~FiberSemaphore();
 
-    bool tryWait();
-    void wait();
-    void notify();
+	bool tryWait();
+	void wait();
+	void notify();
 
-    size_t getConcurrency() const { return m_concurrency;}
-    void reset() { m_concurrency = 0;}
+	size_t getConcurrency() const { return m_concurrency;}
+	void reset() { m_concurrency = 0;}
 private:
-    MutexType m_mutex;
-    std::list<std::pair<Scheduler*, Fiber::ptr> > m_waiters;
-    size_t m_concurrency;
+	MutexType m_mutex;
+	std::list<std::pair<Scheduler*, Fiber::ptr> > m_waiters;
+	size_t m_concurrency;
 };
 
 
-
-}
-
-#endif
+} // namespace webserver

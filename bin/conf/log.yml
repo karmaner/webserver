@@ -1,13 +1,13 @@
 logs:
-    - name: root
-      level: info
-      appenders:
-          - type: FileLogAppender
-            file: /apps/logs/webserver/root.log
-          - type: StdoutLogAppender
-    - name: system
-      level: info
-      appenders:
-          - type: FileLogAppender
-            file: /apps/logs/webserver/system.log
-          - type: StdoutLogAppender
+  - name: root
+    level: info
+    appenders:
+      - type: FileLogAppender
+        file: /apps/webserver/logs/root.log
+      - type: StdoutLogAppender
+  - name: system
+    level: info
+    appenders:
+      - type: FileLogAppender
+        file: /apps/webserver/logs/system.log
+      - type: StdoutLogAppender

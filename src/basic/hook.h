@@ -1,5 +1,4 @@
-#ifndef __SRC_BASIC_HOOK_H__
-#define __SRC_BASIC_HOOK_H__
+#pragma once
 
 #include <fcntl.h>
 #include <sys/ioctl.h>
@@ -10,15 +9,15 @@
 #include <unistd.h>
 
 namespace webserver {
-    /**
-     * @brief 当前线程是否hook
-     */
-    bool is_hook_enable();
-    /**
-     * @brief 设置当前线程的hook状态
-     */
-    void set_hook_enable(bool flag);
-}
+	/**
+	 * @brief 当前线程是否hook
+	 */
+	bool is_hook_enable();
+	/**
+	 * @brief 设置当前线程的hook状态
+	 */
+	void set_hook_enable(bool flag);
+} // namespace webserver
 
 extern "C" {
 
@@ -92,6 +91,4 @@ extern setsockopt_fun setsockopt_f;
 
 extern int connect_with_timeout(int fd, const struct sockaddr* addr, socklen_t addrlen, uint64_t timeout_ms);
 
-}
-
-#endif
+} // extern "C"

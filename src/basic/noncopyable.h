@@ -1,16 +1,13 @@
-#ifndef __SRC_BASIC_NONCOPYABLE_H__
-#define __SRC_BASIC_NONCOPYABLE_H__
+#pragma once
 
 namespace webserver {
 
 class Noncopyable {
 public:
-    Noncopyable() = default;
-    ~Noncopyable() = default;
-    Noncopyable(const Noncopyable&) = delete;
-    Noncopyable& operator=(const Noncopyable&) = delete;
+	Noncopyable() = default;
+	~Noncopyable() = default;
+	Noncopyable(const Noncopyable&) = delete;
+	Noncopyable& operator=(const Noncopyable&) = delete;
 };
 
-}
-
-#endif
+} // namespace webserver

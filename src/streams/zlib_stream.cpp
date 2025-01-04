@@ -79,9 +79,9 @@ void ZlibStream::close() {
 
 int ZlibStream::init(Type type, int level, int window_bits
                     ,int memlevel, Strategy strategy) {
-    WEBSERVER_ASSERT((level >= 0 && level <= 9) || level == DEFAULT_COMPRESSION);
-    WEBSERVER_ASSERT((window_bits >= 8 && window_bits <= 15));
-    WEBSERVER_ASSERT((memlevel >= 1 && memlevel <= 9));
+    ASSERT((level >= 0 && level <= 9) || level == DEFAULT_COMPRESSION);
+    ASSERT((window_bits >= 8 && window_bits <= 15));
+    ASSERT((memlevel >= 1 && memlevel <= 9));
 
     memset(&m_zstream, 0, sizeof(m_zstream));
 

@@ -31,7 +31,7 @@ void FoxThread::read_cb(evutil_socket_t sock, short which, void* args) {
         for(auto it = callbacks.begin();
                 it != callbacks.end(); ++it) {
             if(*it) {
-                //WEBSERVER_ASSERT(thread == GetThis());
+                //ASSERT(thread == GetThis());
                 try {
                     (*it)();
                 } catch (std::exception& ex) {
@@ -413,25 +413,25 @@ void FoxThreadManager::add(const std::string& name, IFoxThread::ptr thr) {
 
 void FoxThreadManager::dispatch(const std::string& name, callback cb) {
     IFoxThread::ptr ti = get(name);
-    WEBSERVER_ASSERT(ti);
+    ASSERT(ti);
     ti->dispatch(cb);
 }
 
 void FoxThreadManager::dispatch(const std::string& name, uint32_t id, callback cb) {
     IFoxThread::ptr ti = get(name);
-    WEBSERVER_ASSERT(ti);
+    ASSERT(ti);
     ti->dispatch(id, cb);
 }
 
 void FoxThreadManager::batchDispatch(const std::string& name, const std::vector<callback>& cbs) {
     IFoxThread::ptr ti = get(name);
-    WEBSERVER_ASSERT(ti);
+    ASSERT(ti);
     ti->batchDispatch(cbs);
 }
 
 void FoxThreadManager::broadcast(const std::string& name, callback cb) {
     IFoxThread::ptr ti = get(name);
-    WEBSERVER_ASSERT(ti);
+    ASSERT(ti);
     ti->broadcast(cb);
 }
 
